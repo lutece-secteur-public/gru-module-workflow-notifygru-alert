@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?><plug-in>
+    <name>workflow-alertgru</name>
+    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <version>1.0.0-SNAPSHOT</version>
+    <documentation/>
+    <installation/>
+    <changes/>
+    <user-guide/>
+    <description>module.workflow.alertgru.module.description</description>
+    <provider>module.workflow.alertgru.module.provider</provider>
+    <provider-url>http://lutece.paris.fr</provider-url>
+   <icon-url>images/admin/skin/plugins/alertgru/alertgru.png</icon-url>
+    <copyright>Copyright (c) 2017 Mairie de Paris</copyright>
+    <db-pool-required>1</db-pool-required>
+    
+    <core-version-dependency>
+        <min-core-version>6.0.0</min-core-version>
+        <max-core-version/>	
+    </core-version-dependency>
+
+    <!-- Admin features parameters -->
+    <admin-features>
+    </admin-features>
+
+    <!-- Portlet parameters -->
+    <portlets>
+   </portlets>
+   
+   <css-stylesheets>
+        <css-stylesheets-scope>portal</css-stylesheets-scope>
+        <css-stylesheet>workflow/modules/alertgru/workflow_alertgru.css</css-stylesheet>
+    </css-stylesheets>
+
+    <daemons>
+        <daemon>
+            <daemon-id>AlertGruDaemon</daemon-id>
+            <daemon-name>module.workflow.alertgru.daemon.AlertGruDaemon.name</daemon-name>
+            <daemon-description>module.workflow.alertgru.daemon.AlertGruDaemon.description</daemon-description>
+            <daemon-class>fr.paris.lutece.plugins.workflow.modules.alertgru.daemon.AlertGruDaemon</daemon-class>
+        </daemon>
+    </daemons>
+</plug-in>
