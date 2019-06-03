@@ -245,6 +245,9 @@ public final class Constants
     public static final String PARAMETER_DAYS_TO_ALERT = "days_to_alert";
     public static final String PARAMETER_SUBJECT_ALERT = "alert_subject";
     public static final String PARAMETER_STATE_AFTER = "id_state_after";
+    public static final String PARAMETER_MARKER_ALERT = "marker_alert";
+    public static final String PARAMETER_ALERT_AFTER_BEFORE = "alert_after_before";
+
 
 
     // AUTHER MARKS

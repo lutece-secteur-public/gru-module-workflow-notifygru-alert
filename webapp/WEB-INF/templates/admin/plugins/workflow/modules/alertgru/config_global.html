@@ -1,10 +1,93 @@
 <div class="row">
+   <div class="col-sm-12">
+      <div class="form-group" >
+         <label class="col-xs-12 col-sm-12 col-md-3 col-lg-3 control-label" for="alert_subject"> #i18n{module.workflow.alertgru.task_alert_reminder.labelTextSubject}</label>
+         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <input type="text" maxlength="255" name="alert_subject" value="${config.alertSubject!''}" class="form-control"/>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="row">
    <div class="col-md-12"  >
       <@formGroup labelKey="#i18n{module.workflow.alertgru.task_alert_gru_config.label_config_provider}" labelFor="list_provider" helpKey="#i18n{module.workflow.alertgru.task_alert_gru_config.label_config_provider_helper}" mandatory=true>
          <@combo name="list_provider" items=list_provider default_value= "${config.idSpringProvider!}" />
+         <button class="btn btn-primary btn-sm btn-flat" type="submit" name="apply_marker" value="loadMarkers">
+            Appliquer
+         </button>
       </@formGroup>
    </div>
 </div>
+
+<div class="row">
+   <div class="col-md-12"  >
+      <div class="form-group">
+         <label class="col-xs-12 col-sm-3 control-label" for="marker_alert">
+            Date de reference</i>
+         </label>
+         <div class="col-xs-12 col-sm-9 col-md-6 col-lg-6">
+            <select id="marker_alert" name="marker_alert">
+               <#if notifygru_markers?? && notifygru_markers?has_content>
+                      <option value="Default" <#if config?exists && config.markerAlert?has_content && config.markerAlert == "Default"> selected </#if> >Default</option>
+               <#list notifygru_markers as marker>
+                      <option value="${marker.marker!''}" <#if config?exists && config.markerAlert?has_content && config.markerAlert == marker.marker> selected </#if> >${marker.description!''}</option>
+                  </#list>
+              </#if>
+            </select>
+            <span class="help-block" id="notifygru_markers_help">S&eacutelectionner Default pour choisir la date d&eacutebut d'&eacutetat</span>
+         </div>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-md-12"  >
+      <div class="form-group" >
+         <label class="col-xs-12 col-sm-12 col-md-3 col-lg-3 control-label" for="days_to_alert"> #i18n{module.workflow.alertgru.task_alert_reminder.labelTextAvant}</label>
+         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <input type="text" maxlength="2" name="days_to_alert" value="${config.daysToAlert!''}"  class="form-control"/>
+            <span class="help-block">#i18n{module.workflow.alertgru.task_alert_reminder.labelTextAvantHelp} </span>
+         </div>
+      </div>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-sm-12"  >
+    <div class="form-group" >
+      <label class="control-label col-xs-12 col-sm-3 col-md-3" for="alert_after_before">Alerte Apres / Avant la date</label>
+
+      <div class="col-xs-12 col-sm-9 col-md-9">
+         <label class="radio-inline">
+            <input type="radio" id="alert_after_before_1"
+                   name="alert_after_before" value="after" <#if config?exists && config.alertAfterBefore?has_content && config.alertAfterBefore=='after'>checked</#if>>Apres
+         </label>
+         <label class="radio-inline">
+            <input type="radio" id="alert_after_before_2"
+                   name="alert_after_before" value="before" <#if config?exists && config.alertAfterBefore?has_content && config.alertAfterBefore=='before'>checked</#if>>Avant
+         </label>
+      </div>
+    </div>
+   </div>
+</div>
+
+<#if list_state?? >
+<div class="row">
+   <div class="col-sm-12"  >
+   <div class="form-group">
+      <label class="col-xs-12 col-sm-12 col-md-3 col-lg-3 control-label" for="state">#i18n{module.workflow.alertgru.task_alert_reminder.labelState}</label>
+      <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+         <select name="id_state_after" class="form-control">
+            <#list list_state as item >
+            <option value="${item.code!''}" <#if config?? && config?has_content><#if config.idStateAfter?string.number==item.code> selected</#if></#if>> ${item.name!''}</option>
+   </#list>
+   </select>
+</div>
+</div>
+</div>
+</div>
+</#if>
+
 
 <div class="row">
    <#if list_marker_provider?? && list_marker_provider?has_content>
@@ -38,12 +121,6 @@
             <@checkBox name="demand_status" labelKey="#i18n{module.workflow.alertgru.task_alert_gru_config.label_demand_status_helper}" mandatory=false />
          </#if>
       </@formGroup>
-   </div>
-</div>
-
-<div class="row">
-   <div class="col-sm-12">
-<#include "task_alert_reminder_config.html" />
    </div>
 </div>
 

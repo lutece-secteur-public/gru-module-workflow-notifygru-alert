@@ -22,8 +22,8 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + "sender_name_email,recipients_cc_email,recipients_cci_email,is_active_onglet_email,"
             + "message_sms,billing_account_sms,billing_group_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ,  days_to_alert, id_state_after, alert_subject) "
-            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ,  days_to_alert, id_state_after, alert_subject, marker_alert, alert_after_before) "
+            + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
 
 
@@ -34,7 +34,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + "subject_email,message_email,sender_name_email,recipients_cc_email,"
             + "recipients_cci_email,is_active_onglet_email,message_sms,billing_account_sms,billing_group_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast,  days_to_alert, id_state_after, alert_subject "
+            + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast,  days_to_alert, id_state_after, alert_subject, marker_alert, alert_after_before "
             + "FROM workflow_task_alert_gru_cf notif WHERE id_task = ?";
 
     private static final String SQL_QUERY_UPDATE = "UPDATE workflow_task_alert_gru_cf "
@@ -46,7 +46,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + "message_sms = ?, billing_account_sms = ?, billing_group_sms = ?, " + "is_active_onglet_sms = ?,  "
             + "id_mailing_list_broadcast = ?, email_broadcast = ?, sender_name_broadcast = ?, subject_broadcast = ?, message_broadcast = ?,"
             + " recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, " + " is_active_onglet_broadcast = ? ,"
-            + " days_to_alert = ?,id_state_after = ?, " + " alert_subject = ? " + " WHERE id_task = ? ";
+            + " days_to_alert = ?,id_state_after = ?, " + " alert_subject = ?, "  + " marker_alert = ?, " +  " alert_after_before = ? "+ " WHERE id_task = ? ";
 
 
     private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_alert_gru_cf WHERE id_task = ? ";
@@ -164,6 +164,8 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             config.setDaysToAlert( daoUtil.getInt( ++nPos ) );
             config.setIdStateAfter( daoUtil.getInt( ++nPos ) );
             config.setAlertSubject( daoUtil.getString( ++nPos ) );
+            config.setMarkerAlert( daoUtil.getString( ++nPos ) );
+            config.setAlertAfterBefore( daoUtil.getString( ++nPos ) );
         }
 
         daoUtil.free( );
@@ -240,6 +242,8 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
         daoUtil.setInt( ++nPos, config.getDaysToAlert( ) );
         daoUtil.setInt( ++nPos, config.getIdStateAfter() );
         daoUtil.setString( ++nPos, config.getAlertSubject( ) );
+        daoUtil.setString( ++nPos, config.getMarkerAlert( ) );
+        daoUtil.setString( ++nPos, config.getAlertAfterBefore( ) );
 
         return nPos;
     }

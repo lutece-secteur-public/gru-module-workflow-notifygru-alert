@@ -62,6 +62,7 @@ public class AlertGruTaskConfigController  {
 
     // Parameters
     private static final String PARAMETER_APPLY = "apply";
+    private static final String PARAMETER_APPLY_MARKER = "apply_marker";
 
     // Actions
     private static final String ACTION_FIRST_STEP_SAVE = "saveFirstStep";
@@ -70,7 +71,11 @@ public class AlertGruTaskConfigController  {
     private static final String ACTION_ADVANCED_CONFIG_CANCEL = "cancelAdvancedConfig";
     private static final String ACTION_ALERT_CONFIG_ADD = "AddAlertConfig";
     private static final String ACTION_ALERT_CONFIG_REMOVE_PREFIX = "RemoveAlertConfig_";
+    private static final String ACTION_ALERT_CONFIG_MARKERS = "loadMarkers";
 
+
+    // Sessions
+    private static final String SESSION_ID_PROVIDER = "alertProviderSession";
     /**
      * Constructor
      *
@@ -138,7 +143,7 @@ public class AlertGruTaskConfigController  {
         HtmlTemplate template = null;
         View view = new View( request );
 
-        if ( _config.getIdSpringProvider( ) == null )
+        if ( _config.getIdSpringProvider( ) == null || _config.getMarkerAlert( ) == null )
         {
             template = view.buildFirstStep( );
         }
@@ -162,6 +167,11 @@ public class AlertGruTaskConfigController  {
         String strErrorUrl = null;
         String strAction = findAction( request );
         Action action = new Action( request, strAction );
+
+        if ( ACTION_ALERT_CONFIG_MARKERS.equals( strAction ) )
+        {
+            strErrorUrl = action.loadMarkers();
+        }
 
         if ( ACTION_FIRST_STEP_SAVE.equals( strAction ) )
         {
@@ -205,8 +215,12 @@ public class AlertGruTaskConfigController  {
      */
     private String findAction( HttpServletRequest request )
     {
-        String strAction = request.getParameter( PARAMETER_APPLY );
-
+        String strAction;
+        if(!StringUtils.isBlank(request.getParameter( PARAMETER_APPLY_MARKER ))){
+            strAction = request.getParameter( PARAMETER_APPLY_MARKER );
+        } else{
+            strAction = request.getParameter( PARAMETER_APPLY );
+        }
         if ( StringUtils.isBlank( strAction ) )
         {
             strAction = ACTION_SECOND_STEP_SAVE;
@@ -249,6 +263,9 @@ public class AlertGruTaskConfigController  {
         {
             fillModelWithConfig( );
             fillModelWithGlobalConfig( );
+            if( _config.getIdSpringProvider() != null ){
+                 manageAlertGruMarkersInModel( );
+            }
 
             return AppTemplateService.getTemplate( TEMPLATE_FIRST_STEP, _request.getLocale( ), _model );
         }
@@ -276,6 +293,8 @@ public class AlertGruTaskConfigController  {
          */
         private void fillModelWithConfig( )
         {
+            if(_request.getSession().getAttribute(SESSION_ID_PROVIDER) != null)
+                _config.setIdSpringProvider((String) _request.getSession().getAttribute(SESSION_ID_PROVIDER));
             _model.put( "config", _config );
         }
 
@@ -355,7 +374,7 @@ public class AlertGruTaskConfigController  {
          */
         private void manageAlertGruMarkersInModel( )
         {
-            String strIdSpringProvider = _config.getIdSpringProvider( );
+            String strIdSpringProvider =  _request.getSession().getAttribute(SESSION_ID_PROVIDER) != null ? (String)_request.getSession().getAttribute(SESSION_ID_PROVIDER): _config.getIdSpringProvider( );
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( strIdSpringProvider );
             String strProviderId = ProviderManagerUtil.fetchProviderId( strIdSpringProvider );
             AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
@@ -450,6 +469,22 @@ public class AlertGruTaskConfigController  {
         }
 
         /**
+         * Load markers from chosen provider
+         *
+         * @return the URL of the error page if there is an error during the action, {@code null} otherwise
+         */
+        private String loadMarkers( )
+        {
+            fillConfigWithGlobalConfig( );
+            putProviderInSession();
+            return null;
+        }
+
+        private void putProviderInSession() {
+            _request.getSession().setAttribute(SESSION_ID_PROVIDER,  _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ));
+        }
+
+        /**
          * Saves the first step of the task configuration
          *
          * @return the URL of the error page if there is an error during the action, {@code null} otherwise
@@ -464,6 +499,7 @@ public class AlertGruTaskConfigController  {
             }
 
             fillConfigWithGlobalConfig( );
+            putProviderInSession();
             saveConfig( );
 
             return null;
@@ -503,11 +539,10 @@ public class AlertGruTaskConfigController  {
             {
                 return strErrorUrl;
             }
-
             fillConfigWithGlobalConfig( );
             fillConfigWithCrmStatus( );
+            putProviderInSession();
             saveConfig( );
-
             return null;
         }
 
@@ -518,6 +553,7 @@ public class AlertGruTaskConfigController  {
          */
         private String cancel( )
         {
+            _request.getSession().removeAttribute(SESSION_ID_PROVIDER);
             return null;
         }
 
@@ -791,6 +827,7 @@ public class AlertGruTaskConfigController  {
             fillConfigWithMarkerProviders( );
             fillConfigWithDemandStatus( );
             fillConfigWithAlertInfos();
+            fillConfigWithMarkerAlert();
         }
 
         /**
@@ -800,6 +837,7 @@ public class AlertGruTaskConfigController  {
         {
             _config.setIdSpringProvider( _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) );
         }
+
 
         /**
          * Fills the configuration with the marker providers
@@ -836,9 +874,19 @@ public class AlertGruTaskConfigController  {
                 _config.setDaysToAlert(StringUtils.isNotBlank( _request.getParameter(Constants.PARAMETER_DAYS_TO_ALERT )) ? Integer.parseInt( _request.getParameter(Constants.PARAMETER_DAYS_TO_ALERT )) : 0);
                 _config.setAlertSubject( _request.getParameter(Constants.PARAMETER_SUBJECT_ALERT ));
                 _config.setIdStateAfter(StringUtils.isNotBlank(_request.getParameter( Constants.PARAMETER_STATE_AFTER)) ? Integer.parseInt(_request.getParameter( Constants.PARAMETER_STATE_AFTER )) : 0);
+                _config.setAlertAfterBefore( _request.getParameter(Constants.PARAMETER_ALERT_AFTER_BEFORE ));
             }
 
             /**
+             * Fills the configuration with the marker
+             */
+            private void fillConfigWithMarkerAlert( )
+            {
+                _config.setMarkerAlert( _request.getParameter( Constants.PARAMETER_MARKER_ALERT ) );
+            }
+
+
+        /**
              * Fills the configuration with the CRM status
              */
             private void fillConfigWithCrmStatus( )

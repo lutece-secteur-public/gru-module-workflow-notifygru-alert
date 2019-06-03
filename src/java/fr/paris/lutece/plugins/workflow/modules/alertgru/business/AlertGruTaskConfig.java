@@ -124,6 +124,12 @@ public class AlertGruTaskConfig extends TaskConfig {
 
     private String _strAlertSubject;
 
+    private String _strMarkerAlert;
+
+    private String _strAlertAfterBefore;
+
+
+
 
     public AlertGruTaskConfig( )
     {
@@ -868,6 +874,19 @@ public class AlertGruTaskConfig extends TaskConfig {
         this._strAlertSubject = _strAlertSubject;
     }
 
+    public String getMarkerAlert() {
+        return _strMarkerAlert;
+    }
 
+    public void setMarkerAlert(String _strMarkerAlert) {
+        this._strMarkerAlert = _strMarkerAlert;
+    }
 
+    public String getAlertAfterBefore() {
+        return _strAlertAfterBefore;
+    }
+
+    public void setAlertAfterBefore(String _strAlertAfterBefore) {
+        this._strAlertAfterBefore = _strAlertAfterBefore;
+    }
 }

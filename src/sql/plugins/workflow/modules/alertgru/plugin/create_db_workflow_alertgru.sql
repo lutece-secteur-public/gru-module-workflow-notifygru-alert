@@ -53,6 +53,8 @@ subject_broadcast VARCHAR(255) DEFAULT   NULL,
   days_to_alert INT DEFAULT  NULL,
   id_state_after INT DEFAULT  NULL,
   alert_subject VARCHAR(255) DEFAULT   NULL,
+  marker_alert VARCHAR(255) DEFAULT   NULL,
+  alert_after_before VARCHAR(50) DEFAULT   NULL,
   PRIMARY KEY  (id_task)
   );
 
