@@ -295,7 +295,7 @@ public class AlertGruTaskConfigController  {
         {
             if(_request.getSession().getAttribute(SESSION_ID_PROVIDER) != null)
                 _config.setIdSpringProvider((String) _request.getSession().getAttribute(SESSION_ID_PROVIDER));
-            _model.put( "config", _config );
+            _model.put( Constants.MARK_CONFIG, _config );
         }
 
         /**

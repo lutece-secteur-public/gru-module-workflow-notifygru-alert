@@ -15,6 +15,7 @@ import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache.AlertGruCacheService;
+import fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
@@ -261,7 +262,7 @@ public class AlertGruTask extends SimpleTask {
             String strRecipientBroadcast = replaceMarkers( config.getEmailBroadcast( ), model );
             if ( StringUtils.isNotEmpty( strRecipientBroadcast ) )
             {
-                listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( ";" ) ) );
+                listRecipientBroadcast.addAll( Arrays.asList( strRecipientBroadcast.split( Constants.SEMICOLON ) ) );
             }
         }
 
@@ -288,8 +289,8 @@ public class AlertGruTask extends SimpleTask {
         broadcastNotification.setRecipient( EmailAddress.buildEmailAddresses( listRecipientBroadcast.toArray( new String [ ] { } ) ) );
         broadcastNotification.setSubject( replaceMarkers( config.getSubjectBroadcast( ), model ) );
         broadcastNotification.setMessage( replaceMarkers( config.getMessageBroadcast( ), model ) );
-        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( strRecipientCcBroadcast.split( ";" ) ) );
-        broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( ";" ) ) );
+        broadcastNotification.setCc( EmailAddress.buildEmailAddresses( strRecipientCcBroadcast.split( Constants.SEMICOLON ) ) );
+        broadcastNotification.setBcc( EmailAddress.buildEmailAddresses( config.getRecipientsCciBroadcast( ).split( Constants.SEMICOLON ) ) );
 
         return broadcastNotification;
     }
@@ -505,7 +506,7 @@ public class AlertGruTask extends SimpleTask {
                                     resourceHistoryState.setAction(_actionService.findByPrimaryKey(actionId));
                                     resourceHistoryState.setWorkFlow(_actionService.findByPrimaryKey(actionId).getWorkflow());
                                     resourceHistoryState.setCreationDate(WorkflowUtils.getCurrentTimestamp());
-                                    resourceHistoryState.setUserAccessCode("auto");
+                                    resourceHistoryState.setUserAccessCode(Constants.USER_AUTO);
                                     _resourceHistoryService.create(resourceHistoryState);
                                     // Update Resource
                                     ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey(idResource,
@@ -550,7 +551,7 @@ public class AlertGruTask extends SimpleTask {
      */
     private Timestamp computeDateAlert(Timestamp dateResource, Map<String,Object> modelMarker,String markerAlert, int daysAlert, String alertAfterBefore ){
         Timestamp dateInit;
-        if(markerAlert.equals("Default")) {
+        if(markerAlert.equals(Constants.MARK_DEFAULT_MARKER)) {
             //dateResource = resourceHistory.getCreationDate();
             dateInit = dateResource;
         } else {
@@ -567,7 +568,7 @@ public class AlertGruTask extends SimpleTask {
         //Date de la ressource + jour configuré en admin
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateInit);
-        if("after".equals(alertAfterBefore)){
+        if(Constants.MARK_ALERT_AFTER.equals(alertAfterBefore)){
             cal.add(Calendar.DAY_OF_WEEK, daysAlert);
         } else {
             cal.roll(Calendar.DAY_OF_WEEK, daysAlert);
