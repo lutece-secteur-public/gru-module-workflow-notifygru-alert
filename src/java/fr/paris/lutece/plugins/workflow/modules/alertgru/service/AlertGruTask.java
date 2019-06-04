@@ -495,7 +495,7 @@ public class AlertGruTask extends SimpleTask {
 
                             if (!bNotifEmpty) {
                                 try {
-                                    //_alertGruSenderService.send(notificationObject);
+                                    _alertGruSenderService.send(notificationObject);
                                     _taskAlertGruHistoryService.create(alertGruHistory, WorkflowUtils.getPlugin());
 
                                     // Create Resource History
