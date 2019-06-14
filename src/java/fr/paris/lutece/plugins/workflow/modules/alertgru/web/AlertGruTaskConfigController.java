@@ -652,21 +652,35 @@ public class AlertGruTaskConfigController  {
          */
         private String validateGlobalConfig( )
         {
-            return validateProviderManagerIsNotNull( );
+            String errUrl;
+            errUrl = validateFieldIsNotNull( Constants.PARAMETER_SUBJECT_ALERT,  Constants.MESSAGE_MANDATORY_SUBJECT );
+            if(StringUtils.isEmpty( errUrl )){
+                errUrl = validateFieldIsNotNull( Constants.PARAMETER_SELECT_PROVIDER,  Constants.MESSAGE_MANDATORY_PROVIDER );
+                if(StringUtils.isEmpty( errUrl )){
+                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_MARKER_ALERT,  Constants.MESSAGE_MANDATORY_MARKER );
+                }
+                if(StringUtils.isEmpty( errUrl )){
+                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_ALERT_AFTER_BEFORE,  Constants.MESSAGE_MANDATORY_ALERT_AFTER );
+                    if(StringUtils.isEmpty( errUrl )){
+                        errUrl = validateFieldIsNotNull( Constants.PARAMETER_STATE_AFTER,  Constants.MESSAGE_MANDATORY_STATE_AFTER );
+                    }
+                }
+            }
+            return errUrl;
         }
 
         /**
-         * Validates that the provider manager is not {@code null}
+         * Validates that the field is not {@code null}
          *
          * @return the URL of the error page if there is a validation error, {@code null} otherwise
          */
-        private String validateProviderManagerIsNotNull( )
+        private String validateFieldIsNotNull(String paramater ,String errMessage )
         {
             String strErrorUrl = null;
 
-            if ( StringUtils.isEmpty( _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) ) )
+            if ( StringUtils.isEmpty( _request.getParameter( paramater ) ) )
             {
-                strErrorUrl = buildUrlForMissingProviderManager( );
+                strErrorUrl = buildUrlForMissingField( errMessage );
             }
 
             return strErrorUrl;
@@ -768,13 +782,13 @@ public class AlertGruTaskConfigController  {
         }
 
         /**
-         * Builds the URL for missing provider manager
+         * Builds the URL for missing field
          *
          * @return the URL
          */
-        private String buildUrlForMissingProviderManager( )
+        private String buildUrlForMissingField(String errMessage)
         {
-            return AdminMessageService.getMessageUrl( _request, Constants.MESSAGE_MANDATORY_PROVIDER, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( _request,errMessage, AdminMessage.TYPE_STOP );
         }
 
         /**

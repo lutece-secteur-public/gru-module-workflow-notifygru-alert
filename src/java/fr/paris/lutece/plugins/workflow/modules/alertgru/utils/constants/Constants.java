@@ -147,6 +147,10 @@ public final class Constants
     // MESSAGES
     public static final String MESSAGE_MANDATORY_ONGLET = "module.workflow.alertgru.message.mandatory.onglet";
     public static final String MESSAGE_MANDATORY_PROVIDER = "module.workflow.alertgru.message.mandatory.provider";
+    public static final String MESSAGE_MANDATORY_MARKER = "module.workflow.alertgru.message.mandatory.marker";
+    public static final String MESSAGE_MANDATORY_SUBJECT = "module.workflow.alertgru.message.mandatory.object";
+    public static final String MESSAGE_MANDATORY_ALERT_AFTER = "module.workflow.alertgru.message.mandatory.after_before";
+    public static final String MESSAGE_MANDATORY_STATE_AFTER = "module.workflow.alertgru.message.mandatory.stateAfter";
     public static final String MESSAGE_EQUAL_FIELD = "module.workflow.alertgru.message.equal.field";
     public static final String MESSAGE_ERROR_VALIDATION = "module.workflow.alertgru.message.error_validation";
     public static final String MESSAGE_ERROR_FREEMARKER = "module.workflow.alertgru.message.error_freemarker";
