@@ -35,7 +35,7 @@ import fr.paris.lutece.plugins.workflowcore.service.state.IStateService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITaskService;
 import fr.paris.lutece.plugins.workflowcore.service.task.SimpleTask;
-import fr.paris.lutece.plugins.workflowcore.service.workflow.IWorkflowService;
+
 import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
@@ -43,6 +43,7 @@ import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.util.html.HtmlTemplate;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -91,9 +92,6 @@ public class AlertGruTask extends SimpleTask {
 
     @Inject
     private IStateService _stateService;
-
-    @Inject
-    IWorkflowService _workflowService;
 
 
     @Inject
@@ -515,7 +513,7 @@ public class AlertGruTask extends SimpleTask {
                                     resourceWorkflow.setState(state);
                                     _resourceWorkflowService.update(resourceWorkflow);
                                     Locale locale = I18nService.getDefaultLocale();
-                                    _workflowService.doProcessAutomaticReflexiveActions(idResource, resourceType, config.getIdStateAfter(), null, locale);
+                                    WorkflowService.getInstance().doProcessAutomaticReflexiveActions(idResource, resourceType, config.getIdStateAfter(), null, locale);
                                 } catch (AppException | NotifyGruException e) {
                                     AppLogService.error("Unable to send the notification");
                                 }
