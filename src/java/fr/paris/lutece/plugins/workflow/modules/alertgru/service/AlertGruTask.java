@@ -569,7 +569,7 @@ public class AlertGruTask extends SimpleTask {
         if(Constants.MARK_ALERT_AFTER.equals(alertAfterBefore)){
             cal.add(Calendar.DAY_OF_WEEK, daysAlert);
         } else {
-            cal.roll(Calendar.DAY_OF_WEEK, daysAlert);
+            cal.add(Calendar.DAY_OF_WEEK, daysAlert * -1);
         }
         return new Timestamp(cal.getTime().getTime());
     }

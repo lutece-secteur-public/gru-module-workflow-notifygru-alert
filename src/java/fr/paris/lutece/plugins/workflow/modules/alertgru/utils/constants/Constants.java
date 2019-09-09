@@ -284,7 +284,7 @@ public final class Constants
     public static final String MARK_NOTIFYGRU_MARKERS = "notifygru_markers";
     public static final String MARK_MESSAGES_ERROR = "errors";
     public static final String MARK_DEFAULT_MARKER = "Default";
-    public static final String MARK_ALERT_AFTER = "Default";
+    public static final String MARK_ALERT_AFTER = "after";
 
     // PROPERTIES
     public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
