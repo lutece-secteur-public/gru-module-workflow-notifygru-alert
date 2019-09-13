@@ -6,7 +6,8 @@
 	|| (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)
 	>
 		<div class="panel">
-		   <span>#i18n{module.workflow.alertgru.task_alert_gru_history.label_information}</span>
+			<div class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.title}</div>
+			<span>#i18n{module.workflow.alertgru.task_alert_gru_history.label_information}</span>
 		   <#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
 		   <a tabindex="0" class="btn btn-primary btn-xs" role="button" data-html="true"  data-toggle="popover" data-trigger="focus" title="${information_history.guichet.subjectGuichet!?html}" data-content="${information_history.guichet.messageGuichet!?html}"> #i18n{module.workflow.alertgru.task_alert_gru_history.label_guichet}
 		   </a>
@@ -30,6 +31,10 @@
 		   #i18n{module.workflow.alertgru.task_alert_gru_history.label_liste}
 		   </a>
 		   </#if>
+		</div>
+	<#else>
+		<div class="panel">
+			<div class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.init}</div>
 		</div>
 	</#if>
 </#if>

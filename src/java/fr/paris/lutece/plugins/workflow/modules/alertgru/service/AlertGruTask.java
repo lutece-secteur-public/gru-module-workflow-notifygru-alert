@@ -438,7 +438,7 @@ public class AlertGruTask extends SimpleTask {
                     if (dateAlert.getTime() <= timestampNow.getTime()) {
                             AlertGruHistory alertGruHistory = new AlertGruHistory();
                             alertGruHistory.setIdTask(task.getId());
-                            alertGruHistory.setIdResourceHistory(nIdResourceHistory);
+                            //alertGruHistory.setIdResourceHistory(nIdResourceHistory);
 
                             Notification notificationObject = buildNotification(config, provider);
                             EmailNotification emailNotification = null;
@@ -495,7 +495,6 @@ public class AlertGruTask extends SimpleTask {
                             if (!bNotifEmpty) {
                                 try {
                                     _alertGruSenderService.send(notificationObject);
-                                    _taskAlertGruHistoryService.create(alertGruHistory, WorkflowUtils.getPlugin());
 
                                     // Create Resource History
                                     ResourceHistory resourceHistoryState = new ResourceHistory();
@@ -506,6 +505,12 @@ public class AlertGruTask extends SimpleTask {
                                     resourceHistoryState.setCreationDate(WorkflowUtils.getCurrentTimestamp());
                                     resourceHistoryState.setUserAccessCode(Constants.USER_AUTO);
                                     _resourceHistoryService.create(resourceHistoryState);
+
+                                    // Create Alert gru History
+                                    alertGruHistory.setIdResourceHistory(resourceHistoryState.getId());
+                                    _taskAlertGruHistoryService.create(alertGruHistory, WorkflowUtils.getPlugin());
+
+
                                     // Update Resource
                                     ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey(idResource,
                                             resourceType, workflowId);
