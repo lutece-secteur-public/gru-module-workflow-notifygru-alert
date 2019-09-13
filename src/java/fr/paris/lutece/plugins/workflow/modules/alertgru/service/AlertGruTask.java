@@ -438,7 +438,6 @@ public class AlertGruTask extends SimpleTask {
                     if (dateAlert.getTime() <= timestampNow.getTime()) {
                             AlertGruHistory alertGruHistory = new AlertGruHistory();
                             alertGruHistory.setIdTask(task.getId());
-                            //alertGruHistory.setIdResourceHistory(nIdResourceHistory);
 
                             Notification notificationObject = buildNotification(config, provider);
                             EmailNotification emailNotification = null;
