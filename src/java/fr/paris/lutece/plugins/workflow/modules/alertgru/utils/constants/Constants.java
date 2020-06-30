@@ -33,6 +33,8 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants;
 
+import fr.paris.lutece.portal.service.util.AppPropertiesService;
+
 /**
  *
  */
@@ -285,9 +287,11 @@ public final class Constants
     public static final String MARK_MESSAGES_ERROR = "errors";
     public static final String MARK_DEFAULT_MARKER = "Default";
     public static final String MARK_ALERT_AFTER = "after";
+    
 
     // PROPERTIES
     public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
+    public static final String PROPERTIE_DATE_FORMAT = AppPropertiesService.getProperty( "workflow-notifygru.dateformat", "dd/MM/yyyy" );
 
     // TAGS
     public static final String TAG_A = "a";
