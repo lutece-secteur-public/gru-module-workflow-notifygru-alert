@@ -577,7 +577,7 @@ public class AlertGruTask extends SimpleTask {
             
         	cal.add(Calendar.DAY_OF_WEEK, daysAlert);
             
-        } else if( timestampNow.after( dateInit ) ) {
+        } else if( dateInit.after( timestampNow ) ) {
         	
             cal.add(Calendar.DAY_OF_WEEK, daysAlert * -1);
             
