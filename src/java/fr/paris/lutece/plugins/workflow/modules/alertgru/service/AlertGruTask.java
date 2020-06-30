@@ -19,7 +19,6 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants.Constan
 import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
-import fr.paris.lutece.plugins.workflowcore.business.action.Action;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceHistory;
 import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceWorkflow;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
@@ -424,7 +423,6 @@ public class AlertGruTask extends SimpleTask {
             if (daysAlert != 0) {
                 if (providerManager != null) {
                     ResourceHistory resourceHistory = _resourceHistoryService.getLastHistoryResource(idResource, resourceType, workflowId);
-                    int nIdResourceHistory = resourceHistory.getId();
                     IProvider provider = providerManager.createProvider(strProviderId, resourceHistory, null);
 
                     if (provider != null) {
@@ -434,8 +432,9 @@ public class AlertGruTask extends SimpleTask {
                     Timestamp timestampNow = new Timestamp(Calendar.getInstance().getTimeInMillis());
 
                     //Resource or State timestamp
-                    Timestamp dateAlert = computeDateAlert(resourceHistory.getCreationDate(),model, markerAlert,  daysAlert, alertAfterBefore);
-                    if (dateAlert.getTime() <= timestampNow.getTime()) {
+                    Timestamp dateAlert = computeDateAlert(resourceHistory.getCreationDate(),model, markerAlert,  daysAlert, alertAfterBefore, timestampNow);
+                    
+                    if (dateAlert != null && dateAlert.getTime() <= timestampNow.getTime()) {
                             AlertGruHistory alertGruHistory = new AlertGruHistory();
                             alertGruHistory.setIdTask(task.getId());
 
@@ -518,6 +517,7 @@ public class AlertGruTask extends SimpleTask {
                                     _resourceWorkflowService.update(resourceWorkflow);
                                     Locale locale = I18nService.getDefaultLocale();
                                     WorkflowService.getInstance().doProcessAutomaticReflexiveActions(idResource, resourceType, config.getIdStateAfter(), null, locale);
+                                    
                                 } catch (AppException | NotifyGruException e) {
                                     AppLogService.error("Unable to send the notification");
                                 }
@@ -551,30 +551,41 @@ public class AlertGruTask extends SimpleTask {
      *            the direction : after or before
      * @return the Timestamp date
      */
-    private Timestamp computeDateAlert(Timestamp dateResource, Map<String,Object> modelMarker,String markerAlert, int daysAlert, String alertAfterBefore ){
-        Timestamp dateInit;
+    private Timestamp computeDateAlert(Timestamp dateResource, Map<String,Object> modelMarker,String markerAlert, int daysAlert, String alertAfterBefore , Timestamp timestampNow){
+       
+    	Timestamp dateInit;
         if(markerAlert.equals(Constants.MARK_DEFAULT_MARKER)) {
-            //dateResource = resourceHistory.getCreationDate();
             dateInit = dateResource;
         } else {
-            SimpleDateFormat dateFormat_tmp = new SimpleDateFormat(
-                    "dd/MM/yyyy");
-            Date date_tmp = null;
+            SimpleDateFormat dateFormatTmp = new SimpleDateFormat( Constants.PROPERTIE_DATE_FORMAT );
+            Date dateTmp = null;
             try {
-                date_tmp = dateFormat_tmp.parse(String.valueOf(modelMarker.get(markerAlert)));
+            	
+                dateTmp = dateFormatTmp.parse(String.valueOf(modelMarker.get(markerAlert)));
+            
             } catch (ParseException e) {
-                AppLogService.info("Marker " + markerAlert + " : Unable to parse date.");
+            	
+                AppLogService.error("Marker " + markerAlert + " : Unable to parse date.");
+                return null;
             }
-            dateInit =  new Timestamp(date_tmp.getTime());
+            dateInit =  new Timestamp(dateTmp.getTime());
         }
-        //Date de la ressource + jour configuré en admin
+        //Resource date + day configured in admin
         Calendar cal = Calendar.getInstance();
         cal.setTime(dateInit);
         if(Constants.MARK_ALERT_AFTER.equals(alertAfterBefore)){
-            cal.add(Calendar.DAY_OF_WEEK, daysAlert);
-        } else {
+            
+        	cal.add(Calendar.DAY_OF_WEEK, daysAlert);
+            
+        } else if( timestampNow.after( dateInit ) ) {
+        	
             cal.add(Calendar.DAY_OF_WEEK, daysAlert * -1);
+            
+        } else {
+        	
+        	return null;
         }
-        return new Timestamp(cal.getTime().getTime());
+        
+                 return new Timestamp(cal.getTime().getTime());
     }
 }
