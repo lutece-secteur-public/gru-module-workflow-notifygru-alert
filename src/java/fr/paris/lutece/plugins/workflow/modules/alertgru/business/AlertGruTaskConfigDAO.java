@@ -34,16 +34,12 @@
 package fr.paris.lutece.plugins.workflow.modules.alertgru.business;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruPlugin;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruService;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache.AlertGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache.AlertGruCacheService;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.util.sql.DAOUtil;
-import static java.lang.Boolean.FALSE;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
@@ -85,15 +81,12 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     @Override
     public void insert( AlertGruTaskConfig config )
     {
-
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( config.getIdTask( ) );
-
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_NOTIF, AlertGruPlugin.getPlugin( ) );
-
-        configToData( config, daoUtil );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
-
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_NOTIF, AlertGruPlugin.getPlugin( ) ) )
+        {
+            configToData( config, daoUtil );
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
@@ -106,14 +99,13 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     {
         // remove cache
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( alertGruTaskConfig.getIdTask( ) );
-
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertGruPlugin.getPlugin( ) );
-
-        int nPos = configToData( alertGruTaskConfig, daoUtil );
-
-        daoUtil.setInt( ++nPos, alertGruTaskConfig.getIdTask( ) );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertGruPlugin.getPlugin( ) ) )
+        {
+            int nPos = configToData( alertGruTaskConfig, daoUtil );
+    
+            daoUtil.setInt( ++nPos, alertGruTaskConfig.getIdTask( ) );
+            daoUtil.executeUpdate( );
+        }
 
     }
 
@@ -127,77 +119,73 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     public AlertGruTaskConfig load( int nIdTask )
     {
         AlertGruTaskConfig config = null;
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, AlertGruPlugin.getPlugin( ) );
-
-        daoUtil.setInt( 1, nIdTask );
-
-        daoUtil.executeQuery( );
-
-        int nPos = 0;
-
-        if ( daoUtil.next( ) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_FIND_BY_PRIMARY_KEY, AlertGruPlugin.getPlugin( ) ) )
         {
-            config = new AlertGruTaskConfig( );
-            config.setIdTask( daoUtil.getInt( ++nPos ) );
-
-            config.setIdSpringProvider( daoUtil.getString( ++nPos ) );
-
-            String strMarkerProviderIds = daoUtil.getString( ++nPos );
-            List<String> listMarkerProviderIds = new ArrayList<>( );
-
-            if ( !StringUtils.isBlank( strMarkerProviderIds ) )
+            daoUtil.setInt( 1, nIdTask );
+            daoUtil.executeQuery( );
+    
+            if ( daoUtil.next( ) )
             {
-                Collections.addAll( listMarkerProviderIds, StringUtils.split( strMarkerProviderIds, ',' ) );
+                int nPos = 0;
+                config = new AlertGruTaskConfig( );
+                config.setIdTask( daoUtil.getInt( ++nPos ) );
+    
+                config.setIdSpringProvider( daoUtil.getString( ++nPos ) );
+    
+                String strMarkerProviderIds = daoUtil.getString( ++nPos );
+                List<String> listMarkerProviderIds = new ArrayList<>( );
+    
+                if ( !StringUtils.isBlank( strMarkerProviderIds ) )
+                {
+                    Collections.addAll( listMarkerProviderIds, StringUtils.split( strMarkerProviderIds, ',' ) );
+                }
+    
+                config.setMarkerProviders( listMarkerProviderIds );
+    
+                config.setDemandStatus( daoUtil.getInt( ++nPos ) );
+                config.setCrmStatusId( daoUtil.getInt( ++nPos ) );
+                config.setSetOnglet( daoUtil.getInt( ++nPos ) );
+    
+                config.setMessageGuichet( daoUtil.getString( ++nPos ) );
+                config.setStatustextGuichet( daoUtil.getString( ++nPos ) );
+                config.setSenderNameGuichet( daoUtil.getString( ++nPos ) );
+                config.setSubjectGuichet( daoUtil.getString( ++nPos ) );
+                config.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
+                config.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
+                config.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
+    
+                config.setStatustextAgent( daoUtil.getString( ++nPos ) );
+                config.setMessageAgent( daoUtil.getString( ++nPos ) );
+                config.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
+    
+                config.setSubjectEmail( daoUtil.getString( ++nPos ) );
+                config.setMessageEmail( daoUtil.getString( ++nPos ) );
+                config.setSenderNameEmail( daoUtil.getString( ++nPos ) );
+                config.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
+                config.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
+                config.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
+    
+                config.setMessageSMS( daoUtil.getString( ++nPos ) );
+                config.setBillingAccountSMS( daoUtil.getString( ++nPos ) );
+                config.setBillingGroupSMS( daoUtil.getString( ++nPos ) );
+                config.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
+    
+                config.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
+                config.setEmailBroadcast( daoUtil.getString( ++nPos ) );
+                config.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
+                config.setSubjectBroadcast( daoUtil.getString( ++nPos ) );
+                config.setMessageBroadcast( daoUtil.getString( ++nPos ) );
+                config.setRecipientsCcBroadcast( daoUtil.getString( ++nPos ) );
+                config.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
+                config.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
+    
+                config.setDaysToAlert( daoUtil.getInt( ++nPos ) );
+                config.setIdStateAfter( daoUtil.getInt( ++nPos ) );
+                config.setAlertSubject( daoUtil.getString( ++nPos ) );
+                config.setMarkerAlert( daoUtil.getString( ++nPos ) );
+                config.setAlertAfterBefore( daoUtil.getString( ++nPos ) );
             }
-
-            config.setMarkerProviders( listMarkerProviderIds );
-
-            config.setDemandStatus( daoUtil.getInt( ++nPos ) );
-            config.setCrmStatusId( daoUtil.getInt( ++nPos ) );
-            config.setSetOnglet( daoUtil.getInt( ++nPos ) );
-
-            config.setMessageGuichet( daoUtil.getString( ++nPos ) );
-            config.setStatustextGuichet( daoUtil.getString( ++nPos ) );
-            config.setSenderNameGuichet( daoUtil.getString( ++nPos ) );
-            config.setSubjectGuichet( daoUtil.getString( ++nPos ) );
-            config.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
-            config.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
-            config.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
-
-            config.setStatustextAgent( daoUtil.getString( ++nPos ) );
-            config.setMessageAgent( daoUtil.getString( ++nPos ) );
-            config.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
-
-            config.setSubjectEmail( daoUtil.getString( ++nPos ) );
-            config.setMessageEmail( daoUtil.getString( ++nPos ) );
-            config.setSenderNameEmail( daoUtil.getString( ++nPos ) );
-            config.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
-            config.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
-            config.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
-
-            config.setMessageSMS( daoUtil.getString( ++nPos ) );
-            config.setBillingAccountSMS( daoUtil.getString( ++nPos ) );
-            config.setBillingGroupSMS( daoUtil.getString( ++nPos ) );
-            config.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
-
-            config.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
-            config.setEmailBroadcast( daoUtil.getString( ++nPos ) );
-            config.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
-            config.setSubjectBroadcast( daoUtil.getString( ++nPos ) );
-            config.setMessageBroadcast( daoUtil.getString( ++nPos ) );
-            config.setRecipientsCcBroadcast( daoUtil.getString( ++nPos ) );
-            config.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
-            config.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
-
-            config.setDaysToAlert( daoUtil.getInt( ++nPos ) );
-            config.setIdStateAfter( daoUtil.getInt( ++nPos ) );
-            config.setAlertSubject( daoUtil.getString( ++nPos ) );
-            config.setMarkerAlert( daoUtil.getString( ++nPos ) );
-            config.setAlertAfterBefore( daoUtil.getString( ++nPos ) );
         }
-
-        daoUtil.free( );
-
         return config;
     }
 
@@ -206,12 +194,11 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     {
         // remove cache
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( i );
-
-        DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, AlertGruPlugin.getPlugin( ) );
-
-        daoUtil.setInt( 1, i );
-        daoUtil.executeUpdate( );
-        daoUtil.free( );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, AlertGruPlugin.getPlugin( ) ) )
+        {
+            daoUtil.setInt( 1, i );
+            daoUtil.executeUpdate( );
+        }
 
     }
 

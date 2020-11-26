@@ -283,7 +283,7 @@ public class AlertGruTaskConfigController
         private View( HttpServletRequest request )
         {
             _request = request;
-            _model = new HashMap<String, Object>( );
+            _model = new HashMap<>( );
 
             _listAlertConfig = initAlertConfigs( request );
         }
@@ -329,7 +329,9 @@ public class AlertGruTaskConfigController
         private void fillModelWithConfig( )
         {
             if ( _request.getSession( ).getAttribute( SESSION_ID_PROVIDER ) != null )
+            {
                 _config.setIdSpringProvider( (String) _request.getSession( ).getAttribute( SESSION_ID_PROVIDER ) );
+            }
             _model.put( Constants.MARK_CONFIG, _config );
         }
 

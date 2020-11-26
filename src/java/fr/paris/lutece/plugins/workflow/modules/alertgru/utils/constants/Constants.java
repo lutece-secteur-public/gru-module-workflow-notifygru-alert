@@ -129,7 +129,7 @@ public final class Constants
     public static final String ID = "id";
     public static final String NAME = "name";
     public static final String USER_AUTO = "auto";
-    public static final String task_alert_gru_KEY = "taskNotifyGru";
+    public static final String TASK_ALERT_GRU_KEY = "taskNotifyGru";
 
     // TITLE
     public static final String TITLE_NOTIFY = "module.workflow.alertgru.task_alert_title";

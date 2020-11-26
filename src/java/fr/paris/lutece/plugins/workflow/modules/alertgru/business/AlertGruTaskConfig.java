@@ -163,8 +163,7 @@ public class AlertGruTaskConfig extends TaskConfig
 
     public AlertGruTaskConfig( )
     {
-        _bBillingAccountBasedSmsNotification = _bBillingAccountBasedSmsNotification = AppPropertiesService
-                .getPropertyBoolean( "workflow-notifygru.sms.billingAccountNeeded", false );
+        _bBillingAccountBasedSmsNotification = AppPropertiesService.getPropertyBoolean( "workflow-notifygru.sms.billingAccountNeeded", false );
     }
 
     /**
@@ -884,9 +883,9 @@ public class AlertGruTaskConfig extends TaskConfig
         return _nDaysToAlert;
     }
 
-    public void setDaysToAlert( int _nDaysToAlert )
+    public void setDaysToAlert( int nDaysToAlert )
     {
-        this._nDaysToAlert = _nDaysToAlert;
+        this._nDaysToAlert = nDaysToAlert;
     }
 
     public int getIdStateAfter( )
@@ -894,9 +893,9 @@ public class AlertGruTaskConfig extends TaskConfig
         return _nIdStateAfter;
     }
 
-    public void setIdStateAfter( int _nIdStateAfter )
+    public void setIdStateAfter( int nIdStateAfter )
     {
-        this._nIdStateAfter = _nIdStateAfter;
+        this._nIdStateAfter = nIdStateAfter;
     }
 
     public String getAlertSubject( )
@@ -904,9 +903,9 @@ public class AlertGruTaskConfig extends TaskConfig
         return _strAlertSubject;
     }
 
-    public void setAlertSubject( String _strAlertSubject )
+    public void setAlertSubject( String strAlertSubject )
     {
-        this._strAlertSubject = _strAlertSubject;
+        this._strAlertSubject = strAlertSubject;
     }
 
     public String getMarkerAlert( )
@@ -914,9 +913,9 @@ public class AlertGruTaskConfig extends TaskConfig
         return _strMarkerAlert;
     }
 
-    public void setMarkerAlert( String _strMarkerAlert )
+    public void setMarkerAlert( String strMarkerAlert )
     {
-        this._strMarkerAlert = _strMarkerAlert;
+        this._strMarkerAlert = strMarkerAlert;
     }
 
     public String getAlertAfterBefore( )
@@ -924,8 +923,8 @@ public class AlertGruTaskConfig extends TaskConfig
         return _strAlertAfterBefore;
     }
 
-    public void setAlertAfterBefore( String _strAlertAfterBefore )
+    public void setAlertAfterBefore( String strAlertAfterBefore )
     {
-        this._strAlertAfterBefore = _strAlertAfterBefore;
+        this._strAlertAfterBefore = strAlertAfterBefore;
     }
 }

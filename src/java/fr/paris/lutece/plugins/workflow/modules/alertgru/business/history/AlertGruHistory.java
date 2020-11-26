@@ -33,12 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.business.history;
 
-import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.BroadcastHistory;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.EmailHistory;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.GuichetHistory;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.SMSHistory;
-import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AgentHistory;
-
 /**
  * This is the business class for the object AlertGruHistory
  */

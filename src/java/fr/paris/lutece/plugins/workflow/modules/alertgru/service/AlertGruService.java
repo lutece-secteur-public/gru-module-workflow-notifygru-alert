@@ -114,9 +114,7 @@ public final class AlertGruService implements IAlertGruService
     @Override
     public List<FileAttachment> getFilesAttachment( AlertGruTaskConfig config, int nIdRecord, int nIdDirectory )
     {
-        List<FileAttachment> listFileAttachment = null;
-
-        return listFileAttachment;
+        return null;
     }
 
     // OTHERS

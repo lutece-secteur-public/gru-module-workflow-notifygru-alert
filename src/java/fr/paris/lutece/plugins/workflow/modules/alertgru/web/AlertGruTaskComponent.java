@@ -83,7 +83,7 @@ public class AlertGruTaskComponent extends NoFormTaskComponent
     {
         AlertGruHistory alertGruTaskHistory = _taskAlertGruHistoryService.findByPrimaryKey( nIdHistory, iTask.getId( ), WorkflowUtils.getPlugin( ) );
 
-        Map<String, Object> model = new HashMap<String, Object>( );
+        Map<String, Object> model = new HashMap<>( );
         AlertGruTaskConfig config = _taskAlertGruConfigService.findByPrimaryKey( iTask.getId( ) );
         model.put( MARK_CONFIG, config );
         model.put( MARK_ALERT_HISTORY, alertGruTaskHistory );
