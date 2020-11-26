@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <parent>
         <artifactId>lutece-global-pom</artifactId>
@@ -12,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-workflow-notifygru-alert</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.3</version>
     <name>Lutece module workflow notigygru alert</name>
 
     <repositories>
@@ -55,12 +53,12 @@
         <componentName>Module Workflow Notify GRU Alert</componentName>
         <jiraProjectName>MWNGA</jiraProjectName>
         <jiraComponentId>15367</jiraComponentId>
-        <sonar.tests></sonar.tests>
+        <sonar.tests />
     </properties>
     <scm>
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</url>
-        <tag>HEAD</tag>
+        <tag>gru-module-workflow-notifygru-alert-1.0.3</tag>
     </scm>
 </project>
