@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2002-2020, City of Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.web;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
@@ -39,7 +72,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
-public class AlertGruTaskConfigController  {
+public class AlertGruTaskConfigController
+{
 
     // Templates
     private static final String TEMPLATE_FIRST_STEP = "admin/plugins/workflow/modules/alertgru/task_alert_gru_config_first_step.html";
@@ -55,7 +89,6 @@ public class AlertGruTaskConfigController  {
     // Services
     private static final ITaskConfigService _taskAlertGruConfigService = SpringContextService.getBean( AlertGruTaskConfigService.BEAN_SERVICE );
     private static final IAlertGruService _alertGruService = SpringContextService.getBean( AlertGruService.BEAN_SERVICE );
-
 
     private final ITask _task;
     private AlertGruTaskConfig _config;
@@ -73,9 +106,9 @@ public class AlertGruTaskConfigController  {
     private static final String ACTION_ALERT_CONFIG_REMOVE_PREFIX = "RemoveAlertConfig_";
     private static final String ACTION_ALERT_CONFIG_MARKERS = "loadMarkers";
 
-
     // Sessions
     private static final String SESSION_ID_PROVIDER = "alertProviderSession";
+
     /**
      * Constructor
      *
@@ -94,12 +127,12 @@ public class AlertGruTaskConfigController  {
      */
     private void findConfig( )
     {
-      _config = _taskAlertGruConfigService.findByPrimaryKey( _task.getId( ) );
+        _config = _taskAlertGruConfigService.findByPrimaryKey( _task.getId( ) );
 
         if ( _config == null )
         {
             // no config stored yet for this task, setting a empty one
-            _config = new AlertGruTaskConfig();
+            _config = new AlertGruTaskConfig( );
         }
     }
 
@@ -110,7 +143,7 @@ public class AlertGruTaskConfigController  {
      *            the request used to initialize the configurations
      * @return the list of configurations
      */
-    private List<IAlertConfig> initAlertConfigs(HttpServletRequest request )
+    private List<IAlertConfig> initAlertConfigs( HttpServletRequest request )
     {
         List<IAlertConfig> listAlertConfig = new ArrayList<>( );
 
@@ -129,7 +162,6 @@ public class AlertGruTaskConfigController  {
 
         return listAlertConfig;
     }
-
 
     /**
      * Builds the view depending on the specified request and locale
@@ -170,7 +202,7 @@ public class AlertGruTaskConfigController  {
 
         if ( ACTION_ALERT_CONFIG_MARKERS.equals( strAction ) )
         {
-            strErrorUrl = action.loadMarkers();
+            strErrorUrl = action.loadMarkers( );
         }
 
         if ( ACTION_FIRST_STEP_SAVE.equals( strAction ) )
@@ -216,9 +248,12 @@ public class AlertGruTaskConfigController  {
     private String findAction( HttpServletRequest request )
     {
         String strAction;
-        if(!StringUtils.isBlank(request.getParameter( PARAMETER_APPLY_MARKER ))){
+        if ( !StringUtils.isBlank( request.getParameter( PARAMETER_APPLY_MARKER ) ) )
+        {
             strAction = request.getParameter( PARAMETER_APPLY_MARKER );
-        } else{
+        }
+        else
+        {
             strAction = request.getParameter( PARAMETER_APPLY );
         }
         if ( StringUtils.isBlank( strAction ) )
@@ -228,7 +263,6 @@ public class AlertGruTaskConfigController  {
 
         return strAction;
     }
-
 
     /**
      * This class represents a view of the task configuration
@@ -263,8 +297,9 @@ public class AlertGruTaskConfigController  {
         {
             fillModelWithConfig( );
             fillModelWithGlobalConfig( );
-            if( _config.getIdSpringProvider() != null ){
-                 manageAlertGruMarkersInModel( );
+            if ( _config.getIdSpringProvider( ) != null )
+            {
+                manageAlertGruMarkersInModel( );
             }
 
             return AppTemplateService.getTemplate( TEMPLATE_FIRST_STEP, _request.getLocale( ), _model );
@@ -293,8 +328,8 @@ public class AlertGruTaskConfigController  {
          */
         private void fillModelWithConfig( )
         {
-            if(_request.getSession().getAttribute(SESSION_ID_PROVIDER) != null)
-                _config.setIdSpringProvider((String) _request.getSession().getAttribute(SESSION_ID_PROVIDER));
+            if ( _request.getSession( ).getAttribute( SESSION_ID_PROVIDER ) != null )
+                _config.setIdSpringProvider( (String) _request.getSession( ).getAttribute( SESSION_ID_PROVIDER ) );
             _model.put( Constants.MARK_CONFIG, _config );
         }
 
@@ -312,8 +347,7 @@ public class AlertGruTaskConfigController  {
          */
         private void fillModelWithAlertConfigs( )
         {
-            ReferenceList listAlertConfig = ServiceConfigTaskForm.buildReferenceListOfInactiveAlertConfigs( _listAlertConfig,
-                    _request.getLocale( ) );
+            ReferenceList listAlertConfig = ServiceConfigTaskForm.buildReferenceListOfInactiveAlertConfigs( _listAlertConfig, _request.getLocale( ) );
 
             _model.put( MARK_LIST_ALERT_CONFIG, listAlertConfig );
         }
@@ -325,7 +359,7 @@ public class AlertGruTaskConfigController  {
         {
             fillModelWithProviders( );
             fillModelWithMarkerProviders( );
-            fillModelWithAlertInfos();
+            fillModelWithAlertInfos( );
         }
 
         /**
@@ -362,10 +396,9 @@ public class AlertGruTaskConfigController  {
             _model.put( Constants.MARK_DEFAULT_SENDER_NAME, strDefaultSenderName );
         }
 
-
-        private void  fillModelWithAlertInfos( )
+        private void fillModelWithAlertInfos( )
         {
-            _model.put( Constants.MARK_STATE_LIST, _alertGruService.getListStates( _task.getAction( ).getId()) );
+            _model.put( Constants.MARK_STATE_LIST, _alertGruService.getListStates( _task.getAction( ).getId( ) ) );
 
         }
 
@@ -374,7 +407,9 @@ public class AlertGruTaskConfigController  {
          */
         private void manageAlertGruMarkersInModel( )
         {
-            String strIdSpringProvider =  _request.getSession().getAttribute(SESSION_ID_PROVIDER) != null ? (String)_request.getSession().getAttribute(SESSION_ID_PROVIDER): _config.getIdSpringProvider( );
+            String strIdSpringProvider = _request.getSession( ).getAttribute( SESSION_ID_PROVIDER ) != null
+                    ? (String) _request.getSession( ).getAttribute( SESSION_ID_PROVIDER )
+                    : _config.getIdSpringProvider( );
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( strIdSpringProvider );
             String strProviderId = ProviderManagerUtil.fetchProviderId( strIdSpringProvider );
             AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
@@ -402,7 +437,7 @@ public class AlertGruTaskConfigController  {
          *            the list of marker provider ids
          * @return the AlertGru markers
          */
-        private Collection<InfoMarker> findMarkers(AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
+        private Collection<InfoMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
         {
             Collection<InfoMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
 
@@ -420,12 +455,6 @@ public class AlertGruTaskConfigController  {
         }
 
     }
-
-
-
-
-
-
 
     /**
      * This class represents an action in the task configuration
@@ -476,12 +505,13 @@ public class AlertGruTaskConfigController  {
         private String loadMarkers( )
         {
             fillConfigWithGlobalConfig( );
-            putProviderInSession();
+            putProviderInSession( );
             return null;
         }
 
-        private void putProviderInSession() {
-            _request.getSession().setAttribute(SESSION_ID_PROVIDER,  _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ));
+        private void putProviderInSession( )
+        {
+            _request.getSession( ).setAttribute( SESSION_ID_PROVIDER, _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) );
         }
 
         /**
@@ -499,7 +529,7 @@ public class AlertGruTaskConfigController  {
             }
 
             fillConfigWithGlobalConfig( );
-            putProviderInSession();
+            putProviderInSession( );
             saveConfig( );
 
             return null;
@@ -541,7 +571,7 @@ public class AlertGruTaskConfigController  {
             }
             fillConfigWithGlobalConfig( );
             fillConfigWithCrmStatus( );
-            putProviderInSession();
+            putProviderInSession( );
             saveConfig( );
             return null;
         }
@@ -553,7 +583,7 @@ public class AlertGruTaskConfigController  {
          */
         private String cancel( )
         {
-            _request.getSession().removeAttribute(SESSION_ID_PROVIDER);
+            _request.getSession( ).removeAttribute( SESSION_ID_PROVIDER );
             return null;
         }
 
@@ -653,16 +683,20 @@ public class AlertGruTaskConfigController  {
         private String validateGlobalConfig( )
         {
             String errUrl;
-            errUrl = validateFieldIsNotNull( Constants.PARAMETER_SUBJECT_ALERT,  Constants.MESSAGE_MANDATORY_SUBJECT );
-            if(StringUtils.isEmpty( errUrl )){
-                errUrl = validateFieldIsNotNull( Constants.PARAMETER_SELECT_PROVIDER,  Constants.MESSAGE_MANDATORY_PROVIDER );
-                if(StringUtils.isEmpty( errUrl )){
-                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_MARKER_ALERT,  Constants.MESSAGE_MANDATORY_MARKER );
+            errUrl = validateFieldIsNotNull( Constants.PARAMETER_SUBJECT_ALERT, Constants.MESSAGE_MANDATORY_SUBJECT );
+            if ( StringUtils.isEmpty( errUrl ) )
+            {
+                errUrl = validateFieldIsNotNull( Constants.PARAMETER_SELECT_PROVIDER, Constants.MESSAGE_MANDATORY_PROVIDER );
+                if ( StringUtils.isEmpty( errUrl ) )
+                {
+                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_MARKER_ALERT, Constants.MESSAGE_MANDATORY_MARKER );
                 }
-                if(StringUtils.isEmpty( errUrl )){
-                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_ALERT_AFTER_BEFORE,  Constants.MESSAGE_MANDATORY_ALERT_AFTER );
-                    if(StringUtils.isEmpty( errUrl )){
-                        errUrl = validateFieldIsNotNull( Constants.PARAMETER_STATE_AFTER,  Constants.MESSAGE_MANDATORY_STATE_AFTER );
+                if ( StringUtils.isEmpty( errUrl ) )
+                {
+                    errUrl = validateFieldIsNotNull( Constants.PARAMETER_ALERT_AFTER_BEFORE, Constants.MESSAGE_MANDATORY_ALERT_AFTER );
+                    if ( StringUtils.isEmpty( errUrl ) )
+                    {
+                        errUrl = validateFieldIsNotNull( Constants.PARAMETER_STATE_AFTER, Constants.MESSAGE_MANDATORY_STATE_AFTER );
                     }
                 }
             }
@@ -674,7 +708,7 @@ public class AlertGruTaskConfigController  {
          *
          * @return the URL of the error page if there is a validation error, {@code null} otherwise
          */
-        private String validateFieldIsNotNull(String paramater ,String errMessage )
+        private String validateFieldIsNotNull( String paramater, String errMessage )
         {
             String strErrorUrl = null;
 
@@ -786,9 +820,9 @@ public class AlertGruTaskConfigController  {
          *
          * @return the URL
          */
-        private String buildUrlForMissingField(String errMessage)
+        private String buildUrlForMissingField( String errMessage )
         {
-            return AdminMessageService.getMessageUrl( _request,errMessage, AdminMessage.TYPE_STOP );
+            return AdminMessageService.getMessageUrl( _request, errMessage, AdminMessage.TYPE_STOP );
         }
 
         /**
@@ -840,8 +874,8 @@ public class AlertGruTaskConfigController  {
             fillConfigWithProvider( );
             fillConfigWithMarkerProviders( );
             fillConfigWithDemandStatus( );
-            fillConfigWithAlertInfos();
-            fillConfigWithMarkerAlert();
+            fillConfigWithAlertInfos( );
+            fillConfigWithMarkerAlert( );
         }
 
         /**
@@ -851,7 +885,6 @@ public class AlertGruTaskConfigController  {
         {
             _config.setIdSpringProvider( _request.getParameter( Constants.PARAMETER_SELECT_PROVIDER ) );
         }
-
 
         /**
          * Fills the configuration with the marker providers
@@ -870,93 +903,97 @@ public class AlertGruTaskConfigController  {
             }
         }
 
-            /**
-            * Fills the configuration with the demand status
-            */
-            private void fillConfigWithDemandStatus( )
-            {
-                 int nDemandStatus = ( VALUE_CHECKBOX.equals( _request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
+        /**
+         * Fills the configuration with the demand status
+         */
+        private void fillConfigWithDemandStatus( )
+        {
+            int nDemandStatus = ( VALUE_CHECKBOX.equals( _request.getParameter( Constants.PARAMETER_DEMAND_STATUS ) ) ) ? 1 : 0;
 
-                _config.setDemandStatus( nDemandStatus );
-            }
-
-            /**
-             * Fills the configuration with alert information
-             */
-            private void fillConfigWithAlertInfos( )
-            {
-                _config.setDaysToAlert(StringUtils.isNotBlank( _request.getParameter(Constants.PARAMETER_DAYS_TO_ALERT )) ? Integer.parseInt( _request.getParameter(Constants.PARAMETER_DAYS_TO_ALERT )) : 0);
-                _config.setAlertSubject( _request.getParameter(Constants.PARAMETER_SUBJECT_ALERT ));
-                _config.setIdStateAfter(StringUtils.isNotBlank(_request.getParameter( Constants.PARAMETER_STATE_AFTER)) ? Integer.parseInt(_request.getParameter( Constants.PARAMETER_STATE_AFTER )) : 0);
-                _config.setAlertAfterBefore( _request.getParameter(Constants.PARAMETER_ALERT_AFTER_BEFORE ));
-            }
-
-            /**
-             * Fills the configuration with the marker
-             */
-            private void fillConfigWithMarkerAlert( )
-            {
-                _config.setMarkerAlert( _request.getParameter( Constants.PARAMETER_MARKER_ALERT ) );
-            }
-
+            _config.setDemandStatus( nDemandStatus );
+        }
 
         /**
-             * Fills the configuration with the CRM status
-             */
-            private void fillConfigWithCrmStatus( )
-            {
-                String strCrmStatusId = _request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
-                int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) ) ? Integer
-                        .parseInt( strCrmStatusId ) : 1;
+         * Fills the configuration with alert information
+         */
+        private void fillConfigWithAlertInfos( )
+        {
+            _config.setDaysToAlert( StringUtils.isNotBlank( _request.getParameter( Constants.PARAMETER_DAYS_TO_ALERT ) )
+                    ? Integer.parseInt( _request.getParameter( Constants.PARAMETER_DAYS_TO_ALERT ) )
+                    : 0 );
+            _config.setAlertSubject( _request.getParameter( Constants.PARAMETER_SUBJECT_ALERT ) );
+            _config.setIdStateAfter( StringUtils.isNotBlank( _request.getParameter( Constants.PARAMETER_STATE_AFTER ) )
+                    ? Integer.parseInt( _request.getParameter( Constants.PARAMETER_STATE_AFTER ) )
+                    : 0 );
+            _config.setAlertAfterBefore( _request.getParameter( Constants.PARAMETER_ALERT_AFTER_BEFORE ) );
+        }
 
-                _config.setCrmStatusId( nCrmStatusId );
+        /**
+         * Fills the configuration with the marker
+         */
+        private void fillConfigWithMarkerAlert( )
+        {
+            _config.setMarkerAlert( _request.getParameter( Constants.PARAMETER_MARKER_ALERT ) );
+        }
+
+        /**
+         * Fills the configuration with the CRM status
+         */
+        private void fillConfigWithCrmStatus( )
+        {
+            String strCrmStatusId = _request.getParameter( Constants.PARAMETER_CRM_STATUS_ID );
+            int nCrmStatusId = ( ( StringUtils.equals( strCrmStatusId, "1" ) ) || ( StringUtils.equals( strCrmStatusId, "0" ) ) )
+                    ? Integer.parseInt( strCrmStatusId )
+                    : 1;
+
+            _config.setCrmStatusId( nCrmStatusId );
+        }
+
+        /**
+         * Fills the configuration with the current alert configuration
+         *
+         * @param alertConfig
+         *            the current alert configuration
+         */
+        private void fillConfigWithCurrentAlertConfig( IAlertConfig alertConfig )
+        {
+            int nCurrentTabIndex = ServiceConfigTaskForm.getTabIndex( alertConfig.getName( ) );
+            _config.setSetOnglet( nCurrentTabIndex );
+        }
+
+        /**
+         * Saves the alert configurations
+         */
+        private void saveAlertConfigs( )
+        {
+            for ( IAlertConfig alertConfig : filterActiveAlertConfigs( ) )
+            {
+                alertConfig.addConfig( );
+            }
+        }
+
+        /**
+         * Saves the configuration of the task
+         */
+        private void saveConfig( )
+        {
+            boolean bCreate = false;
+
+            if ( _config.getIdTask( ) == 0 )
+            {
+                _config.setIdTask( _task.getId( ) );
+                bCreate = true;
             }
 
-            /**
-             * Fills the configuration with the current alert configuration
-             *
-             * @param alertConfig
-             *            the current alert configuration
-             */
-            private void fillConfigWithCurrentAlertConfig( IAlertConfig alertConfig )
+            if ( bCreate )
             {
-                int nCurrentTabIndex = ServiceConfigTaskForm.getTabIndex( alertConfig.getName( ) );
-                _config.setSetOnglet( nCurrentTabIndex );
+                _taskAlertGruConfigService.create( _config );
             }
-
-            /**
-             * Saves the alert configurations
-             */
-            private void saveAlertConfigs( )
+            else
             {
-                for ( IAlertConfig alertConfig : filterActiveAlertConfigs( ) )
-                {
-                    alertConfig.addConfig( );
-                }
+                _taskAlertGruConfigService.update( _config );
             }
-
-            /**
-             * Saves the configuration of the task
-             */
-            private void saveConfig( )
-            {
-                boolean bCreate = false;
-
-                if ( _config.getIdTask( ) == 0 )
-                {
-                    _config.setIdTask( _task.getId( ) );
-                    bCreate = true;
-                }
-
-                if ( bCreate )
-                {
-                    _taskAlertGruConfigService.create( _config );
-                }
-                else
-                {
-                    _taskAlertGruConfigService.update( _config );
-                }
-            }
+        }
     }
 
 }

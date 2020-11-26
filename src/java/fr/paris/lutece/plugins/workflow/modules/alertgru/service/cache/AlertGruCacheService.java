@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -95,7 +95,7 @@ public final class AlertGruCacheService extends AbstractCacheableService
      *            the nid task
      * @return the notify gru config from cache
      */
-    public AlertGruTaskConfig getAlertGruConfigFromCache(ITaskConfigService taskAlertGruConfigService, int nidTask )
+    public AlertGruTaskConfig getAlertGruConfigFromCache( ITaskConfigService taskAlertGruConfigService, int nidTask )
     {
         AlertGruTaskConfig config = (AlertGruTaskConfig) getFromCache( getCacheKey( nidTask ) );
 

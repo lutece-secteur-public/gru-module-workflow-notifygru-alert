@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,7 +72,7 @@ public final class NotificationToHistory
      *            the SMS notification
      * @return the SMS history
      */
-    public static <T extends SMSNotification> SMSHistory populateSMS(AlertGruTaskConfig config, T smsNotification )
+    public static <T extends SMSNotification> SMSHistory populateSMS( AlertGruTaskConfig config, T smsNotification )
     {
         SMSHistory oSMSHistory = new SMSHistory( );
 
@@ -80,7 +80,7 @@ public final class NotificationToHistory
         {
             oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
             oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
-            if ( smsNotification instanceof BillingAccountBasedSMSNotification)
+            if ( smsNotification instanceof BillingAccountBasedSMSNotification )
             {
                 BillingAccountBasedSMSNotification accountBasedSmsNotification = (BillingAccountBasedSMSNotification) smsNotification;
                 oSMSHistory.setBillingAccount( accountBasedSmsNotification.getBillingAccount( ) );
@@ -104,7 +104,7 @@ public final class NotificationToHistory
      *            the email notification
      * @return the email history
      */
-    public static EmailHistory populateEmail(AlertGruTaskConfig config, EmailNotification emailNotification )
+    public static EmailHistory populateEmail( AlertGruTaskConfig config, EmailNotification emailNotification )
     {
         EmailHistory oEmailHistory = new EmailHistory( );
 
@@ -130,7 +130,7 @@ public final class NotificationToHistory
      *            the broadcast notification
      * @return the broadcast history
      */
-    public static BroadcastHistory populateBroadcast(AlertGruTaskConfig config, BroadcastNotification broadcastNotification )
+    public static BroadcastHistory populateBroadcast( AlertGruTaskConfig config, BroadcastNotification broadcastNotification )
     {
         BroadcastHistory oBroadcastHistory = new BroadcastHistory( );
 
@@ -171,7 +171,7 @@ public final class NotificationToHistory
                 {
                     if ( sbEmailAdressesCc.length( ) > 0 )
                     {
-                        sbEmailAdressesCc.append(";" );
+                        sbEmailAdressesCc.append( ";" );
                     }
 
                     sbEmailAdressesCc.append( emailAddress.getAddress( ) );
@@ -193,7 +193,7 @@ public final class NotificationToHistory
      *            the backoffice notification
      * @return the agent history
      */
-    public static AgentHistory populateAgent(AlertGruTaskConfig config, BackofficeNotification backofficeNotification )
+    public static AgentHistory populateAgent( AlertGruTaskConfig config, BackofficeNotification backofficeNotification )
     {
         AgentHistory oAgentHistory = new AgentHistory( );
 
@@ -216,7 +216,7 @@ public final class NotificationToHistory
      *            the MyDashboard notification
      * @return the guichet history
      */
-    public static GuichetHistory populateGuichet(AlertGruTaskConfig config, MyDashboardNotification myDashboardNotification )
+    public static GuichetHistory populateGuichet( AlertGruTaskConfig config, MyDashboardNotification myDashboardNotification )
     {
         GuichetHistory oGuichetHistory = new GuichetHistory( );
 

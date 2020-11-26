@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2018, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,7 @@ public class BillingAccountBasedSMSAlertConfig extends SMSAlertConfig
      * @param config
      *            the config of the task
      */
-    public BillingAccountBasedSMSAlertConfig(HttpServletRequest request, AlertGruTaskConfig config )
+    public BillingAccountBasedSMSAlertConfig( HttpServletRequest request, AlertGruTaskConfig config )
     {
         super( request, config );
         _strBillingAccount = request.getParameter( Constants.PARAMETER_BILLING_ACCOUNT_SMS );

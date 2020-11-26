@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2002-2020, City of Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.business;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruPlugin;
@@ -13,7 +46,8 @@ import java.util.List;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
-public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig> {
+public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
+{
 
     private static final String SQL_QUERY_INSERT_NOTIF = "INSERT INTO workflow_task_alert_gru_cf( "
             + "id_task,id_spring_provider,marker_provider_ids,demand_status,crm_status_id,set_onglet,message_guichet,status_text_guichet,sender_name_guichet,"
@@ -22,16 +56,14 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + "sender_name_email,recipients_cc_email,recipients_cci_email,is_active_onglet_email,"
             + "message_sms,billing_account_sms,billing_group_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
-            + "recipients_cc_broadcast,recipients_cci_broadcast," + "is_active_onglet_broadcast ,  days_to_alert, id_state_after, alert_subject, marker_alert, alert_after_before) "
+            + "recipients_cc_broadcast,recipients_cci_broadcast,"
+            + "is_active_onglet_broadcast ,  days_to_alert, id_state_after, alert_subject, marker_alert, alert_after_before) "
             + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-
-
 
     private static final String SQL_QUERY_FIND_BY_PRIMARY_KEY = "SELECT id_task, id_spring_provider,marker_provider_ids,demand_status,crm_status_id, set_onglet,"
             + "message_guichet,status_text_guichet,sender_name_guichet,"
             + "subject_guichet,demand_max_step_guichet,demand_user_current_step_guichet,is_active_onglet_guichet,"
-            + "status_text_agent,message_agent,is_active_onglet_agent,"
-            + "subject_email,message_email,sender_name_email,recipients_cc_email,"
+            + "status_text_agent,message_agent,is_active_onglet_agent," + "subject_email,message_email,sender_name_email,recipients_cc_email,"
             + "recipients_cci_email,is_active_onglet_email,message_sms,billing_account_sms,billing_group_sms,is_active_onglet_sms,"
             + "id_mailing_list_broadcast,email_broadcast,sender_name_broadcast,subject_broadcast,message_broadcast,"
             + "recipients_cc_broadcast,recipients_cci_broadcast,is_active_onglet_broadcast,  days_to_alert, id_state_after, alert_subject, marker_alert, alert_after_before "
@@ -45,18 +77,14 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + "recipients_cc_email = ?, recipients_cci_email = ?, " + " is_active_onglet_email= ?,"
             + "message_sms = ?, billing_account_sms = ?, billing_group_sms = ?, " + "is_active_onglet_sms = ?,  "
             + "id_mailing_list_broadcast = ?, email_broadcast = ?, sender_name_broadcast = ?, subject_broadcast = ?, message_broadcast = ?,"
-            + " recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, " + " is_active_onglet_broadcast = ? ,"
-            + " days_to_alert = ?,id_state_after = ?, " + " alert_subject = ?, "  + " marker_alert = ?, " +  " alert_after_before = ? "+ " WHERE id_task = ? ";
-
+            + " recipients_cc_broadcast = ?,recipients_cci_broadcast = ?, " + " is_active_onglet_broadcast = ? ," + " days_to_alert = ?,id_state_after = ?, "
+            + " alert_subject = ?, " + " marker_alert = ?, " + " alert_after_before = ? " + " WHERE id_task = ? ";
 
     private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_alert_gru_cf WHERE id_task = ? ";
 
-
-
-
-
     @Override
-    public void insert(AlertGruTaskConfig config) {
+    public void insert( AlertGruTaskConfig config )
+    {
 
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( config.getIdTask( ) );
 
@@ -66,7 +94,6 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
         daoUtil.executeUpdate( );
         daoUtil.free( );
 
-
     }
 
     /**
@@ -75,7 +102,8 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
      * @param alertGruTaskConfig
      */
     @Override
-    public void store(AlertGruTaskConfig alertGruTaskConfig) {
+    public void store( AlertGruTaskConfig alertGruTaskConfig )
+    {
         // remove cache
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( alertGruTaskConfig.getIdTask( ) );
 
@@ -172,8 +200,10 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
 
         return config;
     }
+
     @Override
-    public void delete(int i) {
+    public void delete( int i )
+    {
         // remove cache
         AlertGruCacheService.getInstance( ).removeGruConfigFromCache( i );
 
@@ -185,16 +215,15 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
 
     }
 
-
     /**
-    * Inserts the data of the specified configuration into the specified {@code DAOUtil} object
-    *
-    * @param config
-    *            the configuration containing the data
-    * @param daoUtil
-    *            the {@DAOUtil} object
-    * @return the last position of the data
-    */
+     * Inserts the data of the specified configuration into the specified {@code DAOUtil} object
+     *
+     * @param config
+     *            the configuration containing the data
+     * @param daoUtil
+     *            the {@DAOUtil} object
+     * @return the last position of the data
+     */
     private int configToData( AlertGruTaskConfig config, DAOUtil daoUtil )
     {
         int nPos = 0;
@@ -240,7 +269,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
         daoUtil.setBoolean( ++nPos, config.isActiveOngletBroadcast( ) );
 
         daoUtil.setInt( ++nPos, config.getDaysToAlert( ) );
-        daoUtil.setInt( ++nPos, config.getIdStateAfter() );
+        daoUtil.setInt( ++nPos, config.getIdStateAfter( ) );
         daoUtil.setString( ++nPos, config.getAlertSubject( ) );
         daoUtil.setString( ++nPos, config.getMarkerAlert( ) );
         daoUtil.setString( ++nPos, config.getAlertAfterBefore( ) );

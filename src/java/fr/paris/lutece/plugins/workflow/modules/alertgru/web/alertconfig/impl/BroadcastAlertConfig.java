@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,6 @@
  * License 1.0
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.web.alertconfig.impl;
-
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.web.AbstractAlertConfigValidator;
@@ -85,7 +84,7 @@ public class BroadcastAlertConfig implements IAlertConfig
      * @param config
      *            the configuration of the task
      */
-    public BroadcastAlertConfig(HttpServletRequest request, AlertGruTaskConfig config )
+    public BroadcastAlertConfig( HttpServletRequest request, AlertGruTaskConfig config )
     {
         _request = request;
         _config = config;

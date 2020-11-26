@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.business.history;
 
-
 import fr.paris.lutece.portal.service.plugin.Plugin;
 
 /**
@@ -52,7 +51,7 @@ public interface IAlertGruHistoryDAO
      * @param plugin
      *            the plugin
      */
-    void insert(AlertGruHistory history, Plugin plugin);
+    void insert( AlertGruHistory history, Plugin plugin );
 
     /**
      * Load a record by primary key
@@ -65,7 +64,7 @@ public interface IAlertGruHistoryDAO
      *            the plugin
      * @return AlertGruHistory Object
      */
-    AlertGruHistory load(int nIdHistory, int nIdTask, Plugin plugin);
+    AlertGruHistory load( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
      * delete all alertgrus associated width the task specified in parameter
@@ -75,7 +74,7 @@ public interface IAlertGruHistoryDAO
      * @param plugin
      *            the plugin
      */
-    void deleteByTask(int nIdTask, Plugin plugin);
+    void deleteByTask( int nIdTask, Plugin plugin );
 
     /**
      * delete all alertgrus associated width the history specified in parameter
@@ -87,5 +86,5 @@ public interface IAlertGruHistoryDAO
      * @param plugin
      *            the plugin
      */
-    void deleteByHistory(int nIdHistory, int nIdTask, Plugin plugin);
+    void deleteByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 }

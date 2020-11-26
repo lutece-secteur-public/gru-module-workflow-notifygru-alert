@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -254,8 +254,6 @@ public final class Constants
     public static final String PARAMETER_MARKER_ALERT = "marker_alert";
     public static final String PARAMETER_ALERT_AFTER_BEFORE = "alert_after_before";
 
-
-
     // AUTHER MARKS
     public static final String MARK_POSITION = "position_";
     public static final String MARK_GRU_TITLE = "directory_title";
@@ -287,7 +285,6 @@ public final class Constants
     public static final String MARK_MESSAGES_ERROR = "errors";
     public static final String MARK_DEFAULT_MARKER = "Default";
     public static final String MARK_ALERT_AFTER = "after";
-    
 
     // PROPERTIES
     public static final String PROPERTY_IS_BILLING_ACCOUNT_SMS_NEEDED = "workflow-notifygru.sms.billingAccountNeeded";
@@ -301,7 +298,7 @@ public final class Constants
 
     /**
      * Constructor
-     * */
+     */
     private Constants( )
     {
 

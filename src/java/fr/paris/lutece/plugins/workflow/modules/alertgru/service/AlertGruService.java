@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -76,7 +76,7 @@ public final class AlertGruService implements IAlertGruService
      * {@inheritDoc}
      */
     @Override
-    public ReferenceList getMailingList(HttpServletRequest request )
+    public ReferenceList getMailingList( HttpServletRequest request )
     {
         ReferenceList refMailingList = new ReferenceList( );
         refMailingList.addAll( AdminMailingListService.getMailingLists( AdminUserService.getAdminUser( request ) ) );
@@ -90,7 +90,7 @@ public final class AlertGruService implements IAlertGruService
      * {@inheritDoc}
      */
     @Override
-    public ReferenceList getListStates(int nIdAction )
+    public ReferenceList getListStates( int nIdAction )
     {
         ReferenceList referenceListStates = new ReferenceList( );
         Action action = _actionService.findByPrimaryKey( nIdAction );
@@ -112,7 +112,7 @@ public final class AlertGruService implements IAlertGruService
      * {@inheritDoc}
      */
     @Override
-    public List<FileAttachment> getFilesAttachment(AlertGruTaskConfig config, int nIdRecord, int nIdDirectory )
+    public List<FileAttachment> getFilesAttachment( AlertGruTaskConfig config, int nIdRecord, int nIdDirectory )
     {
         List<FileAttachment> listFileAttachment = null;
 

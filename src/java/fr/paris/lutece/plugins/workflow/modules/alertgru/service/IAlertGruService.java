@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -53,7 +53,7 @@ public interface IAlertGruService
      *            the id action
      * @return a ReferenceList
      */
-    ReferenceList getListStates(int nIdAction);
+    ReferenceList getListStates( int nIdAction );
 
     /**
      * The files Attachments to insert in the mail
@@ -66,7 +66,7 @@ public interface IAlertGruService
      *            the directory id
      * @return the files Attachments to insert in the mail
      */
-    List<FileAttachment> getFilesAttachment(AlertGruTaskConfig config, int nIdRecord, int nIdDirectory);
+    List<FileAttachment> getFilesAttachment( AlertGruTaskConfig config, int nIdRecord, int nIdDirectory );
 
     /**
      * Gets the locale.
@@ -75,7 +75,7 @@ public interface IAlertGruService
      *            the request
      * @return the locale
      */
-    Locale getLocale(HttpServletRequest request);
+    Locale getLocale( HttpServletRequest request );
 
     /**
      * Get the mailing list
@@ -84,5 +84,5 @@ public interface IAlertGruService
      *            the HTTP request
      * @return a ReferenceList
      */
-    ReferenceList getMailingList(HttpServletRequest request);
+    ReferenceList getMailingList( HttpServletRequest request );
 }

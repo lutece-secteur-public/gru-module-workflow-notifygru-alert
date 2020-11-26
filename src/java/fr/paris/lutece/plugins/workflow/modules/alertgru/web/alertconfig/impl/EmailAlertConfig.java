@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -57,7 +57,6 @@ public class EmailAlertConfig implements IAlertConfig
     private static final String PARAMETER_RECIPIENT_CC = "recipients_cc_email";
     private static final String PARAMETER_RECIPIENT_CCI = "recipients_cci_email";
 
-
     private final HttpServletRequest _request;
     private final AlertGruTaskConfig _config;
     private final String _strSubject;
@@ -65,7 +64,6 @@ public class EmailAlertConfig implements IAlertConfig
     private final String _strSenderName;
     private final String _strRecipientsCc;
     private final String _strRecipientsCci;
-
 
     /**
      * Constructor
@@ -75,7 +73,7 @@ public class EmailAlertConfig implements IAlertConfig
      * @param config
      *            the configuration of the task
      */
-    public EmailAlertConfig(HttpServletRequest request, AlertGruTaskConfig config )
+    public EmailAlertConfig( HttpServletRequest request, AlertGruTaskConfig config )
     {
         _request = request;
         _config = config;
@@ -113,7 +111,6 @@ public class EmailAlertConfig implements IAlertConfig
     {
         _config.setActiveOngletEmail( bActive );
     }
-
 
     /**
      * {@inheritDoc}
@@ -209,6 +206,5 @@ public class EmailAlertConfig implements IAlertConfig
         }
 
     }
-
 
 }

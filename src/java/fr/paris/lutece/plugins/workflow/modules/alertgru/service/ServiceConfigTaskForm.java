@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -132,10 +132,10 @@ public final class ServiceConfigTaskForm
             return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_THREE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
         }
         else
-        if ( tabRequiredFields.length == 2 )
-        {
-            return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
-        }
+            if ( tabRequiredFields.length == 2 )
+            {
+                return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_TWO_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
+            }
 
         return AdminMessageService.getMessageUrl( request, Constants.MESSAGE_MANDATORY_ONE_FIELD, tabRequiredFields, AdminMessage.TYPE_WARNING );
     }

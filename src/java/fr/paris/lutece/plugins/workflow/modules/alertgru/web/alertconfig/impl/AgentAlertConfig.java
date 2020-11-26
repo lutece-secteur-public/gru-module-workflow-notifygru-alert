@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2017, Mairie de Paris
+ * Copyright (c) 2002-2020, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -66,7 +66,7 @@ public class AgentAlertConfig implements IAlertConfig
      * @param config
      *            the configuration of the task
      */
-    public AgentAlertConfig(HttpServletRequest request, AlertGruTaskConfig config )
+    public AgentAlertConfig( HttpServletRequest request, AlertGruTaskConfig config )
     {
         _request = request;
         _config = config;

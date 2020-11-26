@@ -1,3 +1,36 @@
+/*
+ * Copyright (c) 2002-2020, City of Paris
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *  1. Redistributions of source code must retain the above copyright notice
+ *     and the following disclaimer.
+ *
+ *  2. Redistributions in binary form must reproduce the above copyright notice
+ *     and the following disclaimer in the documentation and/or other materials
+ *     provided with the distribution.
+ *
+ *  3. Neither the name of 'Mairie de Paris' nor 'Lutece' nor the names of its
+ *     contributors may be used to endorse or promote products derived from
+ *     this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+ * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDERS OR CONTRIBUTORS BE
+ * LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+ * CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+ * SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+ * INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+ * CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ *
+ * License 1.0
+ */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 
 import fr.paris.lutece.plugins.grubusiness.business.customer.Customer;
@@ -61,13 +94,13 @@ import javax.inject.Named;
 import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang.StringUtils;
 
-public class AlertGruTask extends SimpleTask {
+public class AlertGruTask extends SimpleTask
+{
     /** The _task alert gru config service. */
     // SERVICES
     @Inject
     @Named( AlertGruTaskConfigService.BEAN_SERVICE )
     private ITaskConfigService _taskAlertGruConfigService;
-
 
     /** The _task notify gru history service. */
     @Inject
@@ -85,22 +118,18 @@ public class AlertGruTask extends SimpleTask {
     @Inject
     private ITaskService _taskService;
 
-
     @Inject
     private IActionService _actionService;
 
     @Inject
     private IStateService _stateService;
 
-
     @Inject
     private IResourceWorkflowService _resourceWorkflowService;
 
-
-
     @Override
-    public void processTask(int nIdResourceHistory, HttpServletRequest request, Locale locale) {
-
+    public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
+    {
 
     }
 
@@ -147,7 +176,7 @@ public class AlertGruTask extends SimpleTask {
      *            the model
      * @return the {@link MyDashboardNotification} object
      */
-    private MyDashboardNotification buildMyDashboardNotification(AlertGruTaskConfig config, Map<String, Object> model )
+    private MyDashboardNotification buildMyDashboardNotification( AlertGruTaskConfig config, Map<String, Object> model )
     {
         MyDashboardNotification userDashBoard = new MyDashboardNotification( );
 
@@ -170,7 +199,7 @@ public class AlertGruTask extends SimpleTask {
      *            the model
      * @return the {@link BackofficeNotification} object
      */
-    private BackofficeNotification buildBackofficeNotification(AlertGruTaskConfig config, Map<String, Object> model )
+    private BackofficeNotification buildBackofficeNotification( AlertGruTaskConfig config, Map<String, Object> model )
     {
         BackofficeNotification userAgent = new BackofficeNotification( );
 
@@ -191,7 +220,7 @@ public class AlertGruTask extends SimpleTask {
      *            the model
      * @return the {@link SMSNotification} object
      */
-    private <T extends SMSNotification> T buildSMSNotification(AlertGruTaskConfig config, IProvider provider, Map<String, Object> model )
+    private <T extends SMSNotification> T buildSMSNotification( AlertGruTaskConfig config, IProvider provider, Map<String, Object> model )
     {
         if ( !config.isBillingAccountBasedSmsNotification( ) )
         {
@@ -248,7 +277,7 @@ public class AlertGruTask extends SimpleTask {
      *            the model
      * @return the {@link BroadcastNotification} object
      */
-    private BroadcastNotification buildBroadcastNotification(AlertGruTaskConfig config, Map<String, Object> model )
+    private BroadcastNotification buildBroadcastNotification( AlertGruTaskConfig config, Map<String, Object> model )
     {
         BroadcastNotification broadcastNotification = new BroadcastNotification( );
 
@@ -305,8 +334,8 @@ public class AlertGruTask extends SimpleTask {
      *            the request
      * @return the AlertGru markers
      */
-    private Collection<InfoMarker> findMarkers(ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
-                                               HttpServletRequest request )
+    private Collection<InfoMarker> findMarkers( ResourceHistory resourceHistory, IProvider provider, List<String> listMarkerProviderIds,
+            HttpServletRequest request )
     {
         Collection<InfoMarker> collectionMarkers = provider.provideMarkerValues( );
 
@@ -389,14 +418,13 @@ public class AlertGruTask extends SimpleTask {
      * @return
      */
     @Override
-    public String getTitle(Locale locale) {
+    public String getTitle( Locale locale )
+    {
         return "Alert notification GRU";
     }
 
-
-
-
-    public void sendAlert(int idResource, String resourceType,  int actionId, int workflowId) {
+    public void sendAlert( int idResource, String resourceType, int actionId, int workflowId )
+    {
 
         ITask task = null;
         List<ITask> listActionTasks = _taskService.getListTaskByIdAction( actionId, Locale.getDefault( ) );
@@ -409,129 +437,150 @@ public class AlertGruTask extends SimpleTask {
             }
         }
 
-        if ( task != null ) {
+        if ( task != null )
+        {
             /* Task Config form cache, it can't be null due to getAlertGruConfigFromCache algorithm */
-            AlertGruTaskConfig config = AlertGruCacheService.getInstance().getAlertGruConfigFromCache(_taskAlertGruConfigService, task.getId());
-            String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId(config.getIdSpringProvider());
-            String strProviderId = ProviderManagerUtil.fetchProviderId(config.getIdSpringProvider());
-            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager(strProviderManagerId);
+            AlertGruTaskConfig config = AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, task.getId( ) );
+            String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
+            String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
+            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
 
-            int daysAlert = config.getDaysToAlert();
-            String  alertAfterBefore = config.getAlertAfterBefore();
-            String markerAlert = config.getMarkerAlert();
+            int daysAlert = config.getDaysToAlert( );
+            String alertAfterBefore = config.getAlertAfterBefore( );
+            String markerAlert = config.getMarkerAlert( );
 
-            if (daysAlert != 0) {
-                if (providerManager != null) {
-                    ResourceHistory resourceHistory = _resourceHistoryService.getLastHistoryResource(idResource, resourceType, workflowId);
-                    IProvider provider = providerManager.createProvider(strProviderId, resourceHistory, null);
+            if ( daysAlert != 0 )
+            {
+                if ( providerManager != null )
+                {
+                    ResourceHistory resourceHistory = _resourceHistoryService.getLastHistoryResource( idResource, resourceType, workflowId );
+                    IProvider provider = providerManager.createProvider( strProviderId, resourceHistory, null );
 
-                    if (provider != null) {
-                    Map<String, Object> model = markersToModel(findMarkers(resourceHistory, provider, config.getMarkerProviders(), null));
+                    if ( provider != null )
+                    {
+                        Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), null ) );
 
-                    //Day timestamp
-                    Timestamp timestampNow = new Timestamp(Calendar.getInstance().getTimeInMillis());
+                        // Day timestamp
+                        Timestamp timestampNow = new Timestamp( Calendar.getInstance( ).getTimeInMillis( ) );
 
-                    //Resource or State timestamp
-                    Timestamp dateAlert = computeDateAlert(resourceHistory.getCreationDate(),model, markerAlert,  daysAlert, alertAfterBefore, timestampNow);
-                    
-                    if (dateAlert != null && dateAlert.getTime() <= timestampNow.getTime()) {
-                            AlertGruHistory alertGruHistory = new AlertGruHistory();
-                            alertGruHistory.setIdTask(task.getId());
+                        // Resource or State timestamp
+                        Timestamp dateAlert = computeDateAlert( resourceHistory.getCreationDate( ), model, markerAlert, daysAlert, alertAfterBefore,
+                                timestampNow );
 
-                            Notification notificationObject = buildNotification(config, provider);
+                        if ( dateAlert != null && dateAlert.getTime( ) <= timestampNow.getTime( ) )
+                        {
+                            AlertGruHistory alertGruHistory = new AlertGruHistory( );
+                            alertGruHistory.setIdTask( task.getId( ) );
+
+                            Notification notificationObject = buildNotification( config, provider );
                             EmailNotification emailNotification = null;
                             boolean bNotifEmpty = true;
-                            if (config.isActiveOngletEmail() && StringUtils.isNotBlank(provider.provideCustomerEmail())) {
-                                emailNotification = buildEmailNotification(config, provider, model);
-                                notificationObject.setEmailNotification(emailNotification);
-                                alertGruHistory.setEmail(NotificationToHistory.populateEmail(config, emailNotification));
+                            if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
+                            {
+                                emailNotification = buildEmailNotification( config, provider, model );
+                                notificationObject.setEmailNotification( emailNotification );
+                                alertGruHistory.setEmail( NotificationToHistory.populateEmail( config, emailNotification ) );
                                 bNotifEmpty = false;
                             }
 
                             MyDashboardNotification myDashBoardNotification = null;
 
-                            if (config.isActiveOngletGuichet() && StringUtils.isNotBlank(provider.provideCustomerConnectionId())) {
-                                myDashBoardNotification = buildMyDashboardNotification(config, model);
-                                notificationObject.setMyDashboardNotification(myDashBoardNotification);
-                                alertGruHistory.setGuichet(NotificationToHistory.populateGuichet(config, myDashBoardNotification));
+                            if ( config.isActiveOngletGuichet( ) && StringUtils.isNotBlank( provider.provideCustomerConnectionId( ) ) )
+                            {
+                                myDashBoardNotification = buildMyDashboardNotification( config, model );
+                                notificationObject.setMyDashboardNotification( myDashBoardNotification );
+                                alertGruHistory.setGuichet( NotificationToHistory.populateGuichet( config, myDashBoardNotification ) );
                                 bNotifEmpty = false;
                             }
 
                             SMSNotification smsNotification = null;
 
-                            if (config.isActiveOngletSMS() && StringUtils.isNotBlank(provider.provideCustomerMobilePhone())) {
-                                smsNotification = buildSMSNotification(config, provider, model);
-                                notificationObject.setSmsNotification(smsNotification);
-                                alertGruHistory.setSMS(NotificationToHistory.populateSMS(config, smsNotification));
+                            if ( config.isActiveOngletSMS( ) && StringUtils.isNotBlank( provider.provideCustomerMobilePhone( ) ) )
+                            {
+                                smsNotification = buildSMSNotification( config, provider, model );
+                                notificationObject.setSmsNotification( smsNotification );
+                                alertGruHistory.setSMS( NotificationToHistory.populateSMS( config, smsNotification ) );
                                 bNotifEmpty = false;
                             }
 
                             BackofficeNotification backofficeNotification = null;
 
-                            if (config.isActiveOngletAgent()) {
-                                backofficeNotification = buildBackofficeNotification(config, model);
-                                notificationObject.setBackofficeNotification(backofficeNotification);
-                                alertGruHistory.setAgent(NotificationToHistory.populateAgent(config, backofficeNotification));
+                            if ( config.isActiveOngletAgent( ) )
+                            {
+                                backofficeNotification = buildBackofficeNotification( config, model );
+                                notificationObject.setBackofficeNotification( backofficeNotification );
+                                alertGruHistory.setAgent( NotificationToHistory.populateAgent( config, backofficeNotification ) );
                                 bNotifEmpty = false;
                             }
 
                             BroadcastNotification broadcastNotification = null;
 
-                            if (config.isActiveOngletBroadcast()) {
-                                broadcastNotification = buildBroadcastNotification(config, model);
+                            if ( config.isActiveOngletBroadcast( ) )
+                            {
+                                broadcastNotification = buildBroadcastNotification( config, model );
 
-                                if (!broadcastNotification.getRecipient().isEmpty()) {
-                                    notificationObject.addBroadcastEmail(broadcastNotification);
-                                    alertGruHistory.setBroadCast(NotificationToHistory.populateBroadcast(config, broadcastNotification));
+                                if ( !broadcastNotification.getRecipient( ).isEmpty( ) )
+                                {
+                                    notificationObject.addBroadcastEmail( broadcastNotification );
+                                    alertGruHistory.setBroadCast( NotificationToHistory.populateBroadcast( config, broadcastNotification ) );
                                     bNotifEmpty = false;
                                 }
                             }
 
                             // crm status id
-                            alertGruHistory.setCrmStatusId(config.getCrmStatusId());
+                            alertGruHistory.setCrmStatusId( config.getCrmStatusId( ) );
 
-                            if (!bNotifEmpty) {
-                                try {
-                                    _alertGruSenderService.send(notificationObject);
+                            if ( !bNotifEmpty )
+                            {
+                                try
+                                {
+                                    _alertGruSenderService.send( notificationObject );
 
                                     // Create Resource History
-                                    ResourceHistory resourceHistoryState = new ResourceHistory();
-                                    resourceHistoryState.setIdResource(idResource);
-                                    resourceHistoryState.setResourceType(resourceType);
-                                    resourceHistoryState.setAction(_actionService.findByPrimaryKey(actionId));
-                                    resourceHistoryState.setWorkFlow(_actionService.findByPrimaryKey(actionId).getWorkflow());
-                                    resourceHistoryState.setCreationDate(WorkflowUtils.getCurrentTimestamp());
-                                    resourceHistoryState.setUserAccessCode(Constants.USER_AUTO);
-                                    _resourceHistoryService.create(resourceHistoryState);
+                                    ResourceHistory resourceHistoryState = new ResourceHistory( );
+                                    resourceHistoryState.setIdResource( idResource );
+                                    resourceHistoryState.setResourceType( resourceType );
+                                    resourceHistoryState.setAction( _actionService.findByPrimaryKey( actionId ) );
+                                    resourceHistoryState.setWorkFlow( _actionService.findByPrimaryKey( actionId ).getWorkflow( ) );
+                                    resourceHistoryState.setCreationDate( WorkflowUtils.getCurrentTimestamp( ) );
+                                    resourceHistoryState.setUserAccessCode( Constants.USER_AUTO );
+                                    _resourceHistoryService.create( resourceHistoryState );
 
                                     // Create Alert gru History
-                                    alertGruHistory.setIdResourceHistory(resourceHistoryState.getId());
-                                    _taskAlertGruHistoryService.create(alertGruHistory, WorkflowUtils.getPlugin());
-
+                                    alertGruHistory.setIdResourceHistory( resourceHistoryState.getId( ) );
+                                    _taskAlertGruHistoryService.create( alertGruHistory, WorkflowUtils.getPlugin( ) );
 
                                     // Update Resource
-                                    ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey(idResource,
-                                            resourceType, workflowId);
-                                    State state = _stateService.findByPrimaryKey(config.getIdStateAfter());
-                                    resourceWorkflow.setState(state);
-                                    _resourceWorkflowService.update(resourceWorkflow);
-                                    Locale locale = I18nService.getDefaultLocale();
-                                    WorkflowService.getInstance().doProcessAutomaticReflexiveActions(idResource, resourceType, config.getIdStateAfter(), null, locale);
-                                    
-                                } catch (AppException | NotifyGruException e) {
-                                    AppLogService.error("Unable to send the notification");
+                                    ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( idResource, resourceType, workflowId );
+                                    State state = _stateService.findByPrimaryKey( config.getIdStateAfter( ) );
+                                    resourceWorkflow.setState( state );
+                                    _resourceWorkflowService.update( resourceWorkflow );
+                                    Locale locale = I18nService.getDefaultLocale( );
+                                    WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( idResource, resourceType, config.getIdStateAfter( ),
+                                            null, locale );
+
+                                }
+                                catch( AppException | NotifyGruException e )
+                                {
+                                    AppLogService.error( "Unable to send the notification" );
                                 }
                             }
-                        } else {
-                            AppLogService.error("Task id " + task.getId() + " : Unable to retrieve the provider '" + config.getIdSpringProvider() + "'");
+                        }
+                        else
+                        {
+                            AppLogService.error( "Task id " + task.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
                         }
                     }
 
-                } else {
-                    AppLogService.error("Task id " + task.getId() + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'");
                 }
-            } else {
-                AppLogService.info("Task id " + task.getId() + " : days defined to 0.");
+                else
+                {
+                    AppLogService.error( "Task id " + task.getId( ) + " : Unable to retrieve the provider manager '" + strProviderManagerId + "'" );
+                }
+            }
+            else
+            {
+                AppLogService.info( "Task id " + task.getId( ) + " : days defined to 0." );
             }
         }
     }
@@ -551,41 +600,55 @@ public class AlertGruTask extends SimpleTask {
      *            the direction : after or before
      * @return the Timestamp date
      */
-    private Timestamp computeDateAlert(Timestamp dateResource, Map<String,Object> modelMarker,String markerAlert, int daysAlert, String alertAfterBefore , Timestamp timestampNow){
-       
-    	Timestamp dateInit;
-        if(markerAlert.equals(Constants.MARK_DEFAULT_MARKER)) {
+    private Timestamp computeDateAlert( Timestamp dateResource, Map<String, Object> modelMarker, String markerAlert, int daysAlert, String alertAfterBefore,
+            Timestamp timestampNow )
+    {
+
+        Timestamp dateInit;
+        if ( markerAlert.equals( Constants.MARK_DEFAULT_MARKER ) )
+        {
             dateInit = dateResource;
-        } else {
+        }
+        else
+        {
             SimpleDateFormat dateFormatTmp = new SimpleDateFormat( Constants.PROPERTIE_DATE_FORMAT );
             Date dateTmp = null;
-            try {
-            	
-                dateTmp = dateFormatTmp.parse(String.valueOf(modelMarker.get(markerAlert)));
-            
-            } catch (ParseException e) {
-            	
-                AppLogService.error("Marker " + markerAlert + " : Unable to parse date.");
+            try
+            {
+
+                dateTmp = dateFormatTmp.parse( String.valueOf( modelMarker.get( markerAlert ) ) );
+
+            }
+            catch( ParseException e )
+            {
+
+                AppLogService.error( "Marker " + markerAlert + " : Unable to parse date." );
                 return null;
             }
-            dateInit =  new Timestamp(dateTmp.getTime());
+            dateInit = new Timestamp( dateTmp.getTime( ) );
         }
-        //Resource date + day configured in admin
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dateInit);
-        if(Constants.MARK_ALERT_AFTER.equals(alertAfterBefore)){
-            
-        	cal.add(Calendar.DAY_OF_WEEK, daysAlert);
-            
-        } else if( dateInit.after( timestampNow ) ) {
-        	
-            cal.add(Calendar.DAY_OF_WEEK, daysAlert * -1);
-            
-        } else {
-        	
-        	return null;
+        // Resource date + day configured in admin
+        Calendar cal = Calendar.getInstance( );
+        cal.setTime( dateInit );
+        if ( Constants.MARK_ALERT_AFTER.equals( alertAfterBefore ) )
+        {
+
+            cal.add( Calendar.DAY_OF_WEEK, daysAlert );
+
         }
-        
-                 return new Timestamp(cal.getTime().getTime());
+        else
+            if ( dateInit.after( timestampNow ) )
+            {
+
+                cal.add( Calendar.DAY_OF_WEEK, daysAlert * -1 );
+
+            }
+            else
+            {
+
+                return null;
+            }
+
+        return new Timestamp( cal.getTime( ).getTime( ) );
     }
 }
