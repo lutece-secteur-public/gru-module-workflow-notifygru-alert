@@ -1,48 +1,38 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
-<div>
-  <fieldset>
-    <legend>#i18n{module.workflow.alertgru.task_alert_gru_config.title_sms}
-      <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveAlertConfig_sms">
-        <i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
-      </button> 
-    </legend>
-  </fieldset>
-  <div class="col-xs-12 col-sm-8">
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="message_sms">#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_sms} *</label>
-        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
+<@row>
+	<@columns>
+		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
+			<h4>#i18n{module.workflow.alertgru.task_alert_gru_config.title_sms}<h4>
+			<@button type='submit' title='' name='apply' id='remove-config-sms' value='RemoveAlertConfig_sms' buttonIcon='trash' color='danger' size='sm' />
+			<script type="text/javascript">
+				// Remove required attribute on fields to allow the form submission
+				$("#remove-config-sms").click(function() {
+					if (jQuery('input:invalid').length > 0) {
+						$('[required]').removeAttr("required");
+					}
+				});
+			</script>
+		</div>
+	</@columns>
+</@row>
+<@row>
+	<@columns sm=8>
+        <@formGroup labelFor='message_sms' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_sms}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_comment_sms}' mandatory=true rows=2>
           <#if config?exists>
-            <textarea name="message_sms" id="message_sms" rows="10" cols="45" >${(config.messageSMS)!''}</textarea>
-            <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_comment_sms}</span>
+            <@input type='textarea' name='message_sms' id='message_sms' rows=10 cols=45>${(config.messageSMS)!''}</@input>
           </#if>
-        </div>
-      </div>
-    </div>
-    <#if config?exists  && config.isBillingAccountBasedSmsNotification()>
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="billing_account_sms">#i18n{module.workflow.alertgru.task_alert_gru_config.label_billing_account_sms} *</label>
-        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                <input type="text" class="" name="billing_account_sms" id="billing_account_sms" value="${(config.billingAccountSMS)!''}"/>
-                <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_comment_billing_account_sms}</span>
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-4 col-lg-4 col-xs-12 col-sm-12" for="billing_group_sms">#i18n{module.workflow.alertgru.task_alert_gru_config.label_billing_group_sms} *</label>
-        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-                <input type="text" class="" name="billing_group_sms" id="billing_group_sms" value="${(config.billingGroupSMS)!''}"/>
-                <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_comment_billing_group_sms}</span>
-        </div>
-      </div>
-    </div>
-    </#if>
-  </div>
-  <div class="col-xs-12 col-sm-4">
-    <@marker_descriptions />
-  </div>
-</div>
-
-
+		</@formGroup>
+		
+		<#if config?exists  && config.isBillingAccountBasedSmsNotification()>
+			<@formGroup labelFor='billing_account_sms' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_billing_account_sms}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_comment_billing_account_sms}' mandatory=true rows=2>
+				<@input type='text' name='billing_account_sms' id='billing_account_sms' value='${(config.billingAccountSMS)!\'\'}' />
+			</@formGroup>
+			<@formGroup labelFor='billing_group_sms' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_billing_group_sms}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_comment_billing_group_sms}' mandatory=true rows=2>
+				<@input type='text' name='billing_group_sms' id='billing_group_sms' value='${(config.billingGroupSMS)!\'\'}' />
+			</@formGroup>
+		</#if>
+	</@columns>
+	<@columns sm=4>
+		<@marker_descriptions />
+	</@columns>
+</@row>

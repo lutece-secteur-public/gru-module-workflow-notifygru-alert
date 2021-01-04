@@ -1,106 +1,72 @@
 <#include "/admin/plugins/workflow/modules/notifygru/include/commons.html"/>
-<div>
-  <fieldset>
-    <legend>#i18n{module.workflow.alertgru.task_alert_gru_config.title_email}
-      <button class="btn btn-sm btn-danger btn-xs" type="submit" name="apply" value="RemoveAlertConfig_email">
-        <i class="glyphicon glyphicon-trash icon-white">&nbsp;</i>
-      </button> 
-    </legend>
-  </fieldset>
-  <div class="col-xs-12 col-sm-8">
-    <!------------------------------------- -->
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="sender_name_email">#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_email} *</label>
-        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12" >
-          <#if config?exists && config.senderNameEmail?has_content>
-            <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="${config.senderNameEmail}" maxlength="255">
-          <#else>
-            <input type="text" name="sender_name_email" id="" class="form-control input-sm" value="" maxlength="255">
-          </#if>
-          <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_comment_email}</span>
-        </div>
-      </div>
-    </div>
-    <!------------------------------------- -->
-    <!------------------------------------- -->
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="subject_email">#i18n{module.workflow.alertgru.task_alert_gru_config.label_subject_email} *</label>
-        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-          <#if config?exists && config.subjectEmail?has_content>
-            <input type="text" name="subject_email" id="" class="form-control input-sm" value="${config.subjectEmail}" maxlength="255">
-          <#else>
-            <input type="text" name="subject_email" id="" class="form-control input-sm" value="" maxlength="255">
-          </#if>
-          <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_subject_comment_email}</span>
-        </div>
-      </div>
-    </div>
-    <!------------------------------------- -->
-    <!------------------------------------- -->
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" ></label>
-        <div class="col-md-4 col-lg-4 col-xs-12 col-sm-12">
-          <a  class="btn btn-primary btn-xs" role="button" onclick="showhide_email()">
-            #i18n{module.workflow.alertgru.task_alert_gru_config.label_put_copy_email}
-            <span class="glyphicon glyphicon-menu-left" aria-hidden="true" id="iconeCCemail"></span>
-          </a>
-        </div>
-      </div>
-    </div>
-    <!------------------------------------- -->
-    <div id="copy_mail_mail">
-      <!------------------------------------- -->
-      <div class="row">
-        <div class="form-group">
-          <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" >#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_cc_email}</label>
-          <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
-            <#if config?exists && config.recipientsCcEmail?has_content>
-              <input type="text" name="recipients_cc_email" id="recipients_cc_email" class="form-control input-sm" value="${config.recipientsCcEmail}"  maxlength="255">
-            <#else>
-              <input type="text" name="recipients_cc_email" id="recipients_cc_email" class="form-control input-sm" value="" maxlength="255">
-            </#if>
-            <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_cc_comment_email}</span>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="form-group">
-          <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" >#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_bcc_email}</label>
-          <div class="col-md-9 col-lg-9 col-xs-12 col-sm-12">
-            <#if config?exists && config.recipientsCciEmail?has_content>
-              <input type="text" name="recipients_cci_email" id="recipients_cci_email" class="form-control input-sm" value="${config.recipientsCciEmail}"  maxlength="255">
-            <#else>
-              <input type="text" name="recipients_cci_email" id="recipients_cci_email" class="form-control input-sm" value="" maxlength="255">
-            </#if>
-            <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_bcc_comment_email}</span>
-          </div>
-        </div>
-      </div>
-      <!------------------------------------- -->
-    </div>
-    <!------------------------------------- -->
-    <div class="row">
-      <div class="form-group">
-        <label class="control-label col-md-3 col-lg-3 col-xs-12 col-sm-12" for="message_email">#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_email} *</label>
-        <div class="col-md-8 col-lg-8 col-xs-12 col-sm-12">
-          <#if config?exists  && config.messageEmail?has_content>
-            <textarea name="message_email" id="message_email" rows="5" cols="70" class="richtext">${config.messageEmail}</textarea>
-          <#else>
-            <textarea name="message_email" id="message_email" rows="5" cols="70" class="richtext"></textarea>
-          </#if>
-          <span class="help-block">#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_comment_email}</span>
-        </div>
-      </div>
-    </div>
-    <!------------------------------------- -->
-  </div>
-  <div class="col-xs-12 col-sm-4">
-    <@marker_descriptions />
-  </div>
-</div>
+<@row>
+	<@columns>
+		<div style="display:flex;justify-content:space-between;border-bottom:1px solid gainsboro;padding-bottom:5px;margin-bottom:15px">
+			<h4>#i18n{module.workflow.alertgru.task_alert_gru_config.title_email}<h4>
+			<@button type='submit' title='' hideTitle=['all'] name='apply' id='remove-config-email' value='RemoveAlertConfig_email' buttonIcon='trash' color='danger' size='sm' />
+			<script type="text/javascript">
+				// Remove required attribute on fields to allow the form submission
+				$("#remove-config-email").click(function() {
+					if (jQuery('input:invalid').length > 0) {
+						$('[required]').removeAttr("required");
+					}
+				});
+			</script>
+		</div>
+	</@columns>
+</@row>
+<@row>
+	<@columns sm=8>
+        <@formGroup labelFor='sender_name_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_comment_email}' mandatory=true rows=2>
+			<#if config?exists && config.senderNameEmail?has_content>
+				<#assign inputValue = config.senderNameEmail! />
+			<#else>
+				<#assign inputValue = '' />
+			</#if>
+			<@input type='text' name='sender_name_email' id='sender_name_email' value=inputValue maxlength=255 />
+		</@formGroup>
+		
+		<@formGroup labelFor='subject_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_subject_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_subject_comment_email}' mandatory=true rows=2>
+			<#if config?exists && config.subjectEmail?has_content>
+				<#assign inputValue = config.subjectEmail />
+			<#else>
+				<#assign inputValue = '' />
+			</#if>
+			<@input type='text' name='subject_email' id='subject_email' value=inputValue maxlength=255 />
+		</@formGroup>
+		
+		<@formGroup rows=2>
+			<@button params='onclick="showhide_email()"' title='#i18n{module.workflow.alertgru.task_alert_gru_config.label_put_copy_email}' buttonIcon='caret-down' id='iconeCCemail' />
+		</@formGroup>
+		
+		<@div id='copy_mail_mail'>
+			<@formGroup labelFor='recipients_cc_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_cc_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_cc_comment_email}' rows=2>
+				<#if config?exists && config.recipientsCcEmail?has_content>
+					<#assign inputValue = config.recipientsCcEmail />
+				<#else>
+					<#assign inputValue = '' />
+				</#if>
+				<@input type='text' name='recipients_cc_email' id='recipients_cc_email' value=inputValue maxlength=255 />
+			</@formGroup>
+			
+			<@formGroup labelFor='recipients_cci_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_bcc_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_recipients_bcc_comment_email}' rows=2>
+				<#if config?exists && config.recipientsCciEmail?has_content>
+					<#assign inputValue = config.recipientsCciEmail />
+				<#else>
+					<#assign inputValue = '' />
+				</#if>
+				<@input type='text' name='recipients_cci_email' id='recipients_cci_email' value=inputValue maxlength=255 />
+			</@formGroup>
+		</@div>
+		
+		<@formGroup labelFor='message_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_message_comment_email}' mandatory=true rows=2>
+			<@input type='textarea' name='message_email' id='message_email' rows=5 cols=70 richtext=true><#if config?exists  && config.messageEmail?has_content>${config.messageEmail}</#if></@input>
+		</@formGroup>
+	</@columns>
+	<@columns sm=4>
+		<@marker_descriptions />
+	</@columns>
+</@row>
 <script>
    var AtloadingEmail=true;
        function showhide_email()
@@ -109,27 +75,30 @@
            var div = document.getElementById("copy_mail_mail");
    
            if (div.style.display !== "none") {
-               div.style.display = "none";
-     document.getElementById("iconeCCemail").setAttribute("class", "glyphicon glyphicon-menu-left");
+				div.style.display = "none";
+				var iconParent = document.getElementById('iconeCCemail');
+				var icon = iconParent.children[0]; 
+				icon.setAttribute("class", "fa fa-caret-down");
            }
            else {
-               div.style.display = "block";
-     document.getElementById("iconeCCemail").setAttribute("class", "glyphicon glyphicon-menu-right");
+				div.style.display = "block";
+				var iconParent = document.getElementById('iconeCCemail'); 
+				var icon = iconParent.children[0]; 
+				icon.setAttribute("class", "fa fa-caret-up");
            }
    
         if(document.getElementById("recipients_cc_email").value.length>0 || document.getElementById("recipients_cci_email").value.length>0 )
    {
    if(AtloadingEmail) {
         div.style.display = "block";
-    document.getElementById("iconeCCListe").setAttribute("class", "glyphicon glyphicon-menu-right");
+		var iconParent = document.getElementById('iconeCCemail');
+		var icon = iconParent.children[0]; 
+		icon.setAttribute("class", "fa fa-caret-down");
+		}
    }
-   }
-      
    
    AtloadingEmail=false;
-   
-   
        }
    
-       showhide_email();
+    showhide_email();
 </script>
