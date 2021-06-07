@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -72,11 +72,11 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT, plugin ) )
         {
             int nPos = 0;
-    
+
             daoUtil.setInt( ++nPos, history.getIdResourceHistory( ) );
             daoUtil.setInt( ++nPos, history.getIdTask( ) );
             daoUtil.setInt( ++nPos, history.getCrmStatusId( ) );
-    
+
             daoUtil.setString( ++nPos, history.getGuichet( ).getMessageGuichet( ) );
             daoUtil.setString( ++nPos, history.getGuichet( ).getStatustextGuichet( ) );
             daoUtil.setString( ++nPos, history.getGuichet( ).getSenderNameGuichet( ) );
@@ -84,22 +84,22 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
             daoUtil.setInt( ++nPos, history.getGuichet( ).getDemandMaxStepGuichet( ) );
             daoUtil.setInt( ++nPos, history.getGuichet( ).getDemandUserCurrentStepGuichet( ) );
             daoUtil.setBoolean( ++nPos, history.getGuichet( ).isActiveOngletGuichet( ) );
-    
+
             daoUtil.setString( ++nPos, history.getAgent( ).getStatustextAgent( ) );
             daoUtil.setString( ++nPos, history.getAgent( ).getMessageAgent( ) );
             daoUtil.setBoolean( ++nPos, history.getAgent( ).isActiveOngletAgent( ) );
-    
+
             daoUtil.setString( ++nPos, history.getEmail( ).getSubjectEmail( ) );
             daoUtil.setString( ++nPos, history.getEmail( ).getMessageEmail( ) );
             daoUtil.setString( ++nPos, history.getEmail( ).getSenderNameEmail( ) );
             daoUtil.setString( ++nPos, history.getEmail( ).getRecipientsCcEmail( ) );
             daoUtil.setString( ++nPos, history.getEmail( ).getRecipientsCciEmail( ) );
             daoUtil.setBoolean( ++nPos, history.getEmail( ).isActiveOngletEmail( ) );
-    
+
             daoUtil.setString( ++nPos, history.getSMS( ).getMessageSMS( ) );
             daoUtil.setString( ++nPos, history.getSMS( ).getBillingAccount( ) );
             daoUtil.setBoolean( ++nPos, history.getSMS( ).isActiveOngletSMS( ) );
-    
+
             daoUtil.setInt( ++nPos, history.getBroadCast( ).getIdMailingListBroadcast( ) );
             daoUtil.setString( ++nPos, history.getBroadCast( ).getEmailBroadcast( ) );
             daoUtil.setString( ++nPos, history.getBroadCast( ).getSenderNameBroadcast( ) );
@@ -108,7 +108,7 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
             daoUtil.setString( ++nPos, history.getBroadCast( ).getRecipientsCcBroadcast( ) );
             daoUtil.setString( ++nPos, history.getBroadCast( ).getRecipientsCciBroadcast( ) );
             daoUtil.setBoolean( ++nPos, history.getBroadCast( ).isActiveOngletBroadcast( ) );
-    
+
             daoUtil.executeUpdate( );
         }
     }
@@ -132,14 +132,14 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
             daoUtil.setInt( ++nPos, nIdTask );
             daoUtil.setInt( ++nPos, nIdHistory );
             daoUtil.executeQuery( );
-    
+
             if ( daoUtil.next( ) )
             {
                 nPos = 0;
                 oAlertGru.setIdResourceHistory( daoUtil.getInt( ++nPos ) );
                 oAlertGru.setIdTask( daoUtil.getInt( ++nPos ) );
                 oAlertGru.setCrmStatusId( daoUtil.getInt( ++nPos ) );
-    
+
                 oGuichet.setMessageGuichet( daoUtil.getString( ++nPos ) );
                 oGuichet.setStatustextGuichet( daoUtil.getString( ++nPos ) );
                 oGuichet.setSenderNameGuichet( daoUtil.getString( ++nPos ) );
@@ -147,22 +147,22 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
                 oGuichet.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
                 oGuichet.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
                 oGuichet.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
-    
+
                 oAgent.setStatustextAgent( daoUtil.getString( ++nPos ) );
                 oAgent.setMessageAgent( daoUtil.getString( ++nPos ) );
                 oAgent.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
-    
+
                 oEmail.setSubjectEmail( daoUtil.getString( ++nPos ) );
                 oEmail.setMessageEmail( daoUtil.getString( ++nPos ) );
                 oEmail.setSenderNameEmail( daoUtil.getString( ++nPos ) );
                 oEmail.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
                 oEmail.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
                 oEmail.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
-    
+
                 oSMS.setMessageSMS( daoUtil.getString( ++nPos ) );
                 oSMS.setBillingAccount( daoUtil.getString( ++nPos ) );
                 oSMS.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
-    
+
                 oBroadcast.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
                 oBroadcast.setEmailBroadcast( daoUtil.getString( ++nPos ) );
                 oBroadcast.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
@@ -172,7 +172,7 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
                 oBroadcast.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
                 oBroadcast.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
             }
-    
+
             oAlertGru.setGuichet( oGuichet );
             oAlertGru.setAgent( oAgent );
             oAlertGru.setEmail( oEmail );
@@ -193,7 +193,7 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
             int nPos = 0;
             daoUtil.setInt( ++nPos, nIdHistory );
             daoUtil.setInt( ++nPos, nIdTask );
-    
+
             daoUtil.executeUpdate( );
         }
     }
@@ -208,7 +208,7 @@ public class AlertGruHistoryDAO implements IAlertGruHistoryDAO
         {
             int nPos = 0;
             daoUtil.setInt( ++nPos, nIdTask );
-    
+
             daoUtil.executeUpdate( );
         }
     }

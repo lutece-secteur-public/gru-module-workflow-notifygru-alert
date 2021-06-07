@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -437,28 +437,28 @@ public class AlertGruTask extends SimpleTask
         }
         return task;
     }
-    
+
     public void sendAlert( int idResource, String resourceType, int actionId, int workflowId )
     {
 
         ITask task = findTaskAlert( actionId );
         if ( task == null )
         {
-            return ;
+            return;
         }
-        
+
         /* Task Config form cache, it can't be null due to getAlertGruConfigFromCache algorithm */
         AlertGruTaskConfig config = AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, task.getId( ) );
         int daysAlert = config.getDaysToAlert( );
         String alertAfterBefore = config.getAlertAfterBefore( );
         String markerAlert = config.getMarkerAlert( );
-        
-        if ( daysAlert == 0 ) 
+
+        if ( daysAlert == 0 )
         {
             AppLogService.info( "Task id " + task.getId( ) + " : days defined to 0." );
-            return ;
+            return;
         }
-        
+
         String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
         AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
@@ -474,21 +474,20 @@ public class AlertGruTask extends SimpleTask
             AppLogService.error( "Task id " + task.getId( ) + " : Unable to retrieve the provider '" + config.getIdSpringProvider( ) + "'" );
             return;
         }
-        
+
         Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), null ) );
 
         // Day timestamp
         Timestamp timestampNow = new Timestamp( Calendar.getInstance( ).getTimeInMillis( ) );
 
         // Resource or State timestamp
-        Timestamp dateAlert = computeDateAlert( resourceHistory.getCreationDate( ), model, markerAlert, daysAlert, alertAfterBefore,
-                timestampNow );
+        Timestamp dateAlert = computeDateAlert( resourceHistory.getCreationDate( ), model, markerAlert, daysAlert, alertAfterBefore, timestampNow );
 
         if ( dateAlert == null || dateAlert.getTime( ) > timestampNow.getTime( ) )
         {
             return;
         }
-        
+
         AlertGruHistory alertGruHistory = new AlertGruHistory( );
         alertGruHistory.setIdTask( task.getId( ) );
 
@@ -503,11 +502,12 @@ public class AlertGruTask extends SimpleTask
             doSendAlert( idResource, resourceType, actionId, workflowId, notificationObject, alertGruHistory, config );
         }
     }
-    
-    private boolean buildNotificationContent( IProvider provider, Notification notificationObject, ResourceHistory resourceHistory , AlertGruHistory alertGruHistory, AlertGruTaskConfig config )
+
+    private boolean buildNotificationContent( IProvider provider, Notification notificationObject, ResourceHistory resourceHistory,
+            AlertGruHistory alertGruHistory, AlertGruTaskConfig config )
     {
         Map<String, Object> model = markersToModel( findMarkers( resourceHistory, provider, config.getMarkerProviders( ), null ) );
-        
+
         boolean bNotifEmpty = true;
         if ( config.isActiveOngletEmail( ) && StringUtils.isNotBlank( provider.provideCustomerEmail( ) ) )
         {
@@ -553,8 +553,9 @@ public class AlertGruTask extends SimpleTask
         }
         return bNotifEmpty;
     }
-    
-    private void doSendAlert( int idResource, String resourceType, int actionId, int workflowId, Notification notificationObject, AlertGruHistory alertGruHistory, AlertGruTaskConfig config )
+
+    private void doSendAlert( int idResource, String resourceType, int actionId, int workflowId, Notification notificationObject,
+            AlertGruHistory alertGruHistory, AlertGruTaskConfig config )
     {
         try
         {
@@ -580,8 +581,7 @@ public class AlertGruTask extends SimpleTask
             resourceWorkflow.setState( state );
             _resourceWorkflowService.update( resourceWorkflow );
             Locale locale = I18nService.getDefaultLocale( );
-            WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( idResource, resourceType, config.getIdStateAfter( ),
-                    null, locale, null );
+            WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( idResource, resourceType, config.getIdStateAfter( ), null, locale, null );
 
         }
         catch( AppException | NotifyGruException e )

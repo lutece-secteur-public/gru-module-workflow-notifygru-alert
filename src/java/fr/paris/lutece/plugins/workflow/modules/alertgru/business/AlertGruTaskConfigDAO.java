@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2020, City of Paris
+ * Copyright (c) 2002-2021, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -102,7 +102,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertGruPlugin.getPlugin( ) ) )
         {
             int nPos = configToData( alertGruTaskConfig, daoUtil );
-    
+
             daoUtil.setInt( ++nPos, alertGruTaskConfig.getIdTask( ) );
             daoUtil.executeUpdate( );
         }
@@ -123,29 +123,29 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
         {
             daoUtil.setInt( 1, nIdTask );
             daoUtil.executeQuery( );
-    
+
             if ( daoUtil.next( ) )
             {
                 int nPos = 0;
                 config = new AlertGruTaskConfig( );
                 config.setIdTask( daoUtil.getInt( ++nPos ) );
-    
+
                 config.setIdSpringProvider( daoUtil.getString( ++nPos ) );
-    
+
                 String strMarkerProviderIds = daoUtil.getString( ++nPos );
                 List<String> listMarkerProviderIds = new ArrayList<>( );
-    
+
                 if ( !StringUtils.isBlank( strMarkerProviderIds ) )
                 {
                     Collections.addAll( listMarkerProviderIds, StringUtils.split( strMarkerProviderIds, ',' ) );
                 }
-    
+
                 config.setMarkerProviders( listMarkerProviderIds );
-    
+
                 config.setDemandStatus( daoUtil.getInt( ++nPos ) );
                 config.setCrmStatusId( daoUtil.getInt( ++nPos ) );
                 config.setSetOnglet( daoUtil.getInt( ++nPos ) );
-    
+
                 config.setMessageGuichet( daoUtil.getString( ++nPos ) );
                 config.setStatustextGuichet( daoUtil.getString( ++nPos ) );
                 config.setSenderNameGuichet( daoUtil.getString( ++nPos ) );
@@ -153,23 +153,23 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
                 config.setDemandMaxStepGuichet( daoUtil.getInt( ++nPos ) );
                 config.setDemandUserCurrentStepGuichet( daoUtil.getInt( ++nPos ) );
                 config.setActiveOngletGuichet( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setStatustextAgent( daoUtil.getString( ++nPos ) );
                 config.setMessageAgent( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletAgent( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setSubjectEmail( daoUtil.getString( ++nPos ) );
                 config.setMessageEmail( daoUtil.getString( ++nPos ) );
                 config.setSenderNameEmail( daoUtil.getString( ++nPos ) );
                 config.setRecipientsCcEmail( daoUtil.getString( ++nPos ) );
                 config.setRecipientsCciEmail( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletEmail( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setMessageSMS( daoUtil.getString( ++nPos ) );
                 config.setBillingAccountSMS( daoUtil.getString( ++nPos ) );
                 config.setBillingGroupSMS( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletSMS( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setIdMailingListBroadcast( daoUtil.getInt( ++nPos ) );
                 config.setEmailBroadcast( daoUtil.getString( ++nPos ) );
                 config.setSenderNameBroadcast( daoUtil.getString( ++nPos ) );
@@ -178,7 +178,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
                 config.setRecipientsCcBroadcast( daoUtil.getString( ++nPos ) );
                 config.setRecipientsCciBroadcast( daoUtil.getString( ++nPos ) );
                 config.setActiveOngletBroadcast( daoUtil.getBoolean( ++nPos ) );
-    
+
                 config.setDaysToAlert( daoUtil.getInt( ++nPos ) );
                 config.setIdStateAfter( daoUtil.getInt( ++nPos ) );
                 config.setAlertSubject( daoUtil.getString( ++nPos ) );
