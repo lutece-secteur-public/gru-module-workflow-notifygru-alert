@@ -86,11 +86,4 @@
         <constructor-arg
             ref="workflow-notifygru.lib-notifygru.apiManagerTransport" />
     </bean>
-
-    <!-- Archivers -->
-    <bean id="workflow-alertgru.workflowNotiyGruAlertResourceArchiver"
-        class="fr.paris.lutece.plugins.workflow.modules.alertgru.service.archiver.WorkflowNotiyGruAlertResourceArchiver" />
-    <bean
-        id="workflow-alertgru.workflowNotiyGruAlertDeleteArchiveProcessingService"
-        class="fr.paris.lutece.plugins.workflow.modules.alertgru.service.archiver.WorkflowNotiyGruAlertDeleteArchiveProcessingService" />
 </beans>
