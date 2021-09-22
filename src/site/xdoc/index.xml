@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>       
+          Module Workflow NotifyGru Alert            
+        </title>
+    </properties>
+    <head>
+	<meta name="keywords" content="notification, GRU, workflow, alert, daemon" />
+    </head>
+    <body>
+        <section name="Module Workflow NotifyGru Alert">
+            <!--
+            <p>
+                <img src="images/moduleworkflownotifygru.png" />
+            </p>
+            -->
+             <subsection name="Introduction">
+<p>This module provides a workflow task which does not run directly when an action is triggered (unlike the module-workflow-notifygru), but allows a daemon to send "GRU" notifications regarding the status of resources and specific date criteria. </p>         
+             </subsection>
+           
+            
+            <subsection name="Configuration">
+                    <p>To configure this task, you must select the data providers and the criteria (status, time) desired to trigger alerts or reminders
+                    ,  and, as for the module-workflow-notifygru, the different types of notification desired. </p>
+                                </subsection>
+            
+            <subsection name="Usage">
+                <p>The spécific Daemon must run to lauch the notifications.
+		</p>
+            </subsection>
+            
+        </section>
+    </body>
+</document>
+

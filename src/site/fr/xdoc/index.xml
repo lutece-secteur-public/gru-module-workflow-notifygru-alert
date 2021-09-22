@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document>
+    <properties>
+        <title>       
+          Module Workflow NotifyGru Alert            
+        </title>
+    </properties>
+    <head>
+	<meta name="keywords" content="notification, GRU, workflow, alerte, demon" />
+    </head>
+    <body>
+        <section name="Module Workflow NotifyGru Alert">
+            <!--
+            <p>
+                <img src="images/moduleworkflownotifygru.png" />
+            </p>
+            -->
+             <subsection name="Introduction">
+<p>Ce module fournit une tâche de workflow qui ne s'execute pas directement au declenchement d'une  action (contrairement au module-workflow-notifygru), mais  permet à un démon d'envoyer des notifications "GRU"  par rapport au statut des ressources et des critères de dates précis.</p>         
+             </subsection>
+           
+            
+            <subsection name="Configuration">
+                    <p>Pour configurer cette tâche il faut sélectionner les fournisseurs de données et les critères (statuts, temps) souhaités pour déclencher les alertes ou rappels , et, comme pour le module-workflow-notifygru, les différents types de notification souhaités.</p>
+                                </subsection>
+            
+            <subsection name="Usage">
+                <p>
+Le démon spécifique doit s'exécuter pour lancer les notifications.
+		</p>
+            </subsection>
+            
+        </section>
+    </body>
+</document>
+

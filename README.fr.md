@@ -7,15 +7,15 @@
 
 ## Introduction
 
-This module provides a workflow task which does not run directly when an action is triggered (unlike the module-workflow-notifygru), but allows a daemon to send "GRU" notifications regarding the status of resources and specific date criteria.
+Ce module fournit une tâche de workflow qui ne s'execute pas directement au declenchement d'une action (contrairement au module-workflow-notifygru), mais permet à un démon d'envoyer des notifications "GRU" par rapport au statut des ressources et des critères de dates précis.
 
 ## Configuration
 
-To configure this task, you must select the data providers and the criteria (status, time) desired to trigger alerts or reminders , and, as for the module-workflow-notifygru, the different types of notification desired.
+Pour configurer cette tâche il faut sélectionner les fournisseurs de données et les critères (statuts, temps) souhaités pour déclencher les alertes ou rappels , et, comme pour le module-workflow-notifygru, les différents types de notification souhaités.
 
 ## Usage
 
-The spécific Daemon must run to lauch the notifications.
+Le démon spécifique doit s'exécuter pour lancer les notifications.
 
 
 [Maven documentation and reports](https://dev.lutece.paris.fr/plugins/module-workflow-notifygru-alert/)
