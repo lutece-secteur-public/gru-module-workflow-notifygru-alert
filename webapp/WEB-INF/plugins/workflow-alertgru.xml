@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><plug-in>
     <name>workflow-alertgru</name>
     <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.0.3</version>
     <documentation/>
     <installation/>
     <changes/>
@@ -9,7 +9,7 @@
     <description>module.workflow.alertgru.module.description</description>
     <provider>module.workflow.alertgru.module.provider</provider>
     <provider-url>http://lutece.paris.fr</provider-url>
-   <icon-url>images/admin/skin/plugins/alertgru/alertgru.png</icon-url>
+    <icon-url>images/admin/skin/plugins/alertgru/alertgru.png</icon-url>
     <copyright>Copyright (c) 2017 Mairie de Paris</copyright>
     <db-pool-required>1</db-pool-required>
     
@@ -24,9 +24,9 @@
 
     <!-- Portlet parameters -->
     <portlets>
-   </portlets>
+    </portlets>
    
-   <css-stylesheets>
+    <css-stylesheets>
         <css-stylesheets-scope>portal</css-stylesheets-scope>
         <css-stylesheet>workflow/modules/alertgru/workflow_alertgru.css</css-stylesheet>
     </css-stylesheets>
