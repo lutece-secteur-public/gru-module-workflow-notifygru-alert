@@ -10,7 +10,7 @@
     <groupId>fr.paris.lutece.plugins</groupId>
     <artifactId>module-workflow-notifygru-alert</artifactId>
     <packaging>lutece-plugin</packaging>
-    <version>2.0.3</version>
+    <version>2.0.4-SNAPSHOT</version>
     <name>Lutece module workflow notigygru alert</name>
 
     <repositories>
@@ -59,6 +59,6 @@
         <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</connection>
         <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</developerConnection>
         <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</url>
-        <tag>module-workflow-notifygru-alert-2.0.3</tag>
+        <tag>HEAD</tag>
     </scm>
 </project>
