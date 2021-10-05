@@ -93,12 +93,6 @@ public class AlertGruTaskComponent extends NoFormTaskComponent
     }
 
     @Override
-    public String getTaskInformationXml( int i, HttpServletRequest httpServletRequest, Locale locale, ITask iTask )
-    {
-        return null;
-    }
-
-    @Override
     public String doSaveConfig( HttpServletRequest request, Locale locale, ITask task )
     {
         return new AlertGruTaskConfigController( task ).performAction( request );
