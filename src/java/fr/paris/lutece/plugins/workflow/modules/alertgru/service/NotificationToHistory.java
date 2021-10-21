@@ -50,7 +50,7 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.SMSHis
 import java.util.List;
 
 import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * The Class NotificationToHistory.
