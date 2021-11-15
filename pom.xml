@@ -55,10 +55,11 @@
         <jiraComponentId>15367</jiraComponentId>
         <sonar.tests />
     </properties>
+    
     <scm>
-        <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</connection>
-        <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</developerConnection>
-        <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert</url>
+        <connection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert.git</connection>
+        <developerConnection>scm:git:https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert.git</developerConnection>
+        <url>https://github.com/lutece-secteur-public/gru-module-workflow-notifygru-alert.git</url>
         <tag>HEAD</tag>
     </scm>
 </project>
