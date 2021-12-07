@@ -72,11 +72,9 @@ import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
-import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppException;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
-import fr.paris.lutece.util.html.HtmlTemplate;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -363,10 +361,11 @@ public class AlertGruTask extends SimpleTask
      */
     private static String replaceMarkers( String strMessage, Map<String, Object> model )
     {
-        @SuppressWarnings( "deprecation" )
-        HtmlTemplate template = AppTemplateService.getTemplateFromStringFtl( strMessage, Locale.FRENCH, model );
-
-        return template.getHtml( );
+        for ( Map.Entry<String, Object> entry : model.entrySet( ) ) 
+        {
+            strMessage = strMessage.replaceAll( "\\$\\{" + entry.getKey( ) + "!{0,1}}", entry.getValue( ).toString( ) );
+        } 
+        return strMessage;
     }
 
     /**
