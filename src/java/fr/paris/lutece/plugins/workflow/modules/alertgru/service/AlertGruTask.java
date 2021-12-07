@@ -363,7 +363,7 @@ public class AlertGruTask extends SimpleTask
     {
         for ( Map.Entry<String, Object> entry : model.entrySet( ) ) 
         {
-            strMessage = strMessage.replaceAll( "\\$\\{" + entry.getKey( ) + "!{0,1}}", entry.getValue( ).toString( ) );
+            strMessage = strMessage.replaceAll( "\\$\\{" + entry.getKey( ) + "!{0,1}}", entry.getValue( ) == null ? "" : entry.getValue( ).toString( )  );
         } 
         return strMessage;
     }
