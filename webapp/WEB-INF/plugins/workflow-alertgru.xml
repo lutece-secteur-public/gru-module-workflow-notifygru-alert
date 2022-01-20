@@ -27,8 +27,6 @@
     </portlets>
    
     <css-stylesheets>
-        <css-stylesheets-scope>portal</css-stylesheets-scope>
-        <css-stylesheet>workflow/modules/alertgru/workflow_alertgru.css</css-stylesheet>
     </css-stylesheets>
 
     <daemons>
