@@ -101,4 +101,16 @@ subject_broadcast VARCHAR(255) DEFAULT   NULL,
   PRIMARY KEY  (id_history, id_task)
   );
 
-
+  --
+-- Table structure for table notifygru_alert_update_resource_state_queue
+--
+DROP TABLE IF EXISTS notifygru_alert_resource_state_queue;
+CREATE TABLE notifygru_alert_update_resource_state_queue (
+  id_resource INT NOT NULL,
+  id_task INT NOT NULL,
+  resource_type VARCHAR(255) DEFAULT '' NOT NULL,
+  id_external_parent INT DEFAULT 0 NOT NULL,
+  id_workflow INT NOT NULL;
+  status INT DEFAULT 0 NOT NULL,
+  PRIMARY KEY ( id_resource )
+);

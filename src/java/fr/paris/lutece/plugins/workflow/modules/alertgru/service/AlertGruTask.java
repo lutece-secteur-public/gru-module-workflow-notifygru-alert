@@ -47,6 +47,7 @@ import fr.paris.lutece.plugins.librarynotifygru.exception.NotifyGruException;
 import fr.paris.lutece.plugins.librarynotifygru.services.NotificationService;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertGruHistory;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
+import fr.paris.lutece.plugins.workflow.modules.alertgru.business.UpdateTaskStateResourceQueue;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache.AlertGruCacheService;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
@@ -124,11 +125,25 @@ public class AlertGruTask extends SimpleTask
 
     @Inject
     private IResourceWorkflowService _resourceWorkflowService;
+    private UpdateTaskStateResourceQueueService _updateResourceQueueService;
 
     @Override
     public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
     {
-        // Do Nothing
+        ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
+
+        ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( resourceHistory.getIdResource( ), resourceHistory.getResourceType( ),
+                resourceHistory.getWorkflow( ).getId( ) );
+
+            UpdateTaskStateResourceQueue updateResourceQueue = new UpdateTaskStateResourceQueue( );
+            updateResourceQueue.setIdResource( resourceHistory.getIdResource( ) );
+            updateResourceQueue.setIdTask( getId( ) );
+            updateResourceQueue.setIdExternalParent( resourceWorkflow.getExternalParentId( ) );
+            updateResourceQueue.setIdWorkflow( resourceWorkflow.getWorkflow( ).getId( ) );
+            updateResourceQueue.setResourceType( resourceHistory.getResourceType( ) );
+            updateResourceQueue.setStatus( false );
+
+            _updateResourceQueueService.create( updateResourceQueue );
     }
 
     /**
