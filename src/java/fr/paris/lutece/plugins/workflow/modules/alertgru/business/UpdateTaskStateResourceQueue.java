@@ -43,6 +43,7 @@ public class UpdateTaskStateResourceQueue
     private int _nIdTask;
     private String _strResourceType;
     private int _nIdExternalParent;
+    private int _nIdResourceHistory;
     private int _nIdWorkflow;
     private boolean _bStatus;
 
@@ -152,7 +153,28 @@ public class UpdateTaskStateResourceQueue
     {
         _nIdWorkflow = nIdWorkflow;
     }
+    
+    /**
+    * Returns the IdResourceHistory
+    * 
+    * @return The IdResourceHistory
+    */
+    public int getIdResourceHistory( )
+    {
+        return _nIdResourceHistory;
+    }
 
+    /**
+    * Sets the IdResourceHistory
+    * 
+    * @param nIdResourceHistory
+    *            The IdResourceHistory
+    */
+    public void setIdResourceHistory( int nIdResourceHistory )
+    {
+        _nIdResourceHistory = nIdResourceHistory;
+    }
+            
     /**
      * Returns the Status
      * 

@@ -137,6 +137,7 @@ public class AlertGruTask extends SimpleTask
 
             UpdateTaskStateResourceQueue updateResourceQueue = new UpdateTaskStateResourceQueue( );
             updateResourceQueue.setIdResource( resourceHistory.getIdResource( ) );
+            updateResourceQueue.setIdResourceHistory( nIdResourceHistory );
             updateResourceQueue.setIdTask( getId( ) );
             updateResourceQueue.setIdExternalParent( resourceWorkflow.getExternalParentId( ) );
             updateResourceQueue.setIdWorkflow( resourceWorkflow.getWorkflow( ).getId( ) );
