@@ -34,6 +34,9 @@
 package fr.paris.lutece.plugins.workflow.modules.alertgru.business;
 
 import java.util.List;
+import java.util.Optional;
+
+import fr.paris.lutece.portal.service.plugin.Plugin;
 
 /**
  * IUpdateTaskStateResourceQueueDAO Interface
@@ -47,37 +50,63 @@ public interface IUpdateTaskStateResourceQueueDAO
      * 
      * @param updateTaskStateResourceQueue
      *            instance of the updateTaskStateResourceQueue object to inssert
+     * @param plugin
+     *            The plugin 
      */
 
-    void insert( UpdateTaskStateResourceQueue updateTaskStateResourceQueue );
+    void insert( UpdateTaskStateResourceQueue updateTaskStateResourceQueue, Plugin plugin );
 
     /**
      * Update the record in the table
      * 
      * @param updateTaskStateResourceQueue
      *            the reference of the updateTaskStateResourceQueue
+     * @param plugin
+     *            The plugin 
      */
 
-    void store( UpdateTaskStateResourceQueue updateTaskStateResourceQueue );
+    void store( UpdateTaskStateResourceQueue updateTaskStateResourceQueue, Plugin plugin );
 
     /**
      * Delete a record from the table
      * 
-     * @param nIdUpdateTaskStateResourceQueue
+     * @param nIdResourceQueues
      *            int identifier of the UpdateTaskStateResourceQueue to delete
+     * @param plugin
+     *            The plugin    
      */
-
-    void delete( int nIdResourceHistory, int nIdTask );
+    void deleteByPrimaryKey( int nIdResourceQueues, Plugin plugin );
     
     /**
      * Delete a record from the table
      * 
      * @param nIdUpdateTaskStateResourceQueue
      *            int identifier of the UpdateTaskStateResourceQueue to delete
+     * @param plugin
+     *            The plugin            
      */
-
-    void deleteByIdTask( int nIdTask );
-
+    void deleteByIdTask( int nIdTask, Plugin plugin );
+   
+    /**
+     * Delete a record from the table
+     * 
+     * @param IdResourceHistory
+     *            the resource history id of the resource workflow 
+     * @param plugin
+     *            The plugin            
+     */
+    void deleteByResourceHistory( int nIdResourceHistory,  Plugin plugin );
+    
+    /**
+     * Delete a record from the table
+     * 
+     * @param nIdResource The nIdResource of the updateTaskStateResourceQueue
+     * @param strResourceType  The resource type of the updateTaskStateResourceQueue
+     * @param plugin the plugin       
+     */
+    void deleteByResource( int nIdResource, String strResourceType, Plugin plugin );
+    
+    
     ///////////////////////////////////////////////////////////////////////////
     // Finders
 
@@ -86,37 +115,68 @@ public interface IUpdateTaskStateResourceQueueDAO
      * 
      * @param nKey
      *            The identifier of the updateTaskStateResourceQueue
+     * @param plugin
+     *            The plugin 
      * @return The instance of the updateTaskStateResourceQueue
      */
-
-    UpdateTaskStateResourceQueue load( int nKey );
+    Optional<UpdateTaskStateResourceQueue> load( int nKey, Plugin plugin );
 
     /**
      * Load the data from the table
      * 
-     * @param nIdResourceHistory
-     *            The nIdResourceHistory of the updateTaskStateResourceQueue
+     * @param nIdResource
+     *            The nIdResource of the updateTaskStateResourceQueue
      * @param nIdTask
      *            The nIdTask of the updateTaskStateResourceQueue
+     * @param plugin
+     *            The plugin 
      * @return The instance of the updateTaskStateResourceQueue
      */
-
-    UpdateTaskStateResourceQueue find( int nIdResourceHistory, int nIdTask );
+    Optional<UpdateTaskStateResourceQueue> load( int nIdResource, int nIdTask, Plugin plugin );
+    /**
+     * Load the data from the table by resource
+     * @param nIdResource The nIdResource of the updateTaskStateResourceQueue
+     * @param strResourceType  The resource type of the updateTaskStateResourceQueue
+     * @param plugin the plugin
+     * @return The instance of the updateTaskStateResourceQueue
+     */
+    Optional<UpdateTaskStateResourceQueue> load( int nIdResource, String strResourceType, Plugin plugin );
 
     /**
      * Load the data of all the updateTaskStateResourceQueue objects and returns them as a collection
-     * 
+     * @param plugin
+     *            The plugin 
      * @return the List which contains the data of all the updateTaskStateResourceQueue objects
      */
 
-    List<UpdateTaskStateResourceQueue> selectAllActived( );
+    List<UpdateTaskStateResourceQueue> selectAllActived( Plugin plugin );
 
     /**
      * Load the data of all the updateTaskStateResourceQueue objects and returns them as a collection
-     * 
+     * @param plugin
+     *            The plugin 
      * @return the List which contains the data of all the updateTaskStateResourceQueue objects
      */
 
-    List<UpdateTaskStateResourceQueue> selectAllDisabled( );
+    List<UpdateTaskStateResourceQueue> selectAllDisabled( Plugin plugin );
 
+    
+    /**
+     * Load the id of all the updateTaskStateResourceQueue  and returns them as a collection
+     * @param plugin
+     *            The plugin 
+     * @return the List which contains the id of all the updateTaskStateResourceQueue objects
+     */
+    List <Integer> selectAllIdQueueActived( Plugin plugin );
+    
+    /**
+     * Load the data from the table
+     * 
+     * @param listIdResourceQueues
+     *            The identifier list of the updateTaskStateResourceQueue
+     * @param plugin
+     *            The plugin 
+     * @return The instance list of the updateTaskStateResourceQueue
+     */
+    List<UpdateTaskStateResourceQueue> selectByPrimaryKeyList( List<Integer> listIdResourceQueues, Plugin plugin );
 }

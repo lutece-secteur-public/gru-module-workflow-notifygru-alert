@@ -33,22 +33,9 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.daemon;
 
-import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruTask;
-import fr.paris.lutece.plugins.workflowcore.business.action.Action;
-import fr.paris.lutece.plugins.workflowcore.business.action.ActionFilter;
-import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceWorkflow;
-import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceWorkflowFilter;
-import fr.paris.lutece.plugins.workflowcore.business.workflow.Workflow;
-import fr.paris.lutece.plugins.workflowcore.business.workflow.WorkflowFilter;
-import fr.paris.lutece.plugins.workflowcore.service.action.ActionService;
-import fr.paris.lutece.plugins.workflowcore.service.action.IActionService;
-import fr.paris.lutece.plugins.workflowcore.service.resource.IResourceWorkflowService;
-import fr.paris.lutece.plugins.workflowcore.service.resource.ResourceWorkflowService;
-import fr.paris.lutece.plugins.workflowcore.service.workflow.IWorkflowService;
+import fr.paris.lutece.plugins.workflow.modules.alertgru.service.TaskAlertService;
 import fr.paris.lutece.portal.service.daemon.Daemon;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
-import fr.paris.lutece.portal.service.util.AppLogService;
-import java.util.List;
+
 
 /**
  * 
@@ -57,54 +44,11 @@ import java.util.List;
 public class AlertGruDaemon extends Daemon
 {
 
-    private AlertGruTask _taskAlertGru = SpringContextService.getBean( "workflow-alertgru.taskAlertGru" );
-
     @Override
     public void run( )
     {
 
-        IWorkflowService workflowService = SpringContextService.getBean( fr.paris.lutece.plugins.workflowcore.service.workflow.WorkflowService.BEAN_SERVICE );
-        WorkflowFilter workflowFilter = new WorkflowFilter( );
-
-        workflowFilter.setIsEnabled( 1 );
-
-        List<Workflow> listWorkflows = workflowService.getListWorkflowsByFilter( workflowFilter );
-        IResourceWorkflowService resourceWorkflowService = SpringContextService.getBean( ResourceWorkflowService.BEAN_SERVICE );
-
-        for ( Workflow workflow : listWorkflows )
-        {
-            IActionService actionService = SpringContextService.getBean( ActionService.BEAN_SERVICE );
-            ActionFilter filter = new ActionFilter( );
-
-            filter.setAutomaticReflexiveAction( true );
-            filter.setIdWorkflow( workflow.getId( ) );
-
-            List<Action> listAutomaticActions = actionService.getListActionByFilter( filter );
-
-            for ( Action action : listAutomaticActions )
-            {
-                ResourceWorkflowFilter filt = new ResourceWorkflowFilter( );
-                filt.setIdState( action.getStateBefore( ).getId( ) );
-                filt.setIdWorkflow( workflow.getId( ) );
-
-                List<ResourceWorkflow> listResource = resourceWorkflowService.getListResourceWorkflowByFilter( filt );
-
-                for ( ResourceWorkflow resource : listResource )
-                {
-                    try
-                    {
-                        _taskAlertGru.sendAlert( resource.getIdResource( ), resource.getResourceType( ), action.getId( ), workflow.getId( ) );
-
-                    }
-                    catch( Exception e )
-                    {
-
-                        AppLogService.error( "alert gru forms: " + e.getMessage( ) + ": " + e, e );
-                    }
-
-                }
-            }
-        }
+    	TaskAlertService.INSNACE.sendAlert();
     }
 
 }

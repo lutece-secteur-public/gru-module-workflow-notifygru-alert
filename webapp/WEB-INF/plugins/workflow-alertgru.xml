@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><plug-in>
     <name>workflow-alertgru</name>
-    <class>fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation</class>
+    <class>fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruPlugin</class>
     <version>2.1.1-SNAPSHOT</version>
     <documentation/>
     <installation/>

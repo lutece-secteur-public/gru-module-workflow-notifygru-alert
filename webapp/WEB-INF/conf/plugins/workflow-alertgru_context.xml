@@ -22,7 +22,10 @@
         class="fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfigDAO" />
     <bean id="AlertGruHistoryDAO"
         class="fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertGruHistoryDAO" />
-
+        <bean id="workflow-alertgru.updateTaskStateResourceQueueDAO"
+        class="fr.paris.lutece.plugins.workflow.modules.alertgru.business.UpdateTaskStateResourceQueueDAO" />
+   
+  
     <!-- Task -->
     <bean id="workflow-alertgru.taskTypeAlertGru"
         class="fr.paris.lutece.plugins.workflowcore.business.task.TaskType"
