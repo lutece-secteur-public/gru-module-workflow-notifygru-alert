@@ -112,7 +112,14 @@ public enum TaskAlertService {
 	        IntStream.range( 0, ( listIdResourceQueues.size( ) + TAILLE_LOT - 1 ) / TAILLE_LOT )
            .mapToObj( i -> listIdResourceQueues.subList( i * TAILLE_LOT, Math.min( listIdResourceQueues.size( ), ( i + 1 ) * TAILLE_LOT ) ) )
            .forEach( batch -> 
-                sendAlert( listIdResourceQueues )
+	           {
+	           		try {
+	           			sendAlert( listIdResourceQueues );
+	           			
+	           		}catch(Exception e){
+			            AppLogService.error(  e.getMessage( ) , e);
+		        	}
+	           }
             );
     	 
      }
@@ -206,7 +213,13 @@ public enum TaskAlertService {
  		  
      	UpdateTaskStateResourceQueueHome.findByPrimaryKeyList(
      			listIdResourceQueues).stream().collect(Collectors.groupingBy(UpdateTaskStateResourceQueue::getIdTask )).forEach( (key, value) ->			
-     		       sendAlert( _taskService.findByPrimaryKey( key ,Locale.getDefault( )),   AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, key ), value )	
+     			{ 
+	     			try {
+	     				sendAlert( _taskService.findByPrimaryKey( key ,Locale.getDefault( )),   AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, key ), value );	
+	     			}catch(Exception e){
+			            AppLogService.error(  e.getMessage( ) , e);
+		        	}
+     			}
      	);
      	
      }
@@ -234,11 +247,18 @@ public enum TaskAlertService {
 	        }
 	    
 	        LocalDateTime now = LocalDateTime.now( );
+	        String strIdProv= ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
 	        listResourceQueues.forEach( resource ->
-		        	doSendAlert(  task, config ,  resource,  now, providerManager, ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) ) )
+	        {
+	        	try {
+	        		
+		        	doSendAlert(  task, config ,  resource,  now, providerManager, strIdProv );
+	        	
+	        	}catch(Exception e){
+		            AppLogService.error(  e.getMessage( ) , e);
+	        	}
+	        }
 	        );
-	        
-	      
      }
      /**
       * Send gru alert
