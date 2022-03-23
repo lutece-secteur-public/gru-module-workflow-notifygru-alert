@@ -50,28 +50,30 @@ public class UpdateTaskStateResourceQueue
     private boolean _bStatus;
     private int _nIdResourceQueue;
     private Timestamp _tCreationDate;
-    private Timestamp  _tAlertReferenceDate;
+    private Timestamp _tAlertReferenceDate;
     private int _nIdState;
-    
-    
-    
+
     /**
      * Returns the IdResourceQueue
+     * 
      * @return The IdResourceQueue
-     */ 
-     public int getIdResourceQueue()
-     {
-         return _nIdResourceQueue;
-     }
- 
+     */
+    public int getIdResourceQueue( )
+    {
+        return _nIdResourceQueue;
+    }
+
     /**
      * Sets the IdResourceQueue
-     * @param nIdResourceQueue The IdResourceQueue
-     */ 
-     public void setIdResourceQueue( int nIdResourceQueue )
-     {
-         _nIdResourceQueue = nIdResourceQueue;
-     }
+     * 
+     * @param nIdResourceQueue
+     *            The IdResourceQueue
+     */
+    public void setIdResourceQueue( int nIdResourceQueue )
+    {
+        _nIdResourceQueue = nIdResourceQueue;
+    }
+
     /**
      * Returns the IdResourceHistory
      * 
@@ -135,7 +137,6 @@ public class UpdateTaskStateResourceQueue
         _strResourceType = strResourceType;
     }
 
-    
     /**
      * Returns the IdExternalParent
      * 
@@ -152,7 +153,7 @@ public class UpdateTaskStateResourceQueue
      * @param nIdExternalParent
      *            The IdExternalParent
      */
-    
+
     public void setIdExternalParent( int nIdExternalParent )
     {
         _nIdExternalParent = nIdExternalParent;
@@ -178,28 +179,28 @@ public class UpdateTaskStateResourceQueue
     {
         _nIdWorkflow = nIdWorkflow;
     }
-    
+
     /**
-    * Returns the IdResourceHistory
-    * 
-    * @return The IdResourceHistory
-    */
+     * Returns the IdResourceHistory
+     * 
+     * @return The IdResourceHistory
+     */
     public int getIdResourceHistory( )
     {
         return _nIdResourceHistory;
     }
 
     /**
-    * Sets the IdResourceHistory
-    * 
-    * @param nIdResourceHistory
-    *            The IdResourceHistory
-    */
+     * Sets the IdResourceHistory
+     * 
+     * @param nIdResourceHistory
+     *            The IdResourceHistory
+     */
     public void setIdResourceHistory( int nIdResourceHistory )
     {
         _nIdResourceHistory = nIdResourceHistory;
     }
-            
+
     /**
      * Returns the Status
      * 
@@ -220,59 +221,64 @@ public class UpdateTaskStateResourceQueue
     {
         _bStatus = bStatus;
     }
+
     /**
-    *
-    * @return the creation date
-    */
-   public Timestamp getCreationDate( )
-   {
-       return _tCreationDate;
-   }
+     *
+     * @return the creation date
+     */
+    public Timestamp getCreationDate( )
+    {
+        return _tCreationDate;
+    }
 
-   /**
-    * set the creation date
-    * 
-    * @param dateCreation
-    *            the creation date
-    */
-   public void setCreationDate( Timestamp dateCreation )
-   {
-       _tCreationDate = dateCreation;
-   }
-   
-  /**
-   * @return the AlertReferenceDate date
-   */
-  public Timestamp getAlertReferenceDate( )
-  {
-      return _tAlertReferenceDate;
-  }
+    /**
+     * set the creation date
+     * 
+     * @param dateCreation
+     *            the creation date
+     */
+    public void setCreationDate( Timestamp dateCreation )
+    {
+        _tCreationDate = dateCreation;
+    }
 
-  /**
-   * set the alert Reference Date 
-   * 
-   * @param alertReferenceDate
-   *            the alert Reference Date 
-   */
-  public void setAlertReferenceDate( Timestamp alertReferenceDate )
-  {
-      _tAlertReferenceDate = alertReferenceDate;
-  }
-  /**
-   * Returns the IdState
-   * @return The IdState
-   */ 
-   public int getIdState()
-   {
-       return _nIdState;
-   }
+    /**
+     * @return the AlertReferenceDate date
+     */
+    public Timestamp getAlertReferenceDate( )
+    {
+        return _tAlertReferenceDate;
+    }
 
-  /**
-   * Sets the IdState
-   * @param nIdState The IdState
-   */ 
-   public void setIdState( int nIdState )
-   {
-       _nIdState = nIdState;
-   }
+    /**
+     * set the alert Reference Date
+     * 
+     * @param alertReferenceDate
+     *            the alert Reference Date
+     */
+    public void setAlertReferenceDate( Timestamp alertReferenceDate )
+    {
+        _tAlertReferenceDate = alertReferenceDate;
+    }
+
+    /**
+     * Returns the IdState
+     * 
+     * @return The IdState
+     */
+    public int getIdState( )
+    {
+        return _nIdState;
+    }
+
+    /**
+     * Sets the IdState
+     * 
+     * @param nIdState
+     *            The IdState
+     */
+    public void setIdState( int nIdState )
+    {
+        _nIdState = nIdState;
+    }
 }

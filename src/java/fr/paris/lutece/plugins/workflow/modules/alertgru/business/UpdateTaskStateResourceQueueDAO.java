@@ -56,7 +56,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
     private static final String SQL_QUERY_INSERT = "INSERT INTO notifygru_alert_update_resource_state_queue ( id_resource, id_task, resource_type, id_external_parent, id_workflow, id_resource_history, status, creation_date, alert_reference_date, id_state ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) ";
     private static final String SQL_QUERY_DELETE = "DELETE FROM notifygru_alert_update_resource_state_queue WHERE id_resource_queue = ? ";
     private static final String SQL_QUERY_DELETE_BY_RESOURCE_HISTORY = "DELETE FROM notifygru_alert_update_resource_state_queue WHERE id_resource_history = ? ";
-    private static final String SQL_QUERY_DELETE_BY_RESOURCE ="DELETE FROM notifygru_alert_update_resource_state_queue WHERE id_resource = ?  AND resource_type = ? ";   
+    private static final String SQL_QUERY_DELETE_BY_RESOURCE = "DELETE FROM notifygru_alert_update_resource_state_queue WHERE id_resource = ?  AND resource_type = ? ";
     private static final String SQL_QUERY_UPDATE = "UPDATE notifygru_alert_update_resource_state_queue SET id_resource = ?, id_task = ?, resource_type = ?, id_external_parent = ?, id_workflow = ?, id_resource_history = ?, status = ?, creation_date = ?, alert_reference_date= ?, id_state= ? WHERE id_resource_queue = ? ";
     private static final String SQL_QUERY_SELECTALL_ACTIVED = "SELECT id_resource_queue, id_resource, id_task, resource_type, id_external_parent, id_workflow, id_resource_history, status, creation_date, alert_reference_date, id_state FROM notifygru_alert_update_resource_state_queue WHERE status = 1";
     private static final String SQL_QUERY_SELECTALL_DISABLED = "SELECT id_resource_queue, id_resource, id_task, resource_type, id_external_parent, id_workflow, id_resource_history, status, creation_date, alert_reference_date, id_state FROM notifygru_alert_update_resource_state_queue WHERE status = 0";
@@ -81,14 +81,14 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdWorkflow( ) );
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdResourceHistory( ) );
             daoUtil.setBoolean( ++nIndex, updateTaskStateResourceQueue.getStatus( ) );
-            daoUtil.setTimestamp(++nIndex, updateTaskStateResourceQueue.getCreationDate( ));
-            daoUtil.setTimestamp(++nIndex, updateTaskStateResourceQueue.getAlertReferenceDate( ));
+            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getCreationDate( ) );
+            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getAlertReferenceDate( ) );
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdState( ) );
 
             daoUtil.executeUpdate( );
             if ( daoUtil.nextGeneratedKey( ) )
             {
-            	updateTaskStateResourceQueue.setIdResourceQueue( daoUtil.getGeneratedKeyInt( 1 ) );
+                updateTaskStateResourceQueue.setIdResourceQueue( daoUtil.getGeneratedKeyInt( 1 ) );
             }
 
         }
@@ -109,10 +109,10 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
 
             if ( daoUtil.next( ) )
             {
-            	 updateTaskStateResourceQueue= buildUpdateTaskStateResourceQueue (  daoUtil );
+                updateTaskStateResourceQueue = buildUpdateTaskStateResourceQueue( daoUtil );
             }
 
-            return Optional.ofNullable(updateTaskStateResourceQueue);
+            return Optional.ofNullable( updateTaskStateResourceQueue );
         }
     }
 
@@ -120,7 +120,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
      * {@inheritDoc }
      */
     @Override
-    public void deleteByPrimaryKey( int nIdResourceQueue,  Plugin plugin )
+    public void deleteByPrimaryKey( int nIdResourceQueue, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, plugin ) )
         {
@@ -128,11 +128,12 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             daoUtil.executeUpdate( );
         }
     }
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public void deleteByResourceHistory( int IdResourceHistory,  Plugin plugin )
+    public void deleteByResourceHistory( int IdResourceHistory, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_RESOURCE_HISTORY, plugin ) )
         {
@@ -140,23 +141,24 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             daoUtil.executeUpdate( );
         }
     }
+
     @Override
     public void deleteByResource( int nIdResource, String strResourceType, Plugin plugin )
     {
-    	 try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_RESOURCE, plugin ) )
-         {
-             daoUtil.setInt( 1, nIdResource );
-             daoUtil.setString( 2, strResourceType );
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_RESOURCE, plugin ) )
+        {
+            daoUtil.setInt( 1, nIdResource );
+            daoUtil.setString( 2, strResourceType );
 
-             daoUtil.executeUpdate( );
-         }
+            daoUtil.executeUpdate( );
+        }
     }
 
     /**
      * {@inheritDoc }
      */
     @Override
-    public void deleteByIdTask(int nIdTask , Plugin plugin)
+    public void deleteByIdTask( int nIdTask, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE_BY_ID_TASK, plugin ) )
         {
@@ -164,7 +166,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             daoUtil.executeUpdate( );
         }
     }
-    
+
     /**
      * {@inheritDoc }
      */
@@ -174,7 +176,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, plugin ) )
         {
             int nIndex = 0;
-    
+
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdResource( ) );
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdTask( ) );
             daoUtil.setString( ++nIndex, updateTaskStateResourceQueue.getResourceType( ) );
@@ -182,11 +184,11 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdWorkflow( ) );
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdResourceHistory( ) );
             daoUtil.setBoolean( ++nIndex, updateTaskStateResourceQueue.getStatus( ) );
-            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getCreationDate( ));
-            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getAlertReferenceDate( ));
+            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getCreationDate( ) );
+            daoUtil.setTimestamp( ++nIndex, updateTaskStateResourceQueue.getAlertReferenceDate( ) );
             daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdState( ) );
-            daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdResourceQueue() );
-         
+            daoUtil.setInt( ++nIndex, updateTaskStateResourceQueue.getIdResourceQueue( ) );
+
             daoUtil.executeUpdate( );
         }
     }
@@ -198,19 +200,19 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
     public List<UpdateTaskStateResourceQueue> selectAllActived( Plugin plugin )
     {
         List<UpdateTaskStateResourceQueue> listUpdateResourceQueues = new ArrayList<>( );
-        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ACTIVED , plugin) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ACTIVED, plugin ) )
         {
             daoUtil.executeQuery( );
 
             while ( daoUtil.next( ) )
             {
-                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue (  daoUtil ) );
+                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue( daoUtil ) );
             }
-
 
             return listUpdateResourceQueues;
         }
     }
+
     /**
      * {@inheritDoc }
      */
@@ -219,27 +221,26 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
     {
         List<UpdateTaskStateResourceQueue> listUpdateResourceQueues = new ArrayList<>( );
         StringBuilder sbSql = new StringBuilder( SQL_QUERY_SELECTALL_ACTIVED_BY_LIST );
-	    if ( CollectionUtils.isNotEmpty( listIdResourceQueues ) )
-	    {
-	        sbSql.append( listIdResourceQueues.stream( ).map( s -> "?" ).collect( Collectors.joining( "," ) ) );
-	        sbSql.append( ")" );
-	    }
-		       
-        try ( DAOUtil daoUtil = new DAOUtil( sbSql.toString( ) , plugin) )
+        if ( CollectionUtils.isNotEmpty( listIdResourceQueues ) )
         {
-        	int nIndex = 0;
-        	 for ( int id : listIdResourceQueues )
-  	       {
-  	           daoUtil.setInt( ++nIndex, id);
-  	       }
+            sbSql.append( listIdResourceQueues.stream( ).map( s -> "?" ).collect( Collectors.joining( "," ) ) );
+            sbSql.append( ")" );
+        }
+
+        try ( DAOUtil daoUtil = new DAOUtil( sbSql.toString( ), plugin ) )
+        {
+            int nIndex = 0;
+            for ( int id : listIdResourceQueues )
+            {
+                daoUtil.setInt( ++nIndex, id );
+            }
             daoUtil.executeQuery( );
 
             while ( daoUtil.next( ) )
             {
-              
-                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue (  daoUtil ) );
-            }
 
+                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue( daoUtil ) );
+            }
 
             return listUpdateResourceQueues;
         }
@@ -249,7 +250,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
      * {@inheritDoc }
      */
     @Override
-    public List<UpdateTaskStateResourceQueue> selectAllDisabled(Plugin plugin )
+    public List<UpdateTaskStateResourceQueue> selectAllDisabled( Plugin plugin )
     {
         List<UpdateTaskStateResourceQueue> listUpdateResourceQueues = new ArrayList<>( );
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_DISABLED, plugin ) )
@@ -258,11 +259,12 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
 
             while ( daoUtil.next( ) )
             {
-                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue (  daoUtil ) );
+                listUpdateResourceQueues.add( buildUpdateTaskStateResourceQueue( daoUtil ) );
             }
             return listUpdateResourceQueues;
         }
     }
+
     /**
      * {@inheritDoc }
      */
@@ -270,17 +272,18 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
     public List<Integer> selectAllIdQueueActived( Plugin plugin )
     {
         List<Integer> listIdResourceQueues = new ArrayList<>( );
-        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID_ACTIVED , plugin) )
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECTALL_ID_ACTIVED, plugin ) )
         {
             daoUtil.executeQuery( );
             while ( daoUtil.next( ) )
             {
 
-            	listIdResourceQueues.add( daoUtil.getInt( 1 )  );
+                listIdResourceQueues.add( daoUtil.getInt( 1 ) );
             }
             return listIdResourceQueues;
         }
     }
+
     /**
      * {@inheritDoc }
      */
@@ -297,17 +300,18 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
 
             if ( daoUtil.next( ) )
             {
-            	 updateTaskStateResourceQueue = buildUpdateTaskStateResourceQueue (  daoUtil );
+                updateTaskStateResourceQueue = buildUpdateTaskStateResourceQueue( daoUtil );
             }
 
-            return Optional.ofNullable(updateTaskStateResourceQueue);
+            return Optional.ofNullable( updateTaskStateResourceQueue );
         }
     }
+
     /**
      * {@inheritDoc }
      */
     @Override
-    public Optional<UpdateTaskStateResourceQueue> load( int nIdResource, String strResourceType,Plugin plugin )
+    public Optional<UpdateTaskStateResourceQueue> load( int nIdResource, String strResourceType, Plugin plugin )
     {
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_RESOURCE, plugin ) )
         {
@@ -318,35 +322,38 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
             UpdateTaskStateResourceQueue updateTaskStateResourceQueue = null;
 
             if ( daoUtil.next( ) )
-            { 
-            	updateTaskStateResourceQueue= buildUpdateTaskStateResourceQueue (  daoUtil );
+            {
+                updateTaskStateResourceQueue = buildUpdateTaskStateResourceQueue( daoUtil );
 
             }
 
-            return Optional.ofNullable(updateTaskStateResourceQueue);
+            return Optional.ofNullable( updateTaskStateResourceQueue );
         }
     }
+
     /**
      * Build UpdateTaskStateResourceQueue from daoUtil
+     * 
      * @return UpdateTaskStateResourceQueue object builded
      */
-    private UpdateTaskStateResourceQueue buildUpdateTaskStateResourceQueue ( DAOUtil daoUtil ){
-    	
-    	 int nIndex = 0;
-    	 UpdateTaskStateResourceQueue updateTaskStateResourceQueue = new UpdateTaskStateResourceQueue( );
-         updateTaskStateResourceQueue.setIdResourceQueue( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setIdResource( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setIdTask( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setResourceType( daoUtil.getString( ++nIndex ) );
-         updateTaskStateResourceQueue.setIdExternalParent( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setIdWorkflow( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setIdResourceHistory( daoUtil.getInt( ++nIndex ) );
-         updateTaskStateResourceQueue.setStatus( daoUtil.getBoolean( ++nIndex ) );
-         updateTaskStateResourceQueue.setCreationDate(daoUtil.getTimestamp( ++nIndex ) );
-         updateTaskStateResourceQueue.setAlertReferenceDate( daoUtil.getTimestamp(  ++nIndex) );
-         updateTaskStateResourceQueue.setIdState( daoUtil.getInt( ++nIndex ) );
+    private UpdateTaskStateResourceQueue buildUpdateTaskStateResourceQueue( DAOUtil daoUtil )
+    {
 
-         return updateTaskStateResourceQueue ;
-     }
-    
+        int nIndex = 0;
+        UpdateTaskStateResourceQueue updateTaskStateResourceQueue = new UpdateTaskStateResourceQueue( );
+        updateTaskStateResourceQueue.setIdResourceQueue( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdResource( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdTask( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setResourceType( daoUtil.getString( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdExternalParent( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdWorkflow( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdResourceHistory( daoUtil.getInt( ++nIndex ) );
+        updateTaskStateResourceQueue.setStatus( daoUtil.getBoolean( ++nIndex ) );
+        updateTaskStateResourceQueue.setCreationDate( daoUtil.getTimestamp( ++nIndex ) );
+        updateTaskStateResourceQueue.setAlertReferenceDate( daoUtil.getTimestamp( ++nIndex ) );
+        updateTaskStateResourceQueue.setIdState( daoUtil.getInt( ++nIndex ) );
+
+        return updateTaskStateResourceQueue;
+    }
+
 }

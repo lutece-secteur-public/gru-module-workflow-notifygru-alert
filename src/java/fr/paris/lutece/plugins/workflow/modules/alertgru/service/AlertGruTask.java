@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2022, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -68,15 +68,16 @@ public class AlertGruTask extends SimpleTask
 
     @Override
     public void processTask( int nIdResourceHistory, HttpServletRequest request, Locale locale )
-    {      
+    {
         ResourceHistory resourceHistory = _resourceHistoryService.findByPrimaryKey( nIdResourceHistory );
 
-        Optional<Timestamp>  referenceDate=TaskAlertService.INSNACE.getReferenceDateAlert(this.getId(), resourceHistory, request);        
-        if(referenceDate.isPresent( )) {
-        	ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( resourceHistory.getIdResource( ), resourceHistory.getResourceType( ),
-                      resourceHistory.getWorkflow( ).getId( ) );
-                  
-        	UpdateTaskStateResourceQueue updateResourceQueue = new UpdateTaskStateResourceQueue( );
+        Optional<Timestamp> referenceDate = TaskAlertService.INSNACE.getReferenceDateAlert( this.getId( ), resourceHistory, request );
+        if ( referenceDate.isPresent( ) )
+        {
+            ResourceWorkflow resourceWorkflow = _resourceWorkflowService.findByPrimaryKey( resourceHistory.getIdResource( ), resourceHistory.getResourceType( ),
+                    resourceHistory.getWorkflow( ).getId( ) );
+
+            UpdateTaskStateResourceQueue updateResourceQueue = new UpdateTaskStateResourceQueue( );
             updateResourceQueue.setIdResource( resourceHistory.getIdResource( ) );
             updateResourceQueue.setIdResourceHistory( nIdResourceHistory );
             updateResourceQueue.setIdTask( getId( ) );
@@ -85,21 +86,25 @@ public class AlertGruTask extends SimpleTask
             updateResourceQueue.setResourceType( resourceHistory.getResourceType( ) );
             updateResourceQueue.setStatus( true );
             updateResourceQueue.setCreationDate( resourceHistory.getCreationDate( ) );
-            updateResourceQueue.setAlertReferenceDate(referenceDate.get( ));
-            updateResourceQueue.setIdState(resourceWorkflow.getState().getId( ));
-            
-        	Optional<UpdateTaskStateResourceQueue> resourceQueue =UpdateTaskStateResourceQueueHome.find( resourceHistory.getIdResource( ), resourceHistory.getResourceType( ) );
-        	if (resourceQueue.isPresent()) {
-        		
-        		updateResourceQueue.setIdResourceQueue(resourceQueue.get().getIdResourceQueue( ));
-        		UpdateTaskStateResourceQueueHome.update(updateResourceQueue);
-        	}else {
-        		
+            updateResourceQueue.setAlertReferenceDate( referenceDate.get( ) );
+            updateResourceQueue.setIdState( resourceWorkflow.getState( ).getId( ) );
+
+            Optional<UpdateTaskStateResourceQueue> resourceQueue = UpdateTaskStateResourceQueueHome.find( resourceHistory.getIdResource( ),
+                    resourceHistory.getResourceType( ) );
+            if ( resourceQueue.isPresent( ) )
+            {
+
+                updateResourceQueue.setIdResourceQueue( resourceQueue.get( ).getIdResourceQueue( ) );
+                UpdateTaskStateResourceQueueHome.update( updateResourceQueue );
+            }
+            else
+            {
+
                 UpdateTaskStateResourceQueueHome.create( updateResourceQueue );
-        	}    
+            }
         }
     }
-        
+
     /**
      * (non-Javadoc)
      *
@@ -137,7 +142,4 @@ public class AlertGruTask extends SimpleTask
         return "Alert notification GRU";
     }
 
-    
-    
-   
 }

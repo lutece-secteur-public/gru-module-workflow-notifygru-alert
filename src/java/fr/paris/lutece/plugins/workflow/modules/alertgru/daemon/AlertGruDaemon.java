@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2022, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.daemon;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.TaskAlertService;
 import fr.paris.lutece.portal.service.daemon.Daemon;
 
-
 /**
  * 
  * Class AlertGru Daemon Reminder To send alert reminder
@@ -48,7 +47,7 @@ public class AlertGruDaemon extends Daemon
     public void run( )
     {
 
-    	TaskAlertService.INSNACE.sendAlert();
+        TaskAlertService.INSNACE.sendAlert( );
     }
 
 }

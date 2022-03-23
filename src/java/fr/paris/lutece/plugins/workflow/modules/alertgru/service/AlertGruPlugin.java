@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2002-2021, City of Paris
+ * Copyright (c) 2002-2022, City of Paris
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,6 @@ public class AlertGruPlugin extends PluginDefaultImplementation
     public static final String PLUGIN_NAME = "workflow-alertgru";
     public static final String BEAN_TRANSACTION_MANAGER = PLUGIN_NAME + ".transactionManager";
 
-    
     @Override
     public void init( )
     {
@@ -57,6 +56,7 @@ public class AlertGruPlugin extends PluginDefaultImplementation
         // Subscribes to the EventManager
         ResourceEventManager.register( new AlertRessourceListener( ) );
     }
+
     /**
      * Get the plugin
      * 

@@ -44,28 +44,31 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
  * UpdateTaskStateResourceQueueService
  *
  */
-public class UpdateTaskStateResourceQueueHome 
+public class UpdateTaskStateResourceQueueHome
 {
-   
-    private static IUpdateTaskStateResourceQueueDAO _updateResourceQueueDAO = SpringContextService.getBean( "workflow-alertgru.updateTaskStateResourceQueueDAO" );
 
-    	
-    private UpdateTaskStateResourceQueueHome() {
-    	
+    private static IUpdateTaskStateResourceQueueDAO _updateResourceQueueDAO = SpringContextService
+            .getBean( "workflow-alertgru.updateTaskStateResourceQueueDAO" );
+
+    private UpdateTaskStateResourceQueueHome( )
+    {
+
     }
+
     public static void create( UpdateTaskStateResourceQueue updateResourceQueue )
-    {      
-        _updateResourceQueueDAO.insert( updateResourceQueue, AlertGruPlugin.getPlugin( ) ); 
+    {
+        _updateResourceQueueDAO.insert( updateResourceQueue, AlertGruPlugin.getPlugin( ) );
     }
 
-    
     public static void update( UpdateTaskStateResourceQueue updateResourceQueue )
     {
         _updateResourceQueueDAO.store( updateResourceQueue, AlertGruPlugin.getPlugin( ) );
-        
+
     }
+
     /**
      * Load the data of all the updateTaskStateResourceQueue objects and returns them as a collection
+     * 
      * @return the List which contains the data of all the updateTaskStateResourceQueue objects
      */
     public static List<UpdateTaskStateResourceQueue> findAllActived( )
@@ -75,6 +78,7 @@ public class UpdateTaskStateResourceQueueHome
 
     /**
      * Load the data of all the updateTaskStateResourceQueue objects and returns them as a collection
+     * 
      * @return the List which contains the data of all the updateTaskStateResourceQueue objects
      */
     public static List<UpdateTaskStateResourceQueue> findAllDisabled( )
@@ -98,75 +102,84 @@ public class UpdateTaskStateResourceQueueHome
 
     public static void removeByPrimaryKey( int nIdResourceQueues )
     {
-        _updateResourceQueueDAO.deleteByPrimaryKey(nIdResourceQueues, AlertGruPlugin.getPlugin( ));
+        _updateResourceQueueDAO.deleteByPrimaryKey( nIdResourceQueues, AlertGruPlugin.getPlugin( ) );
     }
 
     /**
      * Delete a record from the table
      * 
-     * @param nIdUpdateTaskStateResourceQueue          
+     * @param nIdUpdateTaskStateResourceQueue
      */
-	public static void removeByIdTask(int nIdTask) 
-	{
-		_updateResourceQueueDAO.deleteByIdTask( nIdTask, AlertGruPlugin.getPlugin( ) );	
-	}
+    public static void removeByIdTask( int nIdTask )
+    {
+        _updateResourceQueueDAO.deleteByIdTask( nIdTask, AlertGruPlugin.getPlugin( ) );
+    }
 
-	 /**
+    /**
      * Remove a record from the table
      * 
      * @param IdResourceHistory
-     *            the resource history id of the resource workflow 
+     *            the resource history id of the resource workflow
      * @param plugin
-     *            The plugin            
+     *            The plugin
      */
     public static void removeByResourceHistory( int nIdResourceHistory )
     {
-    	_updateResourceQueueDAO.deleteByResourceHistory( nIdResourceHistory, AlertGruPlugin.getPlugin( ) );
+        _updateResourceQueueDAO.deleteByResourceHistory( nIdResourceHistory, AlertGruPlugin.getPlugin( ) );
     }
-    /**
-    * Remove a record from the table
-    * 
-    * @param nIdResource The nIdResource of the updateTaskStateResourceQueue
-    * @param strResourceType  The resource type of the updateTaskStateResourceQueue
-    * @param plugin the plugin       
-    */
-   public static void removeByResource( int nIdResource, String strResourceType )
-   {
-	   _updateResourceQueueDAO.deleteByResource(nIdResource, strResourceType, AlertGruPlugin.getPlugin( ) );
-   }
-   
 
-	/**
-     * Load the id of all the updateTaskStateResourceQueue  and returns them as a collection
+    /**
+     * Remove a record from the table
+     * 
+     * @param nIdResource
+     *            The nIdResource of the updateTaskStateResourceQueue
+     * @param strResourceType
+     *            The resource type of the updateTaskStateResourceQueue
+     * @param plugin
+     *            the plugin
+     */
+    public static void removeByResource( int nIdResource, String strResourceType )
+    {
+        _updateResourceQueueDAO.deleteByResource( nIdResource, strResourceType, AlertGruPlugin.getPlugin( ) );
+    }
+
+    /**
+     * Load the id of all the updateTaskStateResourceQueue and returns them as a collection
+     * 
      * @return the List which contains the id of all the updateTaskStateResourceQueue objects
      */
-	public static List<Integer> findAllIdQueueActived( ){
-		
-		return _updateResourceQueueDAO.selectAllIdQueueActived( AlertGruPlugin.getPlugin( ) ); 
-	}
+    public static List<Integer> findAllIdQueueActived( )
+    {
 
-	 /**
+        return _updateResourceQueueDAO.selectAllIdQueueActived( AlertGruPlugin.getPlugin( ) );
+    }
+
+    /**
      * Load the data from the table
      * 
      * @param listIdResourceQueues
      *            The identifier list of the updateTaskStateResourceQueue
      * @return The instance list of the updateTaskStateResourceQueue
      */
-	public static List<UpdateTaskStateResourceQueue> findByPrimaryKeyList( List<Integer> listIdResourceQueues )
+    public static List<UpdateTaskStateResourceQueue> findByPrimaryKeyList( List<Integer> listIdResourceQueues )
     {
-    	return _updateResourceQueueDAO.selectByPrimaryKeyList(listIdResourceQueues, AlertGruPlugin.getPlugin( ) );
+        return _updateResourceQueueDAO.selectByPrimaryKeyList( listIdResourceQueues, AlertGruPlugin.getPlugin( ) );
     }
 
-	 /**
+    /**
      * find instance of the updateTaskStateResourceQueue by resource
-     * @param nIdResource The nIdResource of the updateTaskStateResourceQueue
-     * @param strResourceType  The resource type of the updateTaskStateResourceQueue
-     * @param plugin the plugin
+     * 
+     * @param nIdResource
+     *            The nIdResource of the updateTaskStateResourceQueue
+     * @param strResourceType
+     *            The resource type of the updateTaskStateResourceQueue
+     * @param plugin
+     *            the plugin
      * @return The instance of the updateTaskStateResourceQueue
      */
-    public static Optional<UpdateTaskStateResourceQueue> find( int nIdResource, String strResourceType  )
+    public static Optional<UpdateTaskStateResourceQueue> find( int nIdResource, String strResourceType )
     {
-    	return _updateResourceQueueDAO.load( nIdResource, strResourceType, AlertGruPlugin.getPlugin( ) );
+        return _updateResourceQueueDAO.load( nIdResource, strResourceType, AlertGruPlugin.getPlugin( ) );
     }
 
 }
