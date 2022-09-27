@@ -89,7 +89,7 @@ public class AlertGruTask extends SimpleTask
             updateResourceQueue.setAlertReferenceDate( referenceDate.get( ) );
             updateResourceQueue.setIdState( resourceWorkflow.getState( ).getId( ) );
 
-            Optional<UpdateTaskStateResourceQueue> resourceQueue = UpdateTaskStateResourceQueueHome.find( resourceHistory.getIdResource( ),
+            Optional<UpdateTaskStateResourceQueue> resourceQueue = UpdateTaskStateResourceQueueHome.find( resourceHistory.getIdResource( ), getId(),
                     resourceHistory.getResourceType( ) );
             if ( resourceQueue.isPresent( ) )
             {

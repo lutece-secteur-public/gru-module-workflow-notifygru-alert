@@ -181,5 +181,23 @@ public class UpdateTaskStateResourceQueueHome
     {
         return _updateResourceQueueDAO.load( nIdResource, strResourceType, AlertGruPlugin.getPlugin( ) );
     }
+    
+    /**
+     * find instance of the updateTaskStateResourceQueue by resource
+     * 
+     * @param nIdResource
+     *            The nIdResource of the updateTaskStateResourceQueue
+     * @param nIdTask
+     *            The nIdTask of the updateTaskStateResourceQueue
+     * @param strResourceType
+     *            The resource type of the updateTaskStateResourceQueue
+     * @param plugin
+     *            the plugin
+     * @return The instance of the updateTaskStateResourceQueue
+     */
+    public static Optional<UpdateTaskStateResourceQueue> find( int nIdResource, int nIdTask, String strResourceType )
+    {
+        return _updateResourceQueueDAO.load( nIdResource, nIdTask, strResourceType, AlertGruPlugin.getPlugin( ) );
+    }
 
 }

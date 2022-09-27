@@ -64,6 +64,7 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
     private static final String SQL_QUERY_SELECTALL_ID_ACTIVED = "SELECT id_resource_queue FROM notifygru_alert_update_resource_state_queue WHERE status= 1 ";
     private static final String SQL_QUERY_SELECTALL_ACTIVED_BY_LIST = "SELECT id_resource_queue, id_resource, id_task, resource_type, id_external_parent, id_workflow, id_resource_history, status, creation_date, alert_reference_date, id_state FROM notifygru_alert_update_resource_state_queue WHERE  id_resource_queue IN ( ";
     private static final String SQL_QUERY_SELECT_BY_RESOURCE = "SELECT id_resource_queue, id_resource, id_task, resource_type, id_external_parent, id_workflow, id_resource_history, status, creation_date, alert_reference_date, id_state FROM notifygru_alert_update_resource_state_queue WHERE id_resource = ? AND resource_type = ? ";
+    private static final String SQL_QUERY_SELECT_BY_ID_TASK_AND_ID_RESOURCE_AND_RESSOURCE_TYPE= SQL_QUERY_SELECT_BY_ID_TASK_AND_ID_RESOURCE+" AND resource_type = ? ";
 
     /**
      * {@inheritDoc }
@@ -327,6 +328,31 @@ public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateRe
 
             }
 
+            return Optional.ofNullable( updateTaskStateResourceQueue );
+        }
+    }
+    
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public Optional<UpdateTaskStateResourceQueue> load( int nIdResource, int nIdTask, String strResourceType, Plugin plugin )
+    {
+        try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_SELECT_BY_ID_TASK_AND_ID_RESOURCE_AND_RESSOURCE_TYPE, plugin ) )
+        {
+            daoUtil.setInt( 1, nIdResource );
+            daoUtil.setInt( 2, nIdTask );
+            daoUtil.setString( 3, strResourceType );
+            daoUtil.executeQuery( );
+            
+            UpdateTaskStateResourceQueue updateTaskStateResourceQueue = null;
+            
+            if ( daoUtil.next( ) )
+            {
+                updateTaskStateResourceQueue = buildUpdateTaskStateResourceQueue( daoUtil );
+                
+            }
+            
             return Optional.ofNullable( updateTaskStateResourceQueue );
         }
     }
