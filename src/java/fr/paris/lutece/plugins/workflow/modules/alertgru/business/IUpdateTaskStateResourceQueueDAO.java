@@ -150,6 +150,21 @@ public interface IUpdateTaskStateResourceQueueDAO
     Optional<UpdateTaskStateResourceQueue> load( int nIdResource, String strResourceType, Plugin plugin );
 
     /**
+     * Load the data from the table by resource
+     * 
+     * @param nIdResource
+     *            The nIdResource of the updateTaskStateResourceQueue
+     * @param nIdTask
+     *            The nIdTask of the updateTaskStateResourceQueue
+     * @param strResourceType
+     *            The resource type of the updateTaskStateResourceQueue
+     * @param plugin
+     *            the plugin
+     * @return The instance of the updateTaskStateResourceQueue
+     */
+    Optional<UpdateTaskStateResourceQueue> load( int nIdResource, int nIdTask, String strResourceType, Plugin plugin );
+    
+    /**
      * Load the data of all the updateTaskStateResourceQueue objects and returns them as a collection
      * 
      * @param plugin
