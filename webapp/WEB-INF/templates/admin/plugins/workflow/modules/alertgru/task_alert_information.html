@@ -1,44 +1,30 @@
 <#if information_history?exists>
-	<#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content)
-	|| (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content)
-	|| (information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content)
-	|| (information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content)
-	|| (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content)
-	>
-		<@div>
-			<div class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.title}</div>
-			<span>#i18n{module.workflow.alertgru.task_alert_gru_history.label_information}</span>
-			
-			<#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
-				<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.guichet.messageGuichet!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_guichet}' />
-		   </#if>
-		   
-			<#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
-				<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_email}' />
-			</#if>
-			
-			<#if information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content>
-				<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.agent.messageAgent!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_agent}' />
-			</#if>
-			
-			<#if information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content>
-				<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.SMS.messageSMS!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_sms}' />
-			</#if>
-			
-			<#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
-				<@button color='primary' size='xs' params='data-html="true" data-toggle="popover" data-trigger="focus" data-content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_liste}' />
-			</#if>
-		</@div>
+	<#if (information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content) || (information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content) || (information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content) || (information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content) || (information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content) >
+		<@p class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.title}</@p>
+		<@p>
+		<@span>#i18n{module.workflow.alertgru.task_alert_gru_history.label_information}</@span>
+		<#if information_history.guichet.activeOngletGuichet && information_history.guichet.messageGuichet?has_content>
+			<@button color='primary' size='xs' params='data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="${information_history.guichet.messageGuichet!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_guichet}' />
+	   </#if>
+		<#if information_history.email.activeOngletEmail && information_history.email.messageEmail?has_content>
+			<@button color='primary' size='xs' params='data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="${information_history.email.messageEmail!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_email}' />
+		</#if>
+		
+		<#if information_history.agent.activeOngletAgent && information_history.agent.messageAgent?has_content>
+			<@button color='primary' size='xs' params='data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="${information_history.agent.messageAgent!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_agent}' />
+		</#if>
+		
+		<#if information_history.SMS.activeOngletSMS && information_history.SMS.messageSMS?has_content>
+			<@button color='primary' size='xs' params='data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="${information_history.SMS.messageSMS!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_sms}' />
+		</#if>
+		
+		<#if information_history.broadCast.activeOngletBroadcast && information_history.broadCast.messageBroadcast?has_content>
+			<@button color='primary' size='xs' params='data-bs-html="true" data-bs-toggle="popover" data-bs-trigger="focus" data-bs-content="${information_history.broadCast.messageBroadcast!?html}"' title='#i18n{module.workflow.alertgru.task_alert_gru_history.label_liste}' />
+		</#if>
+		</@p>
 	<#else>
 		<@div>
-			<div class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.init}</div>
+			<@p class="text-primary">#i18n{module.workflow.alertgru.task_alert_gru_history.label.init}</@p>
 		</@div>
 	</#if>
 </#if>
-<script>
-   $(function () {
-     $('[data-toggle="popover"]').popover({
-       container: 'body'
-     });
-   });
-</script>
