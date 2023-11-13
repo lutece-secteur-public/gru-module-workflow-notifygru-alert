@@ -1,7 +1,7 @@
 <@formGroup labelFor='list_provider' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_config_provider}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_config_provider_helper}'>
 	<@inputGroup>
 		<@select name='list_provider' items=list_provider default_value='${config.idSpringProvider!}' />
-		<@inputGroupItem>
+		<@inputGroupItem type='btn'>
 			<@button type='submit' name='apply_marker' value='loadMarkers' title='Appliquer' hideTitle=['all'] buttonIcon='check' />
 		</@inputGroupItem>
 	</@inputGroup>

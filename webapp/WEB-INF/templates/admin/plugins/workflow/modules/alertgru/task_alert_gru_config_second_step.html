@@ -6,18 +6,10 @@
 	<h4>#i18n{module.workflow.alertgru.task_alert_gru_config.title}</h4>
     <div style="display:flex; justify-content:flex-end; align-items:start;">
 		<#if list_alert_config?exists>
-			<#assign cssFramework>
-				<@commonsFile />
-			</#assign>
-			<#if cssFramework = 'commons.html'>
-				<#assign formGroupParams = 'style="margin-right:0.2rem; margin-top:-0.1rem;"' />
-			<#elseif cssFramework = 'commons_bs4_adminlte.html'>
-				<#assign formGroupParams = 'style="margin-right:0.2rem;"' />
-			</#if>
-			<@formGroup formStyle='inline' labelFor='' labelKey='' hideLabel=['all'] params=formGroupParams!>
+			<@formGroup formStyle='inline' labelFor='' labelKey='' hideLabel=['all']>
 				<@inputGroup>
 					<@select name='added_alert_config' items=list_alert_config default_value='0' size='sm' />
-					<@inputGroupItem>
+					<@inputGroupItem type='btn'>
 						<@button type='submit' name='apply' value='AddAlertConfig' buttonIcon='plus-circle' title='#i18n{module.workflow.alertgru.task_alert_gru_config.label_config_choose}' hideTitle=['all'] size='sm' />
 					</@inputGroupItem>
 				</@inputGroup>

@@ -16,7 +16,7 @@
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
 		<@formGroup labelFor='status_text_guichet' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_status_text_guichet}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_status_text_guichet_helper}' mandatory=true rows=2>
 			<#if config?exists && config.statustextGuichet?has_content>
 				<#assign inputValue = config.statustextGuichet />
@@ -73,7 +73,7 @@
 			</@formGroup>
 		</@div>
 	</@columns>
-	<@columns sm=4>
+	<@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>

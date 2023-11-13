@@ -16,7 +16,7 @@
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
         <@formGroup labelFor='sender_name_email' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_email}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_sender_name_comment_email}' mandatory=true rows=2>
 			<#if config?exists && config.senderNameEmail?has_content>
 				<#assign inputValue = config.senderNameEmail! />
@@ -63,7 +63,7 @@
 			<@input type='textarea' name='message_email' id='message_email' rows=5 cols=70 richtext=true><#if config?exists  && config.messageEmail?has_content>${config.messageEmail}</#if></@input>
 		</@formGroup>
 	</@columns>
-	<@columns sm=4>
+	<@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>

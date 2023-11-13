@@ -16,7 +16,7 @@
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
 		<@formGroup labelFor='status_text_agent' labelKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_status_text_agent}' helpKey='#i18n{module.workflow.alertgru.task_alert_gru_config.label_status_text_agent_helper}' mandatory=true rows=2>
 			<#if config?exists && config.statustextAgent?has_content>
 				<@input type='text' name='status_text_agent' id='status_text_agent' value='${config.statustextAgent}' maxlength=255 />
@@ -33,7 +33,7 @@
           </#if>
         </@formGroup>
 	</@columns>
-	<@columns sm=4>
+	<@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>

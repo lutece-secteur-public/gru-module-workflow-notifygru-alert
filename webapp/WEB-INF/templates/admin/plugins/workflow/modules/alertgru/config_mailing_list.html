@@ -16,7 +16,7 @@
 	</@columns>
 </@row>
 <@row>
-	<@columns sm=8>
+	<@columns xl=8>
 		<#assign mailingSpecStyle = "display:block;" />	
 		<#assign mailingSpecChecked = true />
 		<#assign mailingListStyle = "display:none;" />
@@ -99,7 +99,7 @@
 			<@input type='textarea' name='message_broadcast' id='message_broadcast' rows=5 cols=70 richtext=true><#if config?exists && config.messageBroadcast?has_content>${config.messageBroadcast}</#if></@input>
 		</@formGroup>
 	</@columns>
-    <@columns sm=4>
+    <@columns xl=4>
 		<@marker_descriptions />
 	</@columns>
 </@row>
