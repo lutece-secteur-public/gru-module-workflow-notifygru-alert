@@ -162,7 +162,7 @@ public enum TaskAlertService
 
     /**
      * Get the alert reference date
-     * 
+     *
      * @param nIdTask
      *            the id task
      * @param resourceHistory
@@ -205,7 +205,7 @@ public enum TaskAlertService
 
     /**
      * Update resource queue when an event is triggered
-     * 
+     *
      * @param event
      *            the resource event (event of the Listener)
      */
@@ -495,7 +495,7 @@ public enum TaskAlertService
         if ( !config.isBillingAccountBasedSmsNotification( ) )
         {
             SMSNotification userSMS = new BillingAccountBasedSMSNotification( );
-            userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            userSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ).replaceAll( "&amp;", "&" ) );
             userSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             userSMS.setSenderName( provider.provideSmsSender( ) );
             return (T) userSMS;
@@ -503,7 +503,7 @@ public enum TaskAlertService
         else
         {
             BillingAccountBasedSMSNotification billingAccountUserSMS = new BillingAccountBasedSMSNotification( );
-            billingAccountUserSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ) );
+            billingAccountUserSMS.setMessage( replaceMarkers( config.getMessageSMS( ), model ).replaceAll( "&amp;", "&" ) );
             billingAccountUserSMS.setPhoneNumber( provider.provideCustomerMobilePhone( ) );
             billingAccountUserSMS.setSenderName( provider.provideSmsSender( ) );
             billingAccountUserSMS.setBillingAccount( config.getBillingAccountSMS( ) );
@@ -661,7 +661,7 @@ public enum TaskAlertService
 
     /**
      * Build notification content
-     * 
+     *
      * @return true if the notification is builded
      */
     private boolean buildNotificationContent( ITask task, IProvider provider, Notification notificationObject, ResourceHistory resourceHistory,
@@ -762,7 +762,7 @@ public enum TaskAlertService
 
     /**
      * Build ResourceHistory
-     * 
+     *
      * @return ResourceHistory builded
      */
     private ResourceHistory buildResourceHistory( UpdateTaskStateResourceQueue resource, ITask task )
