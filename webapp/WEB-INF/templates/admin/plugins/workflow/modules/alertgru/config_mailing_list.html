@@ -143,15 +143,21 @@
     }
     function mailingType(newType)
     {
-        if(newType == "list")
-		{
-		    document.getElementById("mailing_spec_block").setAttribute("style", "display:none;");
-			document.getElementById("mailing_list_block").setAttribute("style", "display:block;");
-		}
-		else if(newType == "spec")
-		{
-		    document.getElementById("mailing_spec_block").setAttribute("style", "display:block;");
-			document.getElementById("mailing_list_block").setAttribute("style", "display:none;");
+		var mailingSpecBlock = document.getElementById("mailing_spec_block");
+		var mailingListBlock = document.getElementById("mailing_list_block");
+		var mailingSpecInput = document.querySelector('input[name="mailing_spec"]');
+		var idMailingListInput = document.querySelector('select[name="id_mailing_list_broadcast"]');
+
+		if (newType === "list") {
+			mailingSpecBlock.style.display = "none";
+			mailingListBlock.style.display = "block";
+			mailingSpecInput.removeAttribute("required");
+			idMailingListInput.setAttribute("required", "true");
+		} else if (newType === "spec") {
+			mailingSpecBlock.style.display = "block";
+			mailingListBlock.style.display = "none";
+			mailingSpecInput.setAttribute("required", "true");
+			idMailingListInput.removeAttribute("required");
 		}
     }
         
