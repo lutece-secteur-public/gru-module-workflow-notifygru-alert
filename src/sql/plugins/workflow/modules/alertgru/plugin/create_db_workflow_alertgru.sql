@@ -1,3 +1,6 @@
+-- liquibase formatted sql
+-- changeset workflow-alertgru:create_db_workflow_alertgru.sql
+-- preconditions onFail:MARK_RAN onError:WARN
 
 DROP TABLE IF EXISTS workflow_task_alert_gru_cf;
 DROP TABLE IF EXISTS workflow_task_alert_gru_history;
