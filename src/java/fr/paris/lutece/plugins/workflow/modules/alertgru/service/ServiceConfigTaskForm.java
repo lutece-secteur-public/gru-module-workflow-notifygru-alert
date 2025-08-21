@@ -36,20 +36,20 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants.Constants;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.web.IAlertConfig;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
-import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.ProviderDescription;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.util.ReferenceList;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * The Class ServiceConfigTaskForm.
@@ -150,9 +150,9 @@ public final class ServiceConfigTaskForm
     public static ReferenceList getProviderReferenceList( ITask task )
     {
         ReferenceList referenceList = new ReferenceList( );
-        List<AbstractProviderManager> listProviderManagers = SpringContextService.getBeansOfType( AbstractProviderManager.class );
+        List<IProviderManager> listProviderManagers = CDI.current( ).select( IProviderManager.class ).stream( ).toList( );
 
-        for ( AbstractProviderManager providerManager : listProviderManagers )
+        for ( IProviderManager providerManager : listProviderManagers )
         {
             Collection<ProviderDescription> collectionProviderDescriptions = providerManager.getAllProviderDescriptions( task );
 

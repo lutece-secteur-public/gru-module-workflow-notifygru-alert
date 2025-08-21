@@ -105,7 +105,7 @@ public final class Constants
     public static final String MESSAGE_DISPLAY_MESSAGE_SMS = " _ Message : ";
 
     // CONSTANT FOR SENDING JSON FLUX
-    public static final String BEAN_NOTIFICATION_SENDER = "workflow-notifygru.lib-notifygru.notificationService";
+    public static final String BEAN_NOTIFICATION_SENDER = "workflow-alertgru.lib-notifygru.notificationService";
     public static final String TYPE_AUTHENTIFICATION = "Bearer";
     public static final String PARAMS_ACCES_TOKEN = "access_token";
     public static final String PARAMS_GRANT_TYPE = "grant_type";

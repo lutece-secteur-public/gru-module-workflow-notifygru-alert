@@ -35,6 +35,7 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.business;
 
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
 
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -42,11 +43,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections.CollectionUtils;
 
 /**
  * This class provides Data Access methods for UpdateTaskStateResourceQueue objects
  */
+@ApplicationScoped
 public final class UpdateTaskStateResourceQueueDAO implements IUpdateTaskStateResourceQueueDAO
 {
 

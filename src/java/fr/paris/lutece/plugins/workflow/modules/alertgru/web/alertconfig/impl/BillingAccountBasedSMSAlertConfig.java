@@ -35,7 +35,7 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.web.alertconfig.impl;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.utils.constants.Constants;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class represents the config for SMS alert with billing account handling

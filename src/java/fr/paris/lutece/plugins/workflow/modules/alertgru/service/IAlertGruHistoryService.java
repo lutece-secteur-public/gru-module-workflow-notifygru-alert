@@ -35,7 +35,6 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertGruHistory;
 import fr.paris.lutece.portal.service.plugin.Plugin;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -48,11 +47,10 @@ public interface IAlertGruHistoryService
      * Creation of an instance of Alert GRU
      *
      * @param notifyGru
-     *            The instance of comment value which contains the informations to store
+     *            The instance of alert GRU value which contains the informations to store
      * @param plugin
      *            the plugin
      */
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
     void create( AlertGruHistory notifyGru, Plugin plugin );
 
     /**
@@ -65,7 +63,6 @@ public interface IAlertGruHistoryService
      * @param plugin
      *            the Plugin
      */
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin );
 
     /**
@@ -76,7 +73,6 @@ public interface IAlertGruHistoryService
      * @param plugin
      *            the Plugin
      */
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
     void removeByTask( int nIdTask, Plugin plugin );
 
     /**

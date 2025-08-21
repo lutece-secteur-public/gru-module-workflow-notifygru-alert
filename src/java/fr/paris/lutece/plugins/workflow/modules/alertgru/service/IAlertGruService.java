@@ -38,7 +38,7 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.mail.FileAttachment;
 import java.util.List;
 import java.util.Locale;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
