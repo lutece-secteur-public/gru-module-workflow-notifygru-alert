@@ -33,7 +33,6 @@
  */
 package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 
-import fr.paris.lutece.portal.service.event.ResourceEventManager;
 import fr.paris.lutece.portal.service.plugin.Plugin;
 import fr.paris.lutece.portal.service.plugin.PluginDefaultImplementation;
 import fr.paris.lutece.portal.service.plugin.PluginService;
@@ -46,16 +45,6 @@ import fr.paris.lutece.portal.service.plugin.PluginService;
 public class AlertGruPlugin extends PluginDefaultImplementation
 {
     public static final String PLUGIN_NAME = "workflow-alertgru";
-    public static final String BEAN_TRANSACTION_MANAGER = PLUGIN_NAME + ".transactionManager";
-
-    @Override
-    public void init( )
-    {
-        super.init( );
-
-        // Subscribes to the EventManager
-        ResourceEventManager.register( new AlertRessourceListener( ) );
-    }
 
     /**
      * Get the plugin

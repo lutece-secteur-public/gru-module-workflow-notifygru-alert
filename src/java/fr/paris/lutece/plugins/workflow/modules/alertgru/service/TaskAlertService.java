@@ -49,7 +49,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.inject.spi.CDI;
+import jakarta.servlet.http.HttpServletRequest;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -80,7 +81,7 @@ import fr.paris.lutece.plugins.workflowcore.business.resource.ResourceWorkflow;
 import fr.paris.lutece.plugins.workflowcore.business.state.State;
 import fr.paris.lutece.plugins.workflowcore.business.workflow.Workflow;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
 import fr.paris.lutece.plugins.workflowcore.service.provider.IProvider;
 import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
@@ -96,9 +97,9 @@ import fr.paris.lutece.portal.business.mailinglist.Recipient;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.mail.MailService;
 import fr.paris.lutece.portal.service.mailinglist.AdminMailingListService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.util.AppLogService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.CdiHelper;
 import fr.paris.lutece.portal.service.workflow.WorkflowService;
 import fr.paris.lutece.util.sql.TransactionManager;
 
@@ -175,14 +176,14 @@ public enum TaskAlertService
     {
 
         /* Task Config form cache, it can't be null due to getNotifyGruConfigFromCache algorithm */
-        AlertGruTaskConfig config = AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, nIdTask );
+        AlertGruTaskConfig config = CDI.current( ).select( AlertGruCacheService.class ).get( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, nIdTask );
         if ( config.getMarkerAlert( ).equals( Constants.MARK_DEFAULT_MARKER ) )
         {
             return Optional.ofNullable( resourceHistory.getCreationDate( ) );
         }
         String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) );
         String strProviderId = ProviderManagerUtil.fetchProviderId( config.getIdSpringProvider( ) );
-        AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+        IProviderManager providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
         if ( providerManager == null )
         {
@@ -270,7 +271,7 @@ public enum TaskAlertService
                     try
                     {
                         sendAlert( _taskService.findByPrimaryKey( key, Locale.getDefault( ) ),
-                                AlertGruCacheService.getInstance( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, key ), value );
+                        		CDI.current( ).select( AlertGruCacheService.class ).get( ).getAlertGruConfigFromCache( _taskAlertGruConfigService, key ), value );
                     }
                     catch( Exception e )
                     {
@@ -298,8 +299,8 @@ public enum TaskAlertService
             return;
         }
 
-        AbstractProviderManager providerManager = ProviderManagerUtil
-                .fetchProviderManager( ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) ) );
+        IProviderManager providerManager = ProviderManagerUtil
+                .retrieveProviderManager( ProviderManagerUtil.fetchProviderManagerId( config.getIdSpringProvider( ) ) );
         if ( providerManager == null )
         {
             AppLogService.error( "Task id {} : Unable to retrieve the provider manager {} ", config.getIdSpringProvider( ) );
@@ -326,7 +327,7 @@ public enum TaskAlertService
      * Send gru alert
      */
     private void doSendAlert( ITask task, AlertGruTaskConfig config, UpdateTaskStateResourceQueue updateTaskStateResourceQueue, LocalDateTime now,
-            AbstractProviderManager providerManager, String strProviderId )
+            IProviderManager providerManager, String strProviderId )
     {
 
         if ( !isAlertDay( updateTaskStateResourceQueue.getAlertReferenceDate( ), config.getDaysToAlert( ), config.getAlertAfterBefore( ), now,
@@ -389,7 +390,7 @@ public enum TaskAlertService
             resourceWorkflow.setState( state );
             _resourceWorkflowService.update( resourceWorkflow );
 
-            WorkflowService.getInstance( ).doProcessAutomaticReflexiveActions( resourceHistoryState.getIdResource( ), resourceHistoryState.getResourceType( ),
+            CDI.current( ).select( WorkflowService.class ).get( ).doProcessAutomaticReflexiveActions( resourceHistoryState.getIdResource( ), resourceHistoryState.getResourceType( ),
                     config.getIdStateAfter( ), updateTaskStateResourceQueue.getIdExternalParent( ), I18nService.getDefaultLocale( ), null );
 
             UpdateTaskStateResourceQueueHome.removeByPrimaryKey( updateTaskStateResourceQueue.getIdResourceQueue( ) );
@@ -790,32 +791,31 @@ public enum TaskAlertService
 
         if ( _taskAlertGruConfigService == null )
         {
-            _taskAlertGruConfigService = SpringContextService.getBean( AlertGruTaskConfigService.BEAN_SERVICE );
+            _taskAlertGruConfigService = CdiHelper.getReference( ITaskConfigService.class, AlertGruTaskConfigService.BEAN_SERVICE );
         }
         if ( _resourceWorkflowService == null )
         {
-            _resourceWorkflowService = SpringContextService.getBean( ResourceWorkflowService.BEAN_SERVICE );
+            _resourceWorkflowService = CdiHelper.getReference( IResourceWorkflowService.class, ResourceWorkflowService.BEAN_SERVICE );
         }
         if ( _taskAlertGruHistoryService == null )
         {
-            _taskAlertGruHistoryService = SpringContextService.getBean( "workflow-alertgru.alertGruHistoryService" );
+            _taskAlertGruHistoryService = CdiHelper.getReference( IAlertGruHistoryService.class, AlertGruHistoryService.BEAN_SERVICE );
         }
         if ( _alertGruSenderService == null )
         {
-            _alertGruSenderService = SpringContextService.getBean( "workflow-notifygru.lib-notifygru.notificationService" );
+            _alertGruSenderService = CdiHelper.getReference( NotificationService.class, Constants.BEAN_NOTIFICATION_SENDER );
         }
         if ( _taskService == null )
         {
-            _taskService = SpringContextService.getBean( TaskService.BEAN_SERVICE );
+            _taskService = CdiHelper.getReference( ITaskService.class, TaskService.BEAN_SERVICE );
         }
         if ( _resourceHistoryService == null )
         {
-            _resourceHistoryService = SpringContextService.getBean( ResourceHistoryService.BEAN_SERVICE );
+            _resourceHistoryService = CdiHelper.getReference( IResourceHistoryService.class, ResourceHistoryService.BEAN_SERVICE );
         }
         if ( _resourceHistoryDAO == null )
         {
-
-            _resourceHistoryDAO = SpringContextService.getBean( "workflow.resourceHistoryDAO" );
+            _resourceHistoryDAO = CdiHelper.getReference( IResourceHistoryDAO.class, "workflow.resourceHistoryDAO" );
         }
     }
 

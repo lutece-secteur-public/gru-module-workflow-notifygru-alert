@@ -36,50 +36,24 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.portal.service.cache.AbstractCacheableService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 
 /**
  * The Class NotifyGruCacheService.
  */
-public final class AlertGruCacheService extends AbstractCacheableService
+@ApplicationScoped
+public class AlertGruCacheService extends AbstractCacheableService<String, AlertGruTaskConfig>
 {
     /** The Constant CACHE_NAME. */
     private static final String CACHE_NAME = "workflow.alertGruConfigCacheService";
 
-    /** The Constant BEAN_SERVICE. */
-    private static final String BEAN_SERVICE = "workflow-alertgru.alertGruCacheService";
-
-    /** The _singleton. */
-    private static AlertGruCacheService _singleton;
-
-    /**
-     * Instantiates a new notify gru cache service.
-     */
-    private AlertGruCacheService( )
+    @PostConstruct
+    public void init( )
     {
-        initCache( );
+        initCache( CACHE_NAME, String.class, AlertGruTaskConfig.class );
     }
 
-    /**
-     * Gets the single instance of NotifyGruCacheService.
-     *
-     * @return single instance of NotifyGruCacheService
-     */
-    public static AlertGruCacheService getInstance( )
-    {
-        if ( _singleton == null )
-        {
-            _singleton = SpringContextService.getBean( BEAN_SERVICE );
-        }
-
-        return _singleton;
-    }
-
-    /*
-     * (non-Javadoc)
-     * 
-     * @see fr.paris.lutece.portal.service.util.LuteceService#getName()
-     */
     @Override
     public String getName( )
     {
@@ -97,7 +71,11 @@ public final class AlertGruCacheService extends AbstractCacheableService
      */
     public AlertGruTaskConfig getAlertGruConfigFromCache( ITaskConfigService taskAlertGruConfigService, int nidTask )
     {
-        AlertGruTaskConfig config = (AlertGruTaskConfig) getFromCache( getCacheKey( nidTask ) );
+    	AlertGruTaskConfig config = null;	
+    	if ( isCacheEnable( ) && isCacheAvailable( ) )
+    	{
+    		config = get( getCacheKey( nidTask ) );
+    	}
 
         if ( config == null )
         {
@@ -109,7 +87,10 @@ public final class AlertGruCacheService extends AbstractCacheableService
                 config = new AlertGruTaskConfig( );
             }
 
-            putInCache( getCacheKey( nidTask ), config );
+            if ( isCacheEnable( ) && isCacheAvailable( ) )
+        	{
+            	put( getCacheKey( nidTask ), config );
+        	}            
         }
 
         return config;
@@ -123,7 +104,10 @@ public final class AlertGruCacheService extends AbstractCacheableService
      */
     public void removeGruConfigFromCache( int nidTask )
     {
-        removeKey( getCacheKey( nidTask ) );
+    	if ( isCacheEnable( ) && isCacheAvailable( ) )
+    	{
+            remove( getCacheKey( nidTask ) );
+    	}
     }
 
     /**
@@ -139,5 +123,15 @@ public final class AlertGruCacheService extends AbstractCacheableService
         sbKey.append( "[WORKFLOWALERTGRU-" ).append( nidTask ).append( "-CACHE]" );
 
         return sbKey.toString( );
+    }
+
+    /**
+     * Checks whether the cache instance is initialized and currently open.
+     *
+     * @return true if the cache is not null and not closed, false otherwise.
+     */
+    private boolean isCacheAvailable( )
+    {
+        return _cache != null && !_cache.isClosed( );
     }
 }

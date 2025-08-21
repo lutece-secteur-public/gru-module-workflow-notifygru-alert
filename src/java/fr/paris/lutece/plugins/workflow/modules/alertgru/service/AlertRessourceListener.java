@@ -36,28 +36,15 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.UpdateTaskStateResourceQueueHome;
-import fr.paris.lutece.portal.business.event.EventRessourceListener;
 import fr.paris.lutece.portal.business.event.ResourceEvent;
+import fr.paris.lutece.portal.service.event.EventAction;
+import fr.paris.lutece.portal.service.event.Type;
 import fr.paris.lutece.portal.service.util.AppLogService;
+import jakarta.enterprise.event.Observes;
 
-public class AlertRessourceListener implements EventRessourceListener
+public class AlertRessourceListener
 {
-
-    @Override
-    public String getName( )
-    {
-        return AlertGruPlugin.PLUGIN_NAME;
-    }
-
-    @Override
-    public void addedResource( ResourceEvent event )
-    {
-        // do nothing
-
-    }
-
-    @Override
-    public void deletedResource( ResourceEvent event )
+    public void deletedResource( @Observes @Type(EventAction.REMOVE) ResourceEvent event )
     {
         try
         {
@@ -73,8 +60,7 @@ public class AlertRessourceListener implements EventRessourceListener
         }
     }
 
-    @Override
-    public void updatedResource( ResourceEvent event )
+    public void updatedResource( @Observes @Type(EventAction.UPDATE) ResourceEvent event )
     {
         try
         {

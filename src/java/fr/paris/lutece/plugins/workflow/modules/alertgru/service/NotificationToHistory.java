@@ -81,9 +81,8 @@ public final class NotificationToHistory
         {
             oSMSHistory.setActiveOngletSMS( config.isActiveOngletSMS( ) );
             oSMSHistory.setMessageSMS( smsNotification.getMessage( ) );
-            if ( smsNotification instanceof BillingAccountBasedSMSNotification )
+            if ( smsNotification instanceof BillingAccountBasedSMSNotification accountBasedSmsNotification )
             {
-                BillingAccountBasedSMSNotification accountBasedSmsNotification = (BillingAccountBasedSMSNotification) smsNotification;
                 oSMSHistory.setBillingAccount( accountBasedSmsNotification.getBillingAccount( ) );
                 oSMSHistory.setBillingGroupSMS( accountBasedSmsNotification.getBillingGroup( ) );
             }

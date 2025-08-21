@@ -40,6 +40,7 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruTaskCon
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.IAlertGruHistoryService;
 import fr.paris.lutece.plugins.workflow.utils.WorkflowUtils;
 import fr.paris.lutece.plugins.workflow.web.task.NoFormTaskComponent;
+import fr.paris.lutece.plugins.workflowcore.business.task.ITaskType;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
@@ -47,20 +48,17 @@ import fr.paris.lutece.util.html.HtmlTemplate;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
+
+@ApplicationScoped
+@Named( "workflow-alertgru.alertDirectoryTaskComponent" )
 public class AlertGruTaskComponent extends NoFormTaskComponent
 {
-
     // SERVICES
-    @Inject
-    @Named( AlertGruTaskConfigService.BEAN_SERVICE )
-    private ITaskConfigService _taskAlertGruConfigService;
-
-    @Inject
-    @Named( AlertGruHistoryService.BEAN_SERVICE )
     private IAlertGruHistoryService _taskAlertGruHistoryService;
 
     // MARKS
@@ -69,6 +67,17 @@ public class AlertGruTaskComponent extends NoFormTaskComponent
 
     // TEMPLATES
     private static final String TEMPLATE_TASK_ALERT_INFORMATION = "admin/plugins/workflow/modules/alertgru/task_alert_information.html";
+
+    @Inject
+    public AlertGruTaskComponent( 
+    		@Named( "workflow-alertgru.taskTypeAlertGru" ) ITaskType taskType,
+            @Named( AlertGruTaskConfigService.BEAN_SERVICE ) ITaskConfigService taskConfigService,
+            @Named( AlertGruHistoryService.BEAN_SERVICE ) IAlertGruHistoryService taskAlertGruHistoryService )
+    {
+        setTaskType( taskType );
+        setTaskConfigService( taskConfigService );
+        _taskAlertGruHistoryService = taskAlertGruHistoryService;
+    }
 
     @Override
     public String getDisplayConfigForm( HttpServletRequest httpServletRequest, Locale locale, ITask iTask )
@@ -84,7 +93,7 @@ public class AlertGruTaskComponent extends NoFormTaskComponent
         AlertGruHistory alertGruTaskHistory = _taskAlertGruHistoryService.findByPrimaryKey( nIdHistory, iTask.getId( ), WorkflowUtils.getPlugin( ) );
 
         Map<String, Object> model = new HashMap<>( );
-        AlertGruTaskConfig config = _taskAlertGruConfigService.findByPrimaryKey( iTask.getId( ) );
+        AlertGruTaskConfig config = getTaskConfigService().findByPrimaryKey( iTask.getId( ) );
         model.put( MARK_CONFIG, config );
         model.put( MARK_ALERT_HISTORY, alertGruTaskHistory );
         HtmlTemplate template = AppTemplateService.getTemplate( TEMPLATE_TASK_ALERT_INFORMATION, locale, model );

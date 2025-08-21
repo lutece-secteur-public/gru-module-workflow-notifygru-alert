@@ -39,7 +39,7 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.web.IAlertConfig;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * This class represents a configuration for the SMS alert

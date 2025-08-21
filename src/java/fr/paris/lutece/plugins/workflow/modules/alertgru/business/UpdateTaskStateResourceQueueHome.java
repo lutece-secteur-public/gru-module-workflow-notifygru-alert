@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Optional;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruPlugin;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
+import jakarta.enterprise.inject.spi.CDI;
 
 /**
  * 
@@ -47,8 +47,7 @@ import fr.paris.lutece.portal.service.spring.SpringContextService;
 public class UpdateTaskStateResourceQueueHome
 {
 
-    private static IUpdateTaskStateResourceQueueDAO _updateResourceQueueDAO = SpringContextService
-            .getBean( "workflow-alertgru.updateTaskStateResourceQueueDAO" );
+    private static IUpdateTaskStateResourceQueueDAO _updateResourceQueueDAO = CDI.current( ).select( IUpdateTaskStateResourceQueueDAO.class ).get( );
 
     private UpdateTaskStateResourceQueueHome( )
     {

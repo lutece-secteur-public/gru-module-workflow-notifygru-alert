@@ -37,11 +37,17 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.service.AlertGruPlugin;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.service.cache.AlertGruCacheService;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.util.sql.DAOUtil;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 
+@ApplicationScoped
+@Named( "workflow-alertgru.taskAlertGruConfigDAO" )
 public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
 {
 
@@ -77,11 +83,14 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
             + " alert_subject = ?, " + " marker_alert = ?, " + " alert_after_before = ? " + " WHERE id_task = ? ";
 
     private static final String SQL_QUERY_DELETE = "DELETE FROM workflow_task_alert_gru_cf WHERE id_task = ? ";
+    
+    @Inject
+    private AlertGruCacheService _alertGruCacheService;
 
     @Override
     public void insert( AlertGruTaskConfig config )
     {
-        AlertGruCacheService.getInstance( ).removeGruConfigFromCache( config.getIdTask( ) );
+    	_alertGruCacheService.removeGruConfigFromCache( config.getIdTask( ) );
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_INSERT_NOTIF, AlertGruPlugin.getPlugin( ) ) )
         {
             configToData( config, daoUtil );
@@ -98,7 +107,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     public void store( AlertGruTaskConfig alertGruTaskConfig )
     {
         // remove cache
-        AlertGruCacheService.getInstance( ).removeGruConfigFromCache( alertGruTaskConfig.getIdTask( ) );
+    	_alertGruCacheService.removeGruConfigFromCache( alertGruTaskConfig.getIdTask( ) );
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_UPDATE, AlertGruPlugin.getPlugin( ) ) )
         {
             int nPos = configToData( alertGruTaskConfig, daoUtil );
@@ -193,7 +202,7 @@ public class AlertGruTaskConfigDAO implements ITaskConfigDAO<AlertGruTaskConfig>
     public void delete( int i )
     {
         // remove cache
-        AlertGruCacheService.getInstance( ).removeGruConfigFromCache( i );
+    	_alertGruCacheService.removeGruConfigFromCache( i );
         try ( DAOUtil daoUtil = new DAOUtil( SQL_QUERY_DELETE, AlertGruPlugin.getPlugin( ) ) )
         {
             daoUtil.setInt( 1, i );

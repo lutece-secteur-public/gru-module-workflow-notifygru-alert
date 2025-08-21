@@ -35,9 +35,14 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.business;
 
 import fr.paris.lutece.plugins.workflowcore.business.config.TaskConfig;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Named;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Dependent
+@Named( "workflow-alertgru.taskAlertGruConfig" )
 public class AlertGruTaskConfig extends TaskConfig
 {
 

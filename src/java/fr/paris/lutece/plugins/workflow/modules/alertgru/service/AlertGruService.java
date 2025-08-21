@@ -46,15 +46,20 @@ import fr.paris.lutece.util.ReferenceList;
 import fr.paris.lutece.util.mail.FileAttachment;
 import java.util.List;
 import java.util.Locale;
-import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  *
  * AlertGruService
  *
  */
-public final class AlertGruService implements IAlertGruService
+@ApplicationScoped
+@Named( AlertGruService.BEAN_SERVICE )
+public class AlertGruService implements IAlertGruService
 {
     /** The Constant BEAN_SERVICE. */
     public static final String BEAN_SERVICE = "workflow-alertgru.alertGruService";
@@ -66,9 +71,9 @@ public final class AlertGruService implements IAlertGruService
     private IStateService _stateService;
 
     /**
-     * Private constructor
+     * constructor
      */
-    private AlertGruService( )
+    AlertGruService( )
     {
     }
 

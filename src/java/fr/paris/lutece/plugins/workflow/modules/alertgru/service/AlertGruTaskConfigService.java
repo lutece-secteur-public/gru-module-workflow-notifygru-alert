@@ -35,21 +35,33 @@ package fr.paris.lutece.plugins.workflow.modules.alertgru.service;
 
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.AlertGruTaskConfig;
 import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfig;
+import fr.paris.lutece.plugins.workflowcore.business.config.ITaskConfigDAO;
 import fr.paris.lutece.plugins.workflowcore.service.config.TaskConfigService;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
+@ApplicationScoped
+@Named( AlertGruTaskConfigService.BEAN_SERVICE )
 public class AlertGruTaskConfigService extends TaskConfigService
 {
 
     public static final String BEAN_SERVICE = "workflow-alertgru.taskAlertGruConfigService";
 
+    @Inject
+    public AlertGruTaskConfigService( @Named( "workflow-alertgru.taskAlertGruConfigDAO" ) ITaskConfigDAO<AlertGruTaskConfig> alertGruTaskConfigDAO ) 
+    {
+       setTaskConfigDAO( (ITaskConfigDAO) alertGruTaskConfigDAO ); 
+    }
+    
     /**
      * {@inheritDoc}
      *
      * @param config
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void create( ITaskConfig config )
     {
         super.create( config );
@@ -77,7 +89,7 @@ public class AlertGruTaskConfigService extends TaskConfigService
      * @param config
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void update( ITaskConfig config )
     {
         super.update( config );
@@ -89,7 +101,7 @@ public class AlertGruTaskConfigService extends TaskConfigService
      * @param nIdTask
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void remove( int nIdTask )
     {
         super.remove( nIdTask );

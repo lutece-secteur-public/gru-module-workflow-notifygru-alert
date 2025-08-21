@@ -37,10 +37,13 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertG
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.AlertGruHistoryDAO;
 import fr.paris.lutece.plugins.workflow.modules.alertgru.business.history.IAlertGruHistoryDAO;
 import fr.paris.lutece.portal.service.plugin.Plugin;
-import javax.inject.Inject;
-import javax.inject.Named;
-import org.springframework.transaction.annotation.Transactional;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.transaction.Transactional;
 
+@ApplicationScoped
+@Named( AlertGruHistoryService.BEAN_SERVICE )
 public class AlertGruHistoryService implements IAlertGruHistoryService
 {
     /**
@@ -55,7 +58,7 @@ public class AlertGruHistoryService implements IAlertGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void create( AlertGruHistory alertGru, Plugin plugin )
     {
         _dao.insert( alertGru, plugin );
@@ -65,7 +68,7 @@ public class AlertGruHistoryService implements IAlertGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void removeByHistory( int nIdHistory, int nIdTask, Plugin plugin )
     {
         _dao.deleteByHistory( nIdHistory, nIdTask, plugin );
@@ -75,7 +78,7 @@ public class AlertGruHistoryService implements IAlertGruHistoryService
      * {@inheritDoc}
      */
     @Override
-    @Transactional( AlertGruPlugin.BEAN_TRANSACTION_MANAGER )
+    @Transactional
     public void removeByTask( int nIdTask, Plugin plugin )
     {
         _dao.deleteByTask( nIdTask, plugin );

@@ -48,17 +48,17 @@ import fr.paris.lutece.plugins.workflow.modules.alertgru.web.alertconfig.impl.SM
 import fr.paris.lutece.plugins.workflow.service.provider.MarkerProviderService;
 import fr.paris.lutece.plugins.workflow.service.provider.ProviderManagerUtil;
 import fr.paris.lutece.plugins.workflowcore.service.config.ITaskConfigService;
-import fr.paris.lutece.plugins.workflowcore.service.provider.AbstractProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.IMarkerProvider;
+import fr.paris.lutece.plugins.workflowcore.service.provider.IProviderManager;
 import fr.paris.lutece.plugins.workflowcore.service.provider.InfoMarker;
 import fr.paris.lutece.plugins.workflowcore.service.task.ITask;
 import fr.paris.lutece.portal.service.i18n.I18nService;
 import fr.paris.lutece.portal.service.message.AdminMessage;
 import fr.paris.lutece.portal.service.message.AdminMessageService;
-import fr.paris.lutece.portal.service.spring.SpringContextService;
 import fr.paris.lutece.portal.service.template.AppTemplateService;
 import fr.paris.lutece.portal.service.util.AppPathService;
 import fr.paris.lutece.portal.service.util.AppPropertiesService;
+import fr.paris.lutece.portal.service.util.CdiHelper;
 import fr.paris.lutece.portal.util.mvc.utils.MVCMessage;
 import fr.paris.lutece.util.ErrorMessage;
 import fr.paris.lutece.util.ReferenceList;
@@ -69,7 +69,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 
 public class AlertGruTaskConfigController
@@ -87,8 +87,8 @@ public class AlertGruTaskConfigController
     private static final String MARK_WEBAPP_URL = "webapp_url";
 
     // Services
-    private static final ITaskConfigService _taskAlertGruConfigService = SpringContextService.getBean( AlertGruTaskConfigService.BEAN_SERVICE );
-    private static final IAlertGruService _alertGruService = SpringContextService.getBean( AlertGruService.BEAN_SERVICE );
+    private static final ITaskConfigService _taskAlertGruConfigService = CdiHelper.getReference( ITaskConfigService.class, AlertGruTaskConfigService.BEAN_SERVICE );
+    private static final IAlertGruService _alertGruService = CdiHelper.getReference( IAlertGruService.class, AlertGruService.BEAN_SERVICE );
 
     private final ITask _task;
     private AlertGruTaskConfig _config;
@@ -414,7 +414,7 @@ public class AlertGruTaskConfigController
                     : _config.getIdSpringProvider( );
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( strIdSpringProvider );
             String strProviderId = ProviderManagerUtil.fetchProviderId( strIdSpringProvider );
-            AbstractProviderManager providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+            IProviderManager providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
             if ( providerManager != null )
             {
@@ -439,7 +439,7 @@ public class AlertGruTaskConfigController
          *            the list of marker provider ids
          * @return the AlertGru markers
          */
-        private Collection<InfoMarker> findMarkers( AbstractProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
+        private Collection<InfoMarker> findMarkers( IProviderManager providerManager, String strProviderId, List<String> listMarkerProviderIds )
         {
             Collection<InfoMarker> collectionMarkers = providerManager.getProviderDescription( strProviderId ).getMarkerDescriptions( );
 
@@ -476,7 +476,7 @@ public class AlertGruTaskConfigController
 
         private final HttpServletRequest _request;
         private final List<IAlertConfig> _listAlertConfig;
-        private final AbstractProviderManager _providerManager;
+        private final IProviderManager _providerManager;
         private final String _strAction;
 
         /**
@@ -493,7 +493,7 @@ public class AlertGruTaskConfigController
             _strAction = strAction;
 
             String strProviderManagerId = ProviderManagerUtil.fetchProviderManagerId( _config.getIdSpringProvider( ) );
-            _providerManager = ProviderManagerUtil.fetchProviderManager( strProviderManagerId );
+            _providerManager = ProviderManagerUtil.retrieveProviderManager( strProviderManagerId );
 
             _listAlertConfig = initAlertConfigs( request );
 

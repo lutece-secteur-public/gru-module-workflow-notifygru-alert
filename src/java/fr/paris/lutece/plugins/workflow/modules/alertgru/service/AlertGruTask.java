@@ -46,10 +46,13 @@ import java.sql.Timestamp;
 import java.util.Locale;
 import java.util.Optional;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.enterprise.context.Dependent;
+import jakarta.inject.Inject;
+import jakarta.inject.Named;
+import jakarta.servlet.http.HttpServletRequest;
 
+@Dependent
+@Named( "workflow-alertgru.taskAlertGru" )
 public class AlertGruTask extends SimpleTask
 {
     /** The _task alert gru config service. */
