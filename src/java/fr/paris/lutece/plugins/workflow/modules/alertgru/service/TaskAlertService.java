@@ -116,9 +116,6 @@ public enum TaskAlertService
     /** The _task notify gru history service. */
     private IAlertGruHistoryService _taskAlertGruHistoryService;
 
-    /** Lib-NotifyGru sender service */
-    private NotificationService _alertGruSenderService;
-
     /** The task service **/
     private ITaskService _taskService;
 
@@ -369,7 +366,7 @@ public enum TaskAlertService
         try
         {
 
-            _alertGruSenderService.send( notificationObject );
+            NotificationService.send( notificationObject );
 
             // Create Resource History
             resourceHistoryState.setId( 0 );
@@ -799,10 +796,6 @@ public enum TaskAlertService
         if ( _taskAlertGruHistoryService == null )
         {
             _taskAlertGruHistoryService = SpringContextService.getBean( "workflow-alertgru.alertGruHistoryService" );
-        }
-        if ( _alertGruSenderService == null )
-        {
-            _alertGruSenderService = SpringContextService.getBean( "workflow-notifygru.lib-notifygru.notificationService" );
         }
         if ( _taskService == null )
         {
