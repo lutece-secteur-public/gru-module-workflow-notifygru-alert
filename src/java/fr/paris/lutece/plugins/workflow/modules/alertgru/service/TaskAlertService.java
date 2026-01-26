@@ -803,7 +803,7 @@ public enum TaskAlertService
         }
         if ( _alertGruSenderService == null )
         {
-            _alertGruSenderService = CdiHelper.getReference( NotificationService.class, Constants.BEAN_NOTIFICATION_SENDER );
+            _alertGruSenderService = CDI.current().select( NotificationService.class ).get( );
         }
         if ( _taskService == null )
         {
